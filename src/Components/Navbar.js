@@ -80,7 +80,7 @@ const Navbar = () => {
       <div className="container-fluid">
         <Link to="/" className="navbar-brand">
           <i className="fa-solid fa-charging-station"></i>
-          <span className="ml-2">ZapQuest</span>
+          <span className="ml-2" style={{ fontFamily: 'Chantal', fontWeight: 'bold', fontSize: '1.25rem'}}>ZapQuest</span>
         </Link>
         {auth.username ? (
           <>
