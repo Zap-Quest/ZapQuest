@@ -1,12 +1,134 @@
 import React, { useState } from "react";
-import { GoogleMap, Marker } from "@react-google-maps/api";
-import { useLoadScript } from "@react-google-maps/api";
-
-import { useMemo } from "react";
-import axios from "axios";
-
+import { GoogleMap, Marker, useLoadScript } from "@react-google-maps/api";
+import { useSelector,useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
+import { fetchNearbyStations, fetchSearchAddress } from "../store";
 
 
+
+
+const Map = () => {
+  
+  const { isLoaded } = useLoadScript({
+      googleMapsApiKey: 'AIzaSyAyylWo4yRMjT_HSowB1jWsz5qwnPDSUWw',
+  });
+
+  const [center,setCenter]= useState(null);
+  const [myLocation, setMyLocation] = useState(null);
+  const [searchLocation, setSearchLocation] = useState(null);
+  const [EVSList,setEVSList] = useState(null);
+  
+  //test
+  const dispatch = useDispatch();
+  const {searchAddress, station} = useSelector(state => state);
+  const {address} = useParams();
+
+
+  React.useEffect(() => {
+       dispatch(fetchSearchAddress(address));
+     }, [address]);
+
+  React.useEffect(() =>{
+      setCenter(searchAddress.latLng);
+      dispatch(fetchNearbyStations({address:searchAddress.zipcode,inputRadius:1}));
+  },[searchAddress]);
+
+  React.useEffect(()=>{
+    console.log('stations',station);
+    setEVSList(station);
+  },[station])
+    
+  
+  
+ 
+
+  
+/// use this to set current location
+  React.useEffect(() => {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const { latitude, longitude } = position.coords;
+            const userLocation = { lat: latitude, lng: longitude };
+            setMyLocation(userLocation);
+            //setCenter(userLocation);
+            //setAddressList((prevAddressList) => [...prevAddressList, userLocation]);
+          },
+          (error) => {
+            console.error(error.message);
+          }
+        );
+      }
+    }, []);
+
+
+
+  console.log('searchAddress',searchAddress);
+    
+  const mapOptions = {
+      streetViewControl: false
+    };
+
+
+  return (
+  <div className="Map">
+    <h1> address: {address}</h1>
+
+
+  {!isLoaded ? (
+      <h1>Loading...</h1>
+  ) : (
+      <GoogleMap
+      mapContainerClassName="map-container"
+      center={center}
+      zoom={15}
+      options={mapOptions}
+      >
+          <Marker 
+              position={center} 
+              icon={"http://maps.google.com/mapfiles/ms/icons/green-dot.png"}
+          />
+          {myLocation?
+          ( <Marker 
+              position={myLocation} />
+          )
+          :(null)}
+
+          {searchLocation?
+          ( <Marker 
+              position={searchLocation} 
+              icon={"http://maps.google.com/mapfiles/ms/icons/pink-dot.png"}/>
+          )
+          :(null)
+          }
+          {
+            EVSList?
+            (
+              EVSList.map((s)=>{
+              //console.log(`here,latitude:${s.geometry.coordinates[1]},longitude:${s.geometry.coordinates[0]}`);
+              let location = {lat:s.geometry.coordinates[1],lng:s.geometry.coordinates[0]};
+              //console.log(location);
+                return(
+                    <Marker
+                    position={location}
+                    icon={"http://maps.google.com/mapfiles/ms/icons/yellow-dot.png"}
+                    key={s.properties.id}
+                    />
+                )
+              })
+            ):(null)
+          }
+          
+      </GoogleMap>
+  )}
+  </div>
+  );
+};
+export default Map;
+
+
+
+/*
 const Map = () => {
     const { isLoaded } = useLoadScript({
         googleMapsApiKey: 'AIzaSyAyylWo4yRMjT_HSowB1jWsz5qwnPDSUWw',
@@ -205,3 +327,4 @@ return (
 );
 };
 export default Map;
+*/
