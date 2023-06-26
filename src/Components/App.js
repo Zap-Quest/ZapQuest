@@ -7,6 +7,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { loginWithToken, fetchCart } from '../store';
 import { Link, Routes, Route } from 'react-router-dom';
 import MyAccount from './Account';
+// require('dotenv').config({path: '../.env'})
+
 
 const App = ()=> {
   const { auth } = useSelector(state => state);
@@ -20,6 +22,7 @@ const App = ()=> {
       dispatch(fetchCart());
     }
   }, [auth]);
+
   return (
     <div>
       <Navbar />
