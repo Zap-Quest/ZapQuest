@@ -22,7 +22,7 @@ const App = ()=> {
       dispatch(fetchCart());
     }
   }, [auth]);
-
+  
   return (
     <div>
       <Navbar />
