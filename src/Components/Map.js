@@ -143,7 +143,7 @@ const Map = () => {
           <p>{`Tel: ${selectedStation.properties.station_phone}`}</p>
         </div>
 
-      ):(null)};
+      ):(null)/* if we have a selectdStation, we can have specific station infor. if not, should we show the list of all the nearby stations?*/};
     </div>
     
   );
