@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { GoogleMap, Marker, useLoadScript } from "@react-google-maps/api";
 import { useSelector,useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
-import { fetchNearbyStations, fetchSearchAddress } from "../store";
+import { fetchNearbyStations, fetchSearchAddress, setToNearby } from "../store";
 
 
 
@@ -18,110 +18,108 @@ const Map = () => {
   const [searchLocation, setSearchLocation] = useState(null);
   const [EVSList,setEVSList] = useState(null);
   
-  //test
+  
   const dispatch = useDispatch();
-  const {searchAddress, station} = useSelector(state => state);
-  const {address} = useParams();
+  const { searchAddress, station } = useSelector(state => state);
+  const { address } = useParams();
 
-
+//check if URL is an address or nearby
   React.useEffect(() => {
-       dispatch(fetchSearchAddress(address));
-     }, [address]);
-
-  React.useEffect(() =>{
-      setCenter(searchAddress.latLng);
-      dispatch(fetchNearbyStations({address:searchAddress.zipcode,inputRadius:1}));
-  },[searchAddress]);
-
-  React.useEffect(()=>{
-    console.log('stations',station);
-    setEVSList(station);
-  },[station])
-    
-  
-  
- 
-
-  
-/// use this to set current location
-  React.useEffect(() => {
+    if(address ==='nearby'){
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
           (position) => {
             const { latitude, longitude } = position.coords;
             const userLocation = { lat: latitude, lng: longitude };
             setMyLocation(userLocation);
-            //setCenter(userLocation);
-            //setAddressList((prevAddressList) => [...prevAddressList, userLocation]);
           },
           (error) => {
             console.error(error.message);
           }
         );
       }
-    }, []);
+    }else{
+      dispatch(fetchSearchAddress(address));
+    }
+     }, [address]);
 
+  // if search specific address
+  React.useEffect(() => {
+    if(searchAddress){
+      setCenter(searchAddress);
+      setSearchLocation(searchAddress);
+      dispatch(fetchNearbyStations({latitude:searchAddress.lat,longitude:searchAddress.lng,inputRadius:1}));
+    };  
+  },[searchAddress]);
 
+  //if we use neaby to search
+  React.useEffect (() => {
+    if(myLocation){
+      setCenter(myLocation);
+      dispatch(fetchNearbyStations({latitude:myLocation.lat,longitude:myLocation.lng,inputRadius:1}));
+    }
+  },[myLocation]);
 
-  console.log('searchAddress',searchAddress);
+  //fetch stations
+  React.useEffect(()=>{
+    setEVSList(station);
+  },[station])
     
+
+  //map style 
   const mapOptions = {
       streetViewControl: false
     };
 
 
   return (
-  <div className="Map">
-    <h1> address: {address}</h1>
+    <div className="Map">
+      <h4> address: {address}</h4>
+      {!isLoaded ? (
+          <h1>Loading...</h1>
+      ) : (
+          <GoogleMap
+            mapContainerClassName="map-container"
+            center={center}
+            zoom={15}
+            options={mapOptions}
+          >
+            {myLocation?
+              ( 
+                <Marker 
+                  position={myLocation}
+                  icon={"http://maps.google.com/mapfiles/ms/icons/green-dot.png"}
+                />
+              )
+              :(null)}
 
-
-  {!isLoaded ? (
-      <h1>Loading...</h1>
-  ) : (
-      <GoogleMap
-      mapContainerClassName="map-container"
-      center={center}
-      zoom={15}
-      options={mapOptions}
-      >
-          <Marker 
-              position={center} 
-              icon={"http://maps.google.com/mapfiles/ms/icons/green-dot.png"}
-          />
-          {myLocation?
-          ( <Marker 
-              position={myLocation} />
-          )
-          :(null)}
-
-          {searchLocation?
-          ( <Marker 
-              position={searchLocation} 
-              icon={"http://maps.google.com/mapfiles/ms/icons/pink-dot.png"}/>
-          )
-          :(null)
-          }
-          {
-            EVSList?
-            (
-              EVSList.map((s)=>{
-              //console.log(`here,latitude:${s.geometry.coordinates[1]},longitude:${s.geometry.coordinates[0]}`);
-              let location = {lat:s.geometry.coordinates[1],lng:s.geometry.coordinates[0]};
-              //console.log(location);
-                return(
+            {searchLocation?
+              ( <Marker 
+                  position={searchLocation} 
+                  icon={"http://maps.google.com/mapfiles/ms/icons/pink-dot.png"}/>
+              )
+              :(null)
+            }
+              
+            {EVSList?
+              (
+                EVSList.map((s)=>{
+                  let location = {lat:s.geometry.coordinates[1],lng:s.geometry.coordinates[0]};
+                  return(
                     <Marker
-                    position={location}
-                    icon={"http://maps.google.com/mapfiles/ms/icons/yellow-dot.png"}
-                    key={s.properties.id}
+                        position={location}
+                        icon={"http://maps.google.com/mapfiles/ms/icons/yellow-dot.png"}
+                        key={s.properties.id}
                     />
-                )
-              })
-            ):(null)
-          }
-          
-      </GoogleMap>
-  )}
-  </div>
+                  )
+                })
+              ):(null)
+            }
+              
+          </GoogleMap>
+      )}
+    </div>
+    
   );
 };
 export default Map;

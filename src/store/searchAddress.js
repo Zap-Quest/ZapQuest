@@ -9,11 +9,8 @@ const fetchSearchAddress =createAsyncThunk("fetchSearchAddress", async (address)
         key: 'AIzaSyAyylWo4yRMjT_HSowB1jWsz5qwnPDSUWw', // Replace with your own API key
         },
     });
-    const addressArr = response.data.results[0].formatted_address.split(',');
-    const tempAddressARR =addressArr[addressArr.length-2].split(' ');
-    const zipcode = tempAddressARR[tempAddressARR.length-1];
     const latLng = response.data.results[0].geometry.location;
-    return {zipcode,latLng};
+    return latLng;
 })
 
 
@@ -21,13 +18,17 @@ const initialState = '';
 const searchAddressSlice = createSlice({
     name:"searchAddress",
     initialState,
-    reducers:{},
+    reducers:{
+        setToNearby:(state,action) =>{
+            return action.payload;
+        }
+    },
     extraReducers:(builder) =>{
         builder.addCase(fetchSearchAddress.fulfilled,(state,action) => {
             return action.payload;
         })
     }
 })
-
+export const { setToNearby } = searchAddressSlice.actions;
 export { fetchSearchAddress };
 export default searchAddressSlice.reducer;

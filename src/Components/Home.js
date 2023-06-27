@@ -21,6 +21,10 @@ const Home = ()=> {
       console.log(ex);
     }
   };
+  const handleMyLocation = () => {
+    navigate(`/map/${encodeURIComponent('nearby')}`)
+
+  }
 
 
   return (
@@ -29,8 +33,8 @@ const Home = ()=> {
       <>
         <form onSubmit={handleSearch}>
             <input placeholder=" search city, place or address" value={searchInput} onChange={onChange}/>
-            <button>search</button>
         </form>
+        <button onClick={handleMyLocation}>Nearby Chargers</button>
       </>
     </div>
   );
