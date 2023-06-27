@@ -12,3 +12,12 @@
 - Bonus: Directions to/trip planning
 - Bonus: Parking garage vs street parking
 - Bonus: Nearby food
+
+
+Setup
+1. in root director create a .env file
+  a. Create 2 Variables
+    REACT_APP_GOOGLE_MAPS_API_KEY=
+    REACT_APP_NREI_API_KEY=
+  b. Input API KEY from Google Maps after the '='  quotes are not needed around api key
+  c. Input API Key from NREI after the '='   quotes are not needed around api key.
