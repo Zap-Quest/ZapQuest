@@ -26,6 +26,7 @@ const App = ()=> {
       <div>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/map/:address/:stationId" element={<Map />} />
           <Route path="/map/:address" element={<Map />} />
           <Route path="/myaccount" element={<MyAccount />} />
         </Routes>

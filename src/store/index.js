@@ -4,7 +4,7 @@ import auth from './auth';
 import cart from './cart';
 import user from './user';
 import searchAddress from "./searchAddress";
-import station from "./station";
+import allStations from "./allStations";
 
 const store = configureStore({
   middleware: (defaultMiddleware)=> defaultMiddleware().concat(logger),
@@ -13,7 +13,7 @@ const store = configureStore({
     auth: auth,
     cart: cart,
     searchAddress: searchAddress,
-    station:station,
+    allStations:allStations,
 
   }
 });
@@ -23,5 +23,5 @@ export * from './auth';
 export * from './cart';
 export * from './user';
 export * from './searchAddress';
-export * from './station';
+export * from './allStations';
 

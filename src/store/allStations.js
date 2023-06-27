@@ -19,14 +19,10 @@ export const fetchNearbyStations = createAsyncThunk("fetchNearbyStations", async
 
 
 const initialState = [];
-const stationSlice = createSlice({
-    name:"station",
+const allStationsSlice = createSlice({
+    name:"allStations",
     initialState,
-    reducers:{
-        setToNearby:(state,action) =>{
-            return action.payload;
-        }
-    },
+    reducers:{},
     extraReducers:(builder) => {
         builder.addCase(fetchNearbyStations.fulfilled,(state,action) =>{
             return action.payload;
@@ -34,4 +30,4 @@ const stationSlice = createSlice({
     }
 })
 
-export default stationSlice.reducer;
+export default allStationsSlice.reducer;

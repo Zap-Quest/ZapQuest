@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { GoogleMap, Marker, useLoadScript } from "@react-google-maps/api";
 import { useSelector,useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { fetchNearbyStations, fetchSearchAddress, setToNearby } from "../store";
+
 
 
 
@@ -17,11 +18,14 @@ const Map = () => {
   const [myLocation, setMyLocation] = useState(null);
   const [searchLocation, setSearchLocation] = useState(null);
   const [EVSList,setEVSList] = useState(null);
+  const [selectedStation,setSelectedStation] = useState(null);
   
-  
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { searchAddress, station } = useSelector(state => state);
-  const { address } = useParams();
+  const { searchAddress, allStations } = useSelector(state => state);
+  const { address,stationId } = useParams();
+
+
 
 //check if URL is an address or nearby
   React.useEffect(() => {
@@ -62,19 +66,25 @@ const Map = () => {
 
   //fetch stations
   React.useEffect(()=>{
-    setEVSList(station);
-  },[station])
+    setEVSList(allStations);
+    const station = allStations.filter((s)=>{return s.properties.id ===stationId*1});
+    setSelectedStation(station[0]);
+  },[allStations,stationId])
     
 
   //map style 
   const mapOptions = {
       streetViewControl: false
     };
-
-
+  const handleStationId = (id) =>{
+      navigate(`/map/${encodeURIComponent(address)}/${id}`);
+    }
+    console.log('selected station:',selectedStation);
   return (
     <div className="Map">
       <h4> address: {address}</h4>
+      <button onClick={()=>handleStationId(2)}> 2</button>
+      
       {!isLoaded ? (
           <h1>Loading...</h1>
       ) : (
@@ -110,6 +120,7 @@ const Map = () => {
                         position={location}
                         icon={"http://maps.google.com/mapfiles/ms/icons/yellow-dot.png"}
                         key={s.properties.id}
+                        onClick={()=>handleStationId(s.properties.id)}
                     />
                   )
                 })
@@ -118,6 +129,14 @@ const Map = () => {
               
           </GoogleMap>
       )}
+      {selectedStation?(
+        <div>
+          <p>{`${selectedStation.properties.street_address}, ${selectedStation.properties.city}`}</p>
+          <p>{`Charging points: ${selectedStation.properties.ev_connector_types}`}</p>
+          <p>{`Tel: ${selectedStation.properties.station_phone}`}</p>
+        </div>
+
+      ):(null)};
     </div>
     
   );
