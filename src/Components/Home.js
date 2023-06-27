@@ -6,6 +6,29 @@ import { Link } from "react-router-dom";
 const Home = () => {
   const { auth } = useSelector((state) => state);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  //search bar: handle the search and convert it to URL Parameter. 
+  const [searchInput,setSearchInput] = useState('');
+  const onChange = (ev) => {
+    setSearchInput(ev.target.value);
+  };
+  //handle input search location and go to the map page
+  const handleSearch = async(ev) => {
+    console.log('handlesearch'); 
+    ev.preventDefault();
+    try{
+      navigate(`/map/${encodeURIComponent(searchInput)}`);
+    }catch (ex){
+      console.log(ex);
+    }
+  };
+  const handleMyLocation = () => {
+    navigate(`/map/${encodeURIComponent('nearby')}`)
+
+  }
+
+
   return (
     <div className="container d-flex flex-column align-items-center justify-content-center">
       <div className='my-5 py-5'>
