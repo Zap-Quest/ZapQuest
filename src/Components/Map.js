@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import { GoogleMap, Marker, useLoadScript } from "@react-google-maps/api";
+import { GoogleMap, Marker, useLoadScript } from "@react-google-maps/api";
 import { useSelector,useDispatch } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 import { fetchNearbyStations, fetchSearchAddress, setToNearby } from "../store";
 
 
+import { useMemo } from "react";
+import axios from "axios";
 
 
 
@@ -147,9 +150,11 @@ export default Map;
 
 /*
 const Map = () => {
-    const { isLoaded } = useLoadScript({
-        googleMapsApiKey: 'AIzaSyAyylWo4yRMjT_HSowB1jWsz5qwnPDSUWw',
-    });
+  // console.log(proces.env.REACT_APP_GOOGLE_MAPS_API_KEY)
+  const { isLoaded } = useLoadScript({
+    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
+  });
+
 
     const originCenter = useMemo(() => ({ lat: 41.8781, lng: -87.000 }), []);
     const [center,setCenter]= useState(null);
@@ -202,7 +207,7 @@ const Map = () => {
         try {
             const response = await axios.get('https://developer.nrel.gov/api/alt-fuel-stations/v1.json', {
                 params: {
-                    api_key:'WcteKIPw0jwiEYdbKSWqyu4Sys9Z0Z4AbcxPVEzx',
+                    api_key: process.env.REACT_APP_NREI_API_KEY,
                     fuel_type: 'ELEC',
                     zip:zipcode,
                 },
@@ -219,7 +224,7 @@ const Map = () => {
       try {
           const response = await axios.get('https://developer.nrel.gov/api/alt-fuel-stations/v1/nearest.geojson', {
               params: {
-                  api_key:'bN0UmPUvm6d9Wqhwl3E4HHigDM8P393YnX30oPdI',
+                  api_key: process.env.REACT_APP_NREI_API_KEY,
                   fuel_type: 'ELEC',
                   location:zipcode,
                   radius:2,
@@ -247,7 +252,7 @@ const Map = () => {
             const response = await axios.get('https://maps.googleapis.com/maps/api/geocode/json', {
                 params: {
                 address: searchInput,
-                key: 'AIzaSyAyylWo4yRMjT_HSowB1jWsz5qwnPDSUWw', // Replace with your own API key
+                key: process.env.REACT_APP_GOOGLE_MAPS_API_KEY, // Replace with your own API key
                 },
             });
             console.log('search address:',response.data);
