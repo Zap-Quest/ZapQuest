@@ -112,8 +112,6 @@ const Map = () => {
   return (
     <div className="Map">
       <h4> address: {address}</h4>
-      <button onClick={()=>handleStationId(2)}> 2</button>
-      
       {!isLoaded ? (
           <h1>Loading...</h1>
       ) : (
