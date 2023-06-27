@@ -148,7 +148,7 @@ const Navbar = () => {
         <div className="modal-dialog modal-md" role="document">
           <div className="modal-content">
             <div className="modal-header d-flex justify-content-between align-items-center">
-              <h4 className="modal-title" id="loginModalLabel">
+              <h4 className="modal-title ml-3" id="loginModalLabel">
                 {isRegisterMode ? "Register" : "Sign In"}
               </h4>
               <button
@@ -213,7 +213,7 @@ const Navbar = () => {
                 {!isRegisterMode && loginError && <div>{loginError}</div>}
               </form>
               {isRegisterMode ? (
-                <p>
+                <p className="ml-3">
                   Already have an account?{" "}
                   <button
                     type="button"
@@ -224,7 +224,7 @@ const Navbar = () => {
                   </button>
                 </p>
               ) : (
-                <p>
+                <p className="ml-3">
                   Need an account?{" "}
                   <button
                     type="button"
