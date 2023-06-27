@@ -6,7 +6,7 @@ const fetchSearchAddress =createAsyncThunk("fetchSearchAddress", async (address)
     const response = await axios.get('https://maps.googleapis.com/maps/api/geocode/json', {
         params: {
         address: address,
-        key: 'AIzaSyAyylWo4yRMjT_HSowB1jWsz5qwnPDSUWw', // Replace with your own API key
+        key: process.env.REACT_APP_GOOGLE_MAPS_API_KEY, // Replace with your own API key
         },
     });
     const latLng = response.data.results[0].geometry.location;

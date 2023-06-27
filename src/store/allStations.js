@@ -5,7 +5,7 @@ export const fetchNearbyStations = createAsyncThunk("fetchNearbyStations", async
     //console.log('latitude:',latitude,'longitude:',longitude,'radius:',inputRadius);
         const response = await axios.get('https://developer.nrel.gov/api/alt-fuel-stations/v1/nearest.geojson', {
             params: {
-                api_key:'bN0UmPUvm6d9Wqhwl3E4HHigDM8P393YnX30oPdI',
+                api_key:process.env.REACT_APP_NREI_API_KEY,
                 fuel_type: 'ELEC',
                 latitude:latitude,
                 longitude:longitude,
