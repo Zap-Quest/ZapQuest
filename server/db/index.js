@@ -1,46 +1,57 @@
 const conn = require('./conn');
 const User = require('./User');
-const Product = require('./Product');
+const Vehicle = require('./Vehicle');
 const Order = require('./Order');
 const LineItem  = require('./LineItem');
 
-Order.belongsTo(User);
+Vehicle.belongsTo(User);
 LineItem.belongsTo(Order);
 Order.hasMany(LineItem);
-LineItem.belongsTo(Product);
 
 const syncAndSeed = async()=> {
   await conn.sync({ force: true });
-  const [moe, lucy, larry, foo, bar, bazz, ethyl] = await Promise.all([
-    User.create({ username: 'moe', password: '123', email: 'moe@test.com' }),
-    User.create({ username: 'lucy', password: '123', email: 'lucy@test.com' }),
-    User.create({ username: 'larry', password: '123', email: 'larry@test.com' }),
-    Product.create({ name: 'foo' }),
-    Product.create({ name: 'bar' }),
-    Product.create({ name: 'bazz' }),
-    User.create({ username: 'ethyl', password: '123', email: 'ethyl@test.com' }),
+  const [moe, lucy, larry, ethyl, Essense] = await Promise.all([
+    User.create({ 
+      password: '123',
+      username: 'moe',
+      email: 'moed@gmail.com',
+      address: '123 Main St, City A',
+      avatar: '/static/images/Default Avatar.svg',
+    }),
+    User.create({ 
+      password: '123',
+      username: 'lucy',
+      email: 'lucyb@gmail.com',
+      address: '456 Elm St, City B',
+      avatar: '/static/images/Default Avatar.svg',
+    }),
+    User.create({ 
+      password: '123',
+      username: 'larry',
+      email: 'larryg@gmail.com',
+      address: '789 Oak St, City C',
+      avatar: '/static/images/Default Avatar.svg',
+    }),
+    User.create({ 
+      password: '123',
+      username: 'ethyl',
+      email: 'ethylr@gmail.com',
+      address: '987 Pine St, City D',
+      avatar: '/static/images/Default Avatar.svg',
+    }),
+    Vehicle.create({ 
+      make: 'Essense',
+      model: 'Model 3',
+      year: '2020',
+      image: '/static/images/Default Car.svg',
+      chargertype: 'CchadeMO' 
+    }),
   ]);
-
-  const cart = await ethyl.getCart();
-  await ethyl.addToCart({ product: bazz, quantity: 3});
-  await ethyl.addToCart({ product: foo, quantity: 2});
-  return {
-    users: {
-      moe,
-      lucy,
-      larry
-    },
-    products: {
-      foo,
-      bar,
-      bazz
-    }
-  };
 };
 
 
 module.exports = {
   syncAndSeed,
   User,
-  Product
+  Vehicle
 };
