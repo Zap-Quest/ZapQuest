@@ -21,7 +21,8 @@ const searchAddressSlice = createSlice({
     reducers:{
         setToNearby:(state,action) =>{
             return action.payload;
-        }
+        },
+        
     },
     extraReducers:(builder) =>{
         builder.addCase(fetchSearchAddress.fulfilled,(state,action) => {

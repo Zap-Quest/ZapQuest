@@ -14,7 +14,7 @@ import axios from "axios";
 const Map = () => {
   
   const { isLoaded } = useLoadScript({
-      googleMapsApiKey: 'AIzaSyAyylWo4yRMjT_HSowB1jWsz5qwnPDSUWw',
+     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
   });
 
   const [center,setCenter]= useState(null);
