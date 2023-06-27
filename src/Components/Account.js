@@ -6,7 +6,7 @@ import { fetchAllUsers, fetchOrders } from '../store';
 const MyAccount = () => {
   const dispatch = useDispatch();
   const userAuthObj = useSelector(state => state.auth);
-  const user = useSelector(state => state.users.usersList.find(e => e.id === userAuthObj.id));
+  const user = useSelector(state => state.user.usersList.find(e => e.id === userAuthObj.id));
   const orders = useSelector(state => state.orders)
 
   useEffect(() => {

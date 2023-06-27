@@ -9,7 +9,7 @@ const initialState = {
 
 export const fetchAllUsers = createAsyncThunk('fetchAllUsers', async () => {
   try {
-    const response = await axios.get(`/api/users`);
+    const response = await axios.get(`/api/user`);
     return response.data;
   } catch (error) {
     console.log(error);
@@ -18,7 +18,7 @@ export const fetchAllUsers = createAsyncThunk('fetchAllUsers', async () => {
 
 export const addUserProfile = createAsyncThunk('addUserProfile', async(user) => {
   try {
-    const {data} = await axios.post('/api/users', user)
+    const {data} = await axios.post('/api/user', user)
     return data
   } catch(err){
     console.log(err)
@@ -29,7 +29,7 @@ export const addUserProfile = createAsyncThunk('addUserProfile', async(user) => 
 export const updateUserProfile = createAsyncThunk('updateUserProfile', async (formData) => {
   const { id } = formData;
   try {
-    const response = await axios.put(`/api/users/${id}`, formData);
+    const response = await axios.put(`/api/user/${id}`, formData);
     return response.data;
   } catch (error) {
     console.log(error)
@@ -37,8 +37,8 @@ export const updateUserProfile = createAsyncThunk('updateUserProfile', async (fo
 });
 
 
-const userSlice = createSlice({
-  name: 'users',
+const user = createSlice({
+  name: 'user',
   initialState,
   reducers: {},
   extraReducers: (builder) => {
@@ -79,4 +79,4 @@ const userSlice = createSlice({
   },
 });
 
-export default userSlice.reducer;
+export default user.reducer;
