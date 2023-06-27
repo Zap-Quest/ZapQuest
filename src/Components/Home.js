@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 import { logout } from "../store";
-import { Link } from "react-router-dom";
 
-const Home = () => {
-  const { auth } = useSelector((state) => state);
+
+const Home = ()=> {
+  const { auth } = useSelector(state => state);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -13,6 +14,7 @@ const Home = () => {
   const onChange = (ev) => {
     setSearchInput(ev.target.value);
   };
+  
   //handle input search location and go to the map page
   const handleSearch = async(ev) => {
     console.log('handlesearch'); 
@@ -35,12 +37,14 @@ const Home = () => {
       <div className="text-center mb-4">
         <img src="https://cdn1.iconfinder.com/data/icons/game-design-volume-2/512/Quest-512.png" alt="Quest Icon" className="mb-4" style={{ width: '200px', height: '200px' }} />
         <h1 className="mb-4">Begin your Quest</h1>
-        <input type="text" className="form-control shadow-sm" placeholder="Search city, place, or address" />
+        <form onSubmit={handleSearch}>
+          <input type="text" className="form-control shadow-sm" placeholder="Search city, place, or address" value={searchInput} onChange={onChange}/>
+        </form>
       </div>
       <div className="d-grid gap-3">
         <div className="row">
           <div className="col">
-            <button className="btn btn-dark mb-2" style={{width: '200px'}}>Nearby</button>
+            <button className="btn btn-dark mb-2" style={{width: '200px'}} onClick={handleMyLocation}>Nearby</button>
           </div>
           <div className="col">
             <Link to="/map">
@@ -63,4 +67,3 @@ const Home = () => {
 };
 
 export default Home;
-
