@@ -20,6 +20,18 @@ const Navbar = () => {
     setIsRegisterMode(!isRegisterMode);
   };
 
+  const clickLogin = () => {
+    setIsRegisterMode(false);
+  };
+
+  const clearForm = () => {
+    setCredentials({
+      username: "",
+      email: "",
+      password: "",
+    });
+  };
+
   const onChange = (ev) => {
     setCredentials({ ...credentials, [ev.target.name]: ev.target.value });
     setLoginError(null);
@@ -33,6 +45,7 @@ const Navbar = () => {
       .then(() => {
         const modal = document.getElementById("loginModal");
         if (modal) {
+          clearForm();
           modal.classList.remove("show");
           modal.setAttribute("aria-hidden", "true");
           modal.style.display = "none";
@@ -44,19 +57,22 @@ const Navbar = () => {
       })
       .catch((error) => {
         setLoginError(
-          error.message || "An error occurred during login. Please try again."
+          error.message || "Invalid Username or Password. Please try again."
         );
       });
   };
 
-  const register = (ev) => {
+  const register = async (ev) => {
     ev.preventDefault();
-    dispatch(signup(credentials))
-      .unwrap()
-      .then(() => dispatch(attemptLogin(credentials)))
-      .then(() => {
+    try {
+      await dispatch(signup(credentials));
+      const loginResponse = await dispatch(attemptLogin(credentials));
+
+      // If the login was successful, close the modal
+      if (loginResponse.payload.toString().length > 0) {
         const modal = document.getElementById("loginModal");
         if (modal) {
+          clearForm();
           modal.classList.remove("show");
           modal.setAttribute("aria-hidden", "true");
           modal.style.display = "none";
@@ -65,22 +81,33 @@ const Navbar = () => {
             modalBackdrop.parentNode.removeChild(modalBackdrop);
           }
         }
-      })
-      .catch((error) => {
-        console.log("Registration error:", error); 
-        setRegisterError(
-          error.message || "An error occurred during registration. Please try again."
-        );
-      });
+      } else {
+        throw new Error("Login failed");
+      }
+    } catch (error) {
+      console.log("Registration error:", error);
+      setRegisterError(
+        error.message ||
+          "An error occurred during registration. Please try again."
+      );
+    }
   };
-  
 
   return (
     <nav className="navbar navbar-light bg-secondary">
       <div className="container-fluid">
         <Link to="/" className="navbar-brand">
           <i className="fa-solid fa-charging-station"></i>
-          <span className="ml-2" style={{ fontFamily: 'Chantal', fontWeight: 'bold', fontSize: '1.25rem'}}>ZapQuest</span>
+          <span
+            className="ml-2"
+            style={{
+              fontFamily: "Chantal",
+              fontWeight: "bold",
+              fontSize: "1.25rem",
+            }}
+          >
+            ZapQuest
+          </span>
         </Link>
         {auth.username ? (
           <>
@@ -104,6 +131,7 @@ const Navbar = () => {
             className="btn btn-dark"
             data-toggle="modal"
             data-target="#loginModal"
+            onClick={clickLogin}
           >
             Login
           </button>
@@ -181,6 +209,8 @@ const Navbar = () => {
                     Login
                   </button>
                 )}
+                {isRegisterMode && registerError && <div>{registerError}</div>}
+                {!isRegisterMode && loginError && <div>{loginError}</div>}
               </form>
               {isRegisterMode ? (
                 <p>
@@ -205,8 +235,6 @@ const Navbar = () => {
                   </button>
                 </p>
               )}
-              {isRegisterMode && registerError && <div>{registerError}</div>}
-              {!isRegisterMode && loginError && <div>{loginError}</div>}
             </div>
           </div>
         </div>
