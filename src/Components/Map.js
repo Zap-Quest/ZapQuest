@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { GoogleMap, Marker, useLoadScript } from "@react-google-maps/api";
 
 import { useSelector,useDispatch } from "react-redux";
@@ -10,7 +10,7 @@ import { useMemo } from "react";
 import axios from "axios";
 
 import 'dotenv/config';
-
+import MapFilter from "./MapFilter";
 
 
 
@@ -34,6 +34,28 @@ const Map = () => {
 
 
 
+  const handleFilterChange = useCallback((newFilters) => {
+    if (allStations) {
+      const filteredStations = applyFilters(allStations, newFilters);
+      setEVSList(filteredStations);
+    }
+  }, [allStations]);
+
+  const applyFilters = (list, filters) => {
+    if (!list) return []; // Return an empty array if the list is undefined
+    
+    const { connectorType, chargingSpeed, provider, cost } = filters;
+  
+    return list.filter(station => {
+      const connectorMatch = connectorType.some(connector => station.properties.ev_connector_types.includes(connector)) || connectorType.includes('all');
+      const chargingSpeedMatch = chargingSpeed.includes(String(station.properties.ev_level2_evse_num)) || chargingSpeed.includes('all');
+      const providerMatch = provider.includes(station.properties.ev_network) || provider.includes('all');
+      const costMatch = cost.includes(station.properties.ev_pricing ? 'paid' : 'free') || cost.includes('all');
+  
+      return connectorMatch && chargingSpeedMatch && providerMatch && costMatch;
+    });
+  };
+  
 //check if URL is an address or nearby
   React.useEffect(() => {
     if(address ==='nearby'){
@@ -101,6 +123,7 @@ const Map = () => {
             zoom={15}
             options={mapOptions}
           >
+          
             {myLocation?
               ( 
                 <Marker 
@@ -133,7 +156,7 @@ const Map = () => {
                 })
               ):(null)
             }
-              
+            <MapFilter onFilterChange={handleFilterChange} />
           </GoogleMap>
       )}
       {selectedStation?(
