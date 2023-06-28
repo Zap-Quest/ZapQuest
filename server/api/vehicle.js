@@ -1,11 +1,19 @@
 const express = require('express');
 const app = express.Router();
-const { Vehicle } = require('../db');
+const { Vehicle, User } = require('../db');
 
 app.get('/', async(req, res, next)=>{
     try{
-        const reviews = await Vehicle.findAll();
-        res.send(reviews);
+        const vehicles = await Vehicle.findAll({ include: User });
+        res.send(vehicles);
+    }catch(er){
+        next(er);
+    }
+})
+app.get('/:id', async(req, res, next)=>{
+    try{
+        const vehicle = await Vehicle.findOne({ where: { id: req.params.id }, include: User });
+        res.send(vehicle);
     }catch(er){
         next(er);
     }
@@ -17,17 +25,5 @@ app.post('/', async(req, res, next)=>{
         next(er)
     }
 })
-app.get('/:id', async(req, res, next)=>{
-    try{
-        const reviews = await Vehicle.findAll({where:{vehicleId: req.params.id}});
-        res.send(reviews);
-    }catch(er){
-        next(er);
-    }
-})
-
-
-
-
 
 module.exports = app;

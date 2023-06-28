@@ -6,45 +6,65 @@ import { fetchAllUsers, fetchVehicles } from '../store';
 const MyAccount = () => {
   const dispatch = useDispatch();
   const userAuthObj = useSelector(state => state.auth);
-  const user = useSelector(state => state.user.usersList.find(e => e.id === userAuthObj.id));
-  const vehicle = (state => state.vehicle);
+  const usersList = useSelector(state => state.user.usersList);
+  const userStatus = useSelector(state => state.user.status);
+  const vehicle = useSelector(state => state.vehicle);
 
   useEffect(() => {
-    dispatch(fetchAllUsers());
-    dispatch(fetchVehicles());
-  }, [dispatch]);
+    if (userStatus === 'idle') {
+      dispatch(fetchAllUsers());
+      dispatch(fetchVehicles());
+    }
+  }, [dispatch, userStatus]);
 
-  return (
-    <div className='my-account-container'>
-      <div className="account-info">
+  let content;
+
+  if (userStatus === 'loading') {
+    content = <div>Loading...</div>;
+  } else if (userStatus === 'succeeded') {
+    const user = usersList.find(e => e.id === userAuthObj.id);
+    const userVehicle = vehicle.find(v => v.user.id === userAuthObj.id);
+
+    content = (
+      <>
         {user && (
-          <div className="my-account-userdatacontainer">
-            <img className='user-avatar' src={user.avatar} alt='User Avatar' />
-            <div className="my-account-details">
-              <p className='my-account-p'>Username: {user.username}</p>
-              <p className='my-account-p'>Email: {user.email}</p>
-              <p className='my-account-p'>Address: {user.address}</p>
-              <p className='my-account-p'>Password: {user.password}</p>
-              <Link to={`/myaccount/updateuserinfo`}>
-                <button className='update-info-button'>Update your information</button>
-              </Link>
+          <div className='my-account-container'>
+            <div className="account-info">
+              <div className="my-account-userdatacontainer">
+                <img className='user-avatar' src={user.avatar} alt='User Avatar' />
+                <div className="my-account-details">
+                  <p className='my-account-p'>Username: {user.username}</p>
+                  <p className='my-account-p'>Email: {user.email}</p>
+                  <p className='my-account-p'>Address: {user.address}</p>
+                  <p className='my-account-p'>Password: {user.password}</p>
+                  <Link to={`/myaccount/updateuserinfo`}>
+                    <button className='update-info-button'>Update your information</button>
+                  </Link>
+                </div>
+              </div>
             </div>
           </div>
         )}
-           </div>
-            <div className="vehicle-info">
-              <div className="my-account-vehicledatacontainer">
-                <img className='user-avatar' src={vehicle.image} alt='Vehicle' />
-                <div className="my-account-details">
-                  <p className='my-account-p'>Make: {vehicle.make}</p>
-                  <p className='my-account-p'>Model: {vehicle.model}</p>
-                  <p className='my-account-p'>Year: {vehicle.year}</p>
-                  <p className='my-account-p'>Charger Type: {vehicle.chargertype}</p>
-                </div>
+        {userVehicle && (
+          <div className="vehicle-info">
+            <div className="my-account-vehicledatacontainer">
+              <img className='user-avatar' src={userVehicle.image} alt='Vehicle' />
+              <div className="my-account-details">
+                <p className='my-account-p'>Make: {userVehicle.make}</p>
+                <p className='my-account-p'>Model: {userVehicle.model}</p>
+                <p className='my-account-p'>Year: {userVehicle.year}</p>
+                <p className='my-account-p'>Charger Type: {userVehicle.chargertype}</p>
+              </div>
+            </div>
           </div>
-      </div>
-    </div>
-  );
-  };  
+        )}
+      </>
+    );
+  } else if (userStatus === 'failed') {
+    content = <div>Error loading user data.</div>;
+  }
+
+  return content;
+};
 
 export default MyAccount;
