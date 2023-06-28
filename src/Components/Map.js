@@ -91,7 +91,7 @@ const Map = () => {
     if(searchAddress){
       setCenter(searchAddress);
       setSearchLocation(searchAddress);
-      dispatch(fetchNearbyStations({latitude:searchAddress.lat,longitude:searchAddress.lng,inputRadius:1}));
+      dispatch(fetchNearbyStations({latitude:searchAddress.lat,longitude:searchAddress.lng,inputRadius:20}));
     };  
   },[searchAddress]);
 
@@ -120,16 +120,6 @@ const Map = () => {
   //map style 
   const mapOptions = {
     streetViewControl: false,
-    styles: [
-      {
-        featureType: "poi",
-        stylers: [
-          {
-            visibility: "off" // Hide points of interest
-          }
-        ]
-      }
-    ],
     mapId:"8a036518220c529",
    
   };
@@ -199,6 +189,7 @@ const Map = () => {
                 })
               ):(null)
             }
+
           </GoogleMap>
       )}
       {selectedStation?(
