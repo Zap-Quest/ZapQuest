@@ -72,3 +72,12 @@ nav {
   background-color: rgba(0, 0, 0, 0.5); 
   z-index: 9998; 
 }
+
+.default-button {
+  background-color: #779DA6;
+  border: none;
+}
+
+.nav-color {
+  background-color: #112426;
+}

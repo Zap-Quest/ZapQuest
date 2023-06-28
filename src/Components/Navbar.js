@@ -94,16 +94,17 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="navbar navbar-light bg-secondary">
+    <nav className="navbar navbar-dark nav-color">
       <div className="container-fluid">
         <Link to="/" className="navbar-brand">
-          <i className="fa-solid fa-charging-station"></i>
+          <i className="fa-solid fa-charging-station" style={{ color: "#EABD00"}}></i>
           <span
             className="ml-2"
             style={{
               fontFamily: "Chantal",
               fontWeight: "bold",
               fontSize: "1.25rem",
+              color: "#779DA6"
             }}
           >
             ZapQuest
@@ -118,7 +119,7 @@ const Navbar = () => {
                 style={{ color: "#212529" }}
               ></i>
               <button
-                className="btn btn-dark"
+                className="btn btn-dark default-button"
                 onClick={() => dispatch(logout())}
               >
                 Logout
@@ -128,7 +129,7 @@ const Navbar = () => {
         ) : (
           <button
             type="button"
-            className="btn btn-dark"
+            className="btn btn-dark default-button"
             data-toggle="modal"
             data-target="#loginModal"
             onClick={clickLogin}
@@ -201,11 +202,11 @@ const Navbar = () => {
                   </div>
                 )}
                 {isRegisterMode ? (
-                  <button type="submit" className="btn btn-dark">
+                  <button type="submit" className="btn btn-dark default-button">
                     Register
                   </button>
                 ) : (
-                  <button type="submit" className="btn btn-dark">
+                  <button type="submit" className="btn btn-dark default-button">
                     Login
                   </button>
                 )}
