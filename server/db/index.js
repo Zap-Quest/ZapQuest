@@ -1,12 +1,12 @@
 const conn = require('./conn');
 const User = require('./User');
 const Vehicle = require('./Vehicle');
-const Order = require('./Order');
+const Favorite = require('./Favorite');
 const LineItem  = require('./LineItem');
 
 Vehicle.belongsTo(User);
-LineItem.belongsTo(Order);
-Order.hasMany(LineItem);
+LineItem.belongsTo(Favorite);
+Favorite.hasMany(LineItem);
 
 const syncAndSeed = async()=> {
   await conn.sync({ force: true });

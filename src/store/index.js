@@ -1,7 +1,7 @@
 import {configureStore} from "@reduxjs/toolkit";
 import logger from 'redux-logger';
 import auth from './auth';
-import cart from './cart';
+import favorite from './favorite';
 import user from './user';
 import vehicle from "./vehicle";
 import searchAddress from "./searchAddress";
@@ -12,7 +12,7 @@ const store = configureStore({
   reducer:{
     user: user,
     auth: auth,
-    cart: cart,
+    favorite: favorite,
     vehicle: vehicle,
     searchAddress: searchAddress,
     allStations:allStations,
@@ -22,7 +22,7 @@ const store = configureStore({
 
 export default store;
 export * from './auth';
-export * from './cart';
+export * from './favorite';
 export * from './user';
 export * from './searchAddress';
 export * from './allStations';
