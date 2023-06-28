@@ -42,16 +42,18 @@ const Map = () => {
   }, [allStations]);
 
   const applyFilters = (list, filters) => {
-    if (!list) return []; // Return an empty array if the list is undefined
-    
+    if (!list) return []; 
+
     const { connectorType, chargingSpeed, provider, cost } = filters;
-  
+
+    const connectorTypeArray = Array.isArray(connectorType) ? connectorType : [connectorType]; 
+
     return list.filter(station => {
-      const connectorMatch = connectorType.some(connector => station.properties.ev_connector_types.includes(connector)) || connectorType.includes('all');
+      const connectorMatch = connectorTypeArray.some(connector => station.properties.ev_connector_types.includes(connector)) || connectorType === 'all';
       const chargingSpeedMatch = chargingSpeed.includes(String(station.properties.ev_level2_evse_num)) || chargingSpeed.includes('all');
       const providerMatch = provider.includes(station.properties.ev_network) || provider.includes('all');
       const costMatch = cost.includes(station.properties.ev_pricing ? 'paid' : 'free') || cost.includes('all');
-  
+
       return connectorMatch && chargingSpeedMatch && providerMatch && costMatch;
     });
   };
