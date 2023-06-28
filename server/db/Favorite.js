@@ -1,13 +1,13 @@
 const conn = require('./conn');
-const { STRING, BOOLEAN, UUID, UUIDV4 } = conn.Sequelize;
+const { BOOLEAN, UUID, UUIDV4 } = conn.Sequelize;
 
-const Order = conn.define('order', {
+const Favorite = conn.define('order', {
   id: {
     type: UUID,
     primaryKey: true,
     defaultValue: UUIDV4
   },
-  isCart: {
+  isFavorite: {
     type: BOOLEAN,
     defaultValue: true,
     allowNull: false
@@ -18,4 +18,4 @@ const Order = conn.define('order', {
   }
 });
 
-module.exports = Order;
+module.exports = Favorite;

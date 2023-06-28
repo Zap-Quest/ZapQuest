@@ -14,7 +14,7 @@ app.get('/', (req, res)=> res.render(path.join(__dirname, '../static/index.html'
 }));
 
 app.use('/api/auth', require('./api/auth'));
-app.use('/api/orders', require('./api/orders'));
+app.use('/api/favorite', require('./api/favorite'));
 app.use('/api/user', require('./api/user'));
 app.use('/api/vehicle', require('./api/vehicle'))
 

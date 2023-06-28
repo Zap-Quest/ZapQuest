@@ -49,27 +49,27 @@ const User = conn.define('user', {
 });
 
 User.prototype.createOrder = async function(){
-  const cart = await this.getCart();
-  cart.isCart = false;
-  await cart.save();
-  return cart;
+  const favorite = await this.getFavorite();
+  favorite.isFavorite = false;
+  await favorite.save();
+  return favorite;
 
 }
 
-User.prototype.getCart = async function(){
-  let cart = await conn.models.order.findOne({
+User.prototype.getFavorite = async function(){
+  let favorite = await conn.models.order.findOne({
     where: {
       userId: this.id,
-      isCart: true
+      isFavorite: true
     }
   });
-  if(!cart){
-    cart = await conn.models.order.create({
+  if(!favorite){
+    favorite = await conn.models.order.create({
       userId: this.id
     });
   }
-  cart = await conn.models.order.findByPk(
-    cart.id,
+  favorite = await conn.models.order.findByPk(
+    favorite.id,
     {
       include: [
         {
@@ -81,12 +81,12 @@ User.prototype.getCart = async function(){
       ]
     }
   );
-  return cart;
+  return favorite;
 }
 
-User.prototype.addToCart = async function({ product, quantity}){
-  const cart = await this.getCart();
-  let lineItem = cart.lineItems.find( lineItem => {
+User.prototype.addToFavorite = async function({ product, quantity}){
+  const favorite = await this.getFavorite();
+  let lineItem = favorite.lineItems.find( lineItem => {
     return lineItem.productId === product.id; 
   });
   if(lineItem){
@@ -94,14 +94,14 @@ User.prototype.addToCart = async function({ product, quantity}){
     await lineItem.save();
   }
   else {
-    await conn.models.lineItem.create({ orderId: cart.id, productId: product.id, quantity });
+    await conn.models.lineItem.create({ orderId: favorite.id, productId: product.id, quantity });
   }
-  return this.getCart();
+  return this.getFavorite();
 };
 
-User.prototype.removeFromCart = async function({ product, quantityToRemove}){
-  const cart = await this.getCart();
-  const lineItem = cart.lineItems.find( lineItem => {
+User.prototype.removeFromFavorite = async function({ product, quantityToRemove}){
+  const favorite = await this.getFavorite();
+  const lineItem = favorite.lineItems.find( lineItem => {
     return lineItem.productId === product.id; 
   });
   lineItem.quantity = lineItem.quantity - quantityToRemove;
@@ -111,7 +111,7 @@ User.prototype.removeFromCart = async function({ product, quantityToRemove}){
   else {
     await lineItem.destroy();
   }
-  return this.getCart();
+  return this.getFavorite();
 };
 
 

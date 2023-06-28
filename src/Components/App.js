@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import Home from './Home';
-import Cart from './Cart';
+import Favorite from './Favorite';
 import Navbar from './Navbar';
 import Map from './Map';
 import { useSelector, useDispatch } from 'react-redux';
-import { loginWithToken, fetchCart } from '../store';
+import { loginWithToken, fetchFavorite } from '../store';
 import { Link, Routes, Route } from 'react-router-dom';
 import MyAccount from './Account';
 // require('dotenv').config({path: '../.env'})
@@ -19,7 +19,7 @@ const App = ()=> {
 
   useEffect(()=> {
     if(auth.id){
-      dispatch(fetchCart());
+      dispatch(fetchFavorite());
     }
   }, [auth]);
   
