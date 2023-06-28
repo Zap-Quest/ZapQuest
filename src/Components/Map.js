@@ -83,6 +83,10 @@ const Map = () => {
      }, [address]);
 
   // if search specific address
+  /*
+  inputRadius is the search radius around your searching location, now it sets to 1 mile.
+  By modifying the inputRadius, you can control the distance within which you want to search for places or points of interest.
+  */
   React.useEffect(() => {
     if(searchAddress){
       setCenter(searchAddress);
