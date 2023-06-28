@@ -5,10 +5,6 @@ import { useSelector,useDispatch } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 import { fetchNearbyStations, fetchSearchAddress, setToNearby } from "../store";
 
-
-import { useMemo } from "react";
-import axios from "axios";
-
 import 'dotenv/config';
 import MapFilter from "./MapFilter";
 
@@ -111,13 +107,26 @@ const Map = () => {
   },[allStations,stationId])
     
 
-  //map style 
-  const mapOptions = {
-      streetViewControl: false
-    };
+ 
+  //navigate to specific station
   const handleStationId = (id) =>{
       navigate(`/map/${encodeURIComponent(address)}/${id}`);
     }
+  
+  //map style 
+  const mapOptions = {
+    streetViewControl: false,
+    styles: [
+      {
+        featureType: "poi",
+        stylers: [
+          {
+            visibility: "off" // Hide points of interest
+          }
+        ]
+      }
+    ]
+  };
     console.log('selected station:',selectedStation);
   return (
     <div className="Map">
