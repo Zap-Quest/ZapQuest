@@ -129,7 +129,9 @@ const Map = () => {
           }
         ]
       }
-    ]
+    ],
+    mapId:"8a036518220c529",
+   
   };
     console.log('selected station:',selectedStation);
   return (
@@ -160,7 +162,10 @@ const Map = () => {
               ( 
                 <Marker 
                   position={myLocation}
-                  icon={"http://maps.google.com/mapfiles/ms/icons/green-dot.png"}
+                  icon={{
+                    url: "https://cdn-icons-png.flaticon.com/512/8065/8065913.png",
+                    scaledSize: new window.google.maps.Size(32, 32), // Adjust the size here
+                  }}
                 />
               )
               :(null)}
@@ -168,7 +173,10 @@ const Map = () => {
             {searchLocation?
               ( <Marker 
                   position={searchLocation} 
-                  icon={"http://maps.google.com/mapfiles/ms/icons/pink-dot.png"}/>
+                  icon={{
+                    url: "https://cdn-icons-png.flaticon.com/512/9131/9131546.png",
+                    scaledSize: new window.google.maps.Size(32, 32), // Adjust the size here
+                  }}/>
               )
               :(null)
             }
@@ -180,7 +188,10 @@ const Map = () => {
                   return(
                     <Marker
                         position={location}
-                        icon={"http://maps.google.com/mapfiles/ms/icons/yellow-dot.png"}
+                        icon={{
+                          url: "https://cdn-icons-png.flaticon.com/512/5868/5868069.png",
+                          scaledSize: new window.google.maps.Size(32, 32), // Adjust the size here
+                        }}
                         key={s.properties.id}
                         onClick={()=>handleStationId(s.properties.id)}
                     />
