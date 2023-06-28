@@ -1,14 +1,33 @@
 import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
 import axios from 'axios';
 
-export const fetchVehicles = createAsyncThunk('fetchVehicles', async()=>{
-    try{
-        const {data}  = await axios.get('/api/vehicle');
-        return data.map(vehicle => ({ ...vehicle, user: vehicle.User }));
-    }catch(er){
-        console.log(er);
-    }
-})
+export const fetchVehicles = createAsyncThunk('vehicle/fetchVehicles', async () => {
+  try {
+    const response = await axios.get(
+      'https://developer.nrel.gov/api/vehicles/v1/light_duty_automobiles.json',
+      {
+        params: {
+          api_key: process.env.REACT_APP_NREI_API_KEY,
+          fuel_id: 41,
+        },
+      }
+    );
+
+    return response.data.result;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+});
+
+// export const fetchVehicles = createAsyncThunk('fetchVehicles', async()=>{
+//     try{
+//         const {data}  = await axios.get('/api/vehicle');
+//         return data.map(vehicle => ({ ...vehicle, user: vehicle.User }));
+//     }catch(er){
+//         console.log(er);
+//     }
+// })
 
 export const fetchVehicleById = createAsyncThunk('fetchVehicleById', async (id) => {
   try {
