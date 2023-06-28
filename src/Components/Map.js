@@ -26,7 +26,7 @@ const Map = () => {
   const [searchLocation, setSearchLocation] = useState(null);
   const [EVSList,setEVSList] = useState(null);
   const [selectedStation,setSelectedStation] = useState(null);
-  
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { searchAddress, allStations } = useSelector(state => state);
@@ -56,6 +56,14 @@ const Map = () => {
 
       return connectorMatch && chargingSpeedMatch && providerMatch && costMatch;
     });
+  };
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
   };
   
 //check if URL is an address or nearby
@@ -114,6 +122,17 @@ const Map = () => {
   return (
     <div className="Map">
       <h4> address: {address}</h4>
+      <button onClick={openModal}>Open Modal</button> 
+      {isModalOpen && (
+        <div className="modal-map-overlay">
+        <div className="modal-map">
+          <div className="modal-map-content">
+            <button onClick={closeModal}>Close Modal</button> 
+            <MapFilter onFilterChange={handleFilterChange} />
+          </div>
+          </div>
+        </div>
+      )}
       {!isLoaded ? (
           <h1>Loading...</h1>
       ) : (
@@ -156,7 +175,6 @@ const Map = () => {
                 })
               ):(null)
             }
-            <MapFilter onFilterChange={handleFilterChange} />
           </GoogleMap>
       )}
       {selectedStation?(
