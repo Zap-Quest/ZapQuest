@@ -158,8 +158,9 @@ const Map = () => {
                   position={myLocation}
                   icon={{
                     url: "https://cdn-icons-png.flaticon.com/512/8065/8065913.png",
-                    scaledSize: new window.google.maps.Size(32, 32), // Adjust the size here
+                    scaledSize: new window.google.maps.Size(36, 36), // Adjust the size here
                   }}
+                  zIndex={999}
                 />
               )
               :(null)}
@@ -169,8 +170,11 @@ const Map = () => {
                   position={searchLocation} 
                   icon={{
                     url: "https://cdn-icons-png.flaticon.com/512/9131/9131546.png",
-                    scaledSize: new window.google.maps.Size(32, 32), // Adjust the size here
-                  }}/>
+                    scaledSize: new window.google.maps.Size(36, 36), // Adjust the size here
+                  }}
+                  zIndex={998}
+                />
+                  
               )
               :(null)
             }
