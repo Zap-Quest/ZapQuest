@@ -23,8 +23,10 @@ const MyAccount = () => {
     content = <div>Loading...</div>;
   } else if (userStatus === 'succeeded') {
     const user = usersList.find(e => e.id === userAuthObj.id);
-    const userVehicle = vehicle.find(v => v.user && v.user.id === userAuthObj.id);
-
+    console.log('user',user);
+    console.log('userAurthObj:',userAuthObj);
+    const userVehicle = vehicle.find(v =>  v.userId === userAuthObj.id);
+    console.log('userVehicle:',userVehicle);
 
     content = (
       <>
