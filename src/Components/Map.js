@@ -119,7 +119,7 @@ const Map = () => {
         fetchNearbyStations({
           latitude: myLocation.lat,
           longitude: myLocation.lng,
-          inputRadius: 20,
+          inputRadius: 10,
         })
       );
     }
