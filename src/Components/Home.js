@@ -63,7 +63,7 @@ const Home = () => {
           <img
             src="https://cdn1.iconfinder.com/data/icons/game-design-volume-2/512/Quest-512.png"
             alt="Quest Icon"
-            className="mb-4"
+            className="mb-2"
             style={{ width: "200px", height: "200px" }}
           />
           <h1 className="mb-4">Begin your Quest</h1>

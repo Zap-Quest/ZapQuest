@@ -97,14 +97,17 @@ const Navbar = () => {
     <nav className="navbar navbar-dark nav-color">
       <div className="container-fluid">
         <Link to="/" className="navbar-brand">
-          <i className="fa-solid fa-charging-station" style={{ color: "#EABD00"}}></i>
+          <i
+            className="fa-solid fa-charging-station"
+            style={{ color: "#EABD00" }}
+          ></i>
           <span
             className="ml-2"
             style={{
               fontFamily: "Chantal",
               fontWeight: "bold",
               fontSize: "1.25rem",
-              color: "#779DA6"
+              color: "#779DA6",
             }}
           >
             ZapQuest
@@ -114,10 +117,13 @@ const Navbar = () => {
           <>
             <span className="navbar-text mr-2">Welcome, {auth.username}!</span>
             <div>
-              <i
-                className="fa-solid fa-circle-user fa-2xl mr-3"
-                style={{ color: "#212529" }}
-              ></i>
+              <Link to="/myaccount">
+                <i
+                  className="fa-solid fa-circle-user fa-2xl mr-4"
+                  style={{ color: "#779DA6" }}
+                ></i>
+              </Link>
+
               <button
                 className="btn btn-dark default-button"
                 onClick={() => dispatch(logout())}
