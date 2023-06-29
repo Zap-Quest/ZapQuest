@@ -7,6 +7,7 @@ import { fetchNearbyStations, fetchSearchAddress, setToNearby } from "../store";
 
 import 'dotenv/config';
 import MapFilter from "./MapFilter";
+import StationModal from "./StationModal";
 
 
 
@@ -23,6 +24,7 @@ const Map = () => {
   const [EVSList,setEVSList] = useState(null);
   const [selectedStation,setSelectedStation] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [zoomParameter,setZoomParameter] = useState(15);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { searchAddress, allStations } = useSelector(state => state);
@@ -91,7 +93,7 @@ const Map = () => {
     if(searchAddress){
       setCenter(searchAddress);
       setSearchLocation(searchAddress);
-      dispatch(fetchNearbyStations({latitude:searchAddress.lat,longitude:searchAddress.lng,inputRadius:20}));
+      dispatch(fetchNearbyStations({latitude:searchAddress.lat,longitude:searchAddress.lng,inputRadius:15}));
     };  
   },[searchAddress]);
 
@@ -99,7 +101,7 @@ const Map = () => {
   React.useEffect (() => {
     if(myLocation){
       setCenter(myLocation);
-      dispatch(fetchNearbyStations({latitude:myLocation.lat,longitude:myLocation.lng,inputRadius:1}));
+      dispatch(fetchNearbyStations({latitude:myLocation.lat,longitude:myLocation.lng,inputRadius:20}));
     }
   },[myLocation]);
 
@@ -123,7 +125,8 @@ const Map = () => {
     mapId:"8a036518220c529",
    
   };
-    console.log('selected station:',selectedStation);
+  
+  console.log('selected station:',selectedStation);
   return (
     <div className="Map">
       <h4> address: {address}</h4>
@@ -144,10 +147,10 @@ const Map = () => {
           <GoogleMap
             mapContainerClassName="map-container"
             center={center}
-            zoom={15}
+            zoom={14}
             options={mapOptions}
           >
-          
+          <StationModal/>
             {myLocation?
               ( 
                 <Marker 
