@@ -4,13 +4,13 @@ const Vehicle = require('./Vehicle');
 const Favorite = require('./Favorite');
 const LineItem  = require('./LineItem');
 
-Vehicle.belongsTo(User);
+
 LineItem.belongsTo(Favorite);
 Favorite.hasMany(LineItem);
 
 const syncAndSeed = async()=> {
   await conn.sync({ force: true });
-  const [moe, lucy, larry, ethyl, Essense] = await Promise.all([
+  const [moe, lucy, larry, ethyl] = await Promise.all([
     User.create({ 
       password: '123',
       username: 'moe',
@@ -39,14 +39,16 @@ const syncAndSeed = async()=> {
       address: '987 Pine St, City D',
       avatar: '/static/images/Default Avatar.svg',
     }),
-    Vehicle.create({ 
-      make: 'Essense',
-      model: 'Model 3',
-      year: '2020',
-      image: '/static/images/Default Car.svg',
-      chargertype: 'CchadeMO' 
-    }),
   ]);
+
+  const teslaVehicle = await Vehicle.create({ 
+    make: 'Tesla',
+    model: 'Model 3',
+    year: '2020',
+    image: '/static/images/Default Car.svg',
+    chargertype: 'CchadeMO',
+    userId: moe.id
+  });
 };
 
 

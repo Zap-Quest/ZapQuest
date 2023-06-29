@@ -48,7 +48,7 @@ const User = conn.define('user', {
   }
 });
 
-User.prototype.createOrder = async function(){
+User.prototype.createFavorite = async function(){
   const favorite = await this.getFavorite();
   favorite.isFavorite = false;
   await favorite.save();
@@ -57,26 +57,23 @@ User.prototype.createOrder = async function(){
 }
 
 User.prototype.getFavorite = async function(){
-  let favorite = await conn.models.order.findOne({
+  let favorite = await conn.models.favorite.findOne({
     where: {
       userId: this.id,
       isFavorite: true
     }
   });
   if(!favorite){
-    favorite = await conn.models.order.create({
+    favorite = await conn.models.favorite.create({
       userId: this.id
     });
   }
-  favorite = await conn.models.order.findByPk(
+  favorite = await conn.models.favorite.findByPk(
     favorite.id,
     {
       include: [
         {
           model: conn.models.lineItem,
-          include: [
-            conn.models.product
-          ]
         }
       ]
     }

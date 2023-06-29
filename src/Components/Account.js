@@ -23,7 +23,8 @@ const MyAccount = () => {
     content = <div>Loading...</div>;
   } else if (userStatus === 'succeeded') {
     const user = usersList.find(e => e.id === userAuthObj.id);
-    const userVehicle = vehicle.find(v => v.user.id === userAuthObj.id);
+    const userVehicle = vehicle.find(v => v.user && v.user.id === userAuthObj.id);
+
 
     content = (
       <>
@@ -45,6 +46,7 @@ const MyAccount = () => {
             </div>
           </div>
         )}
+        console.log('userVehicle' userVehicle)
         {userVehicle && (
           <div className="vehicle-info">
             <div className="my-account-vehicledatacontainer">

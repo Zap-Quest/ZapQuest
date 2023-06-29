@@ -1,5 +1,6 @@
 const conn = require('./conn');
 const { STRING, UUID, UUIDV4 } = conn.Sequelize;
+const User = require('./User');
 
 const Vehicle = conn.define('vehicle', {
   id: {
@@ -40,5 +41,7 @@ const Vehicle = conn.define('vehicle', {
     defaultValue: '/static/images/Default Car.svg',
   },
 });
+
+Vehicle.belongsTo(User);
 
 module.exports = Vehicle;

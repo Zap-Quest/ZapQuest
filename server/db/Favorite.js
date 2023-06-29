@@ -1,7 +1,7 @@
 const conn = require('./conn');
 const { BOOLEAN, UUID, UUIDV4 } = conn.Sequelize;
 
-const Favorite = conn.define('order', {
+const Favorite = conn.define('favorite', {
   id: {
     type: UUID,
     primaryKey: true,
