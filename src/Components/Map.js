@@ -93,7 +93,7 @@ const Map = () => {
     if(searchAddress){
       setCenter(searchAddress);
       setSearchLocation(searchAddress);
-      dispatch(fetchNearbyStations({latitude:searchAddress.lat,longitude:searchAddress.lng,inputRadius:15}));
+      dispatch(fetchNearbyStations({latitude:searchAddress.lat,longitude:searchAddress.lng,inputRadius:10}));
     };  
   },[searchAddress]);
 
@@ -150,7 +150,8 @@ const Map = () => {
             zoom={14}
             options={mapOptions}
           >
-          <StationModal/>
+
+          
             {myLocation?
               ( 
                 <Marker 

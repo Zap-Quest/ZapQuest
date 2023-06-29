@@ -20,7 +20,7 @@ const StationModal = ({ onClose, showModal }) => {
               role="document" 
               style={{ marginLeft: '5rem', marginRight: 'auto', height: '700px', width: '300px', maxWidth: '800px' }}
             >
-              <div className="modal-content" style={{ marginTop: '-90px' }}>
+              <div className="modal-content" style={{ marginTop: '-30px' }}>
                 <div className="modal-header">
                   <h5 className="modal-title" id="exampleModalLabel">Modal title</h5>
                   <button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={onClose}>
@@ -30,7 +30,6 @@ const StationModal = ({ onClose, showModal }) => {
                 <div className="modal-body" style={{ height: '400px', overflowY: 'auto' }}>
                   <Card/>
                   <Card/>
-                  <h1>hi</h1>
                 </div>
                 <div className="modal-footer">
                   <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={onClose}>Close</button>
@@ -51,9 +50,6 @@ const StationModal = ({ onClose, showModal }) => {
           <div className="card-body">
             <h5 className="card-title">title</h5>
             <p className="card-text">text</p>
-            <a href="#" className="btn btn-primary">
-              check
-            </a>
           </div>
         </div>
       </div>
