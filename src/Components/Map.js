@@ -1,6 +1,5 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useRef } from "react";
 import { GoogleMap, Marker, useLoadScript } from "@react-google-maps/api";
-
 import { useSelector, useDispatch } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 import { fetchNearbyStations, fetchSearchAddress, setToNearby } from "../store";
@@ -8,6 +7,7 @@ import { fetchNearbyStations, fetchSearchAddress, setToNearby } from "../store";
 import "dotenv/config";
 import MapFilter from "./MapFilter";
 import StationModal from "./StationModal";
+import SearchBar from "./SearchBar";
 
 const Map = () => {
   const { isLoaded } = useLoadScript({
@@ -146,11 +146,17 @@ const Map = () => {
     fullscreenControl: false,
   };
 
+  //set to my location button
+  const setToMyLocation = () =>{
+    navigate(`/map/${encodeURIComponent("nearby")}`);
+  }
+
   console.log("selected station:", selectedStation);
   return (
     <div className="Map">
+      <SearchBar/>
       <button className="open-modal-button" onClick={openModal}>
-        <i class="fa-solid fa-filter"></i>
+        <i className="fa-solid fa-filter"></i>
       </button>
       {isModalOpen && (
         <div className="modal-map-overlay">
@@ -162,6 +168,9 @@ const Map = () => {
           </div>
         </div>
       )}
+      <button className="set-mylocation-button" onClick={setToMyLocation} >
+          <i className="fa-solid fa-location-dot"></i>
+      </button>
       {!isLoaded ? (
         <h1>Loading...</h1>
       ) : (
@@ -228,3 +237,5 @@ const Map = () => {
   );
 };
 export default Map;
+
+
