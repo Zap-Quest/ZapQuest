@@ -147,14 +147,13 @@ const Map = () => {
   };
 
   //set to my location button
-  const setToMyLocation = () =>{
+  const setToMyLocation = () => {
     navigate(`/map/${encodeURIComponent("nearby")}`);
-  }
+  };
 
   console.log("selected station:", selectedStation);
   return (
     <div className="Map">
-      <SearchBar/>
       <button className="open-modal-button" onClick={openModal}>
         <i className="fa-solid fa-filter"></i>
       </button>
@@ -168,8 +167,8 @@ const Map = () => {
           </div>
         </div>
       )}
-      <button className="set-mylocation-button" onClick={setToMyLocation} >
-          <i className="fa-solid fa-location-dot"></i>
+      <button className="set-mylocation-button" onClick={setToMyLocation}>
+        <i className="fa-solid fa-location-dot"></i>
       </button>
       {!isLoaded ? (
         <h1>Loading...</h1>
@@ -221,6 +220,9 @@ const Map = () => {
                 );
               })
             : null}
+          <div className="d-flex justify-content-end p-0">
+          <SearchBar/>
+          </div>
         </GoogleMap>
       )}
       {
@@ -232,10 +234,7 @@ const Map = () => {
           </div>
         ) : null /* if we have a selectdStation, we can have specific station infor. if not, should we show the list of all the nearby stations?*/
       }
-      ;
     </div>
   );
 };
 export default Map;
-
-
