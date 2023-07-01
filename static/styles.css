@@ -25,6 +25,7 @@ nav {
   height: 90%;
   width: 100%; 
   position: relative;
+  flex: 1;
 }
 
 .map-button {
@@ -177,4 +178,10 @@ nav {
   width: 60%;
   margin-left: 35%;
   z-index: 997;
+}
+
+.map-search-bar {
+  position: absolute;
+  top: 40px;
+  left: 30px;
 }

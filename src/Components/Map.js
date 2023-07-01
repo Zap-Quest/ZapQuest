@@ -166,8 +166,9 @@ const Map = () => {
   };
 
   //set to my location button
-  const setToMyLocation = () =>{
+  const setToMyLocation = () => {
     navigate(`/map/${encodeURIComponent("nearby")}`);
+
   }
   //probably can add use watchPosition feature.
 
@@ -175,12 +176,15 @@ const Map = () => {
   // console.log("selected station:", selectedStation);
   // console.log('evlist',EVSList)
 
+
   return (
     <div className="Map">
+
       {/* show specific station info */}
 
       <SearchBar/>
       {/* filter modal */}
+
       <button className="open-modal-button" onClick={openModal}>
         <i className="fa-solid fa-filter"></i>
       </button>
@@ -194,9 +198,11 @@ const Map = () => {
           </div>
         </div>
       )}
+
       {/* set my location button */}
       <button className="set-mylocation-button" onClick={setToMyLocation} >
           <i className="fa-solid fa-location-dot"></i>
+
       </button>
       {/* show my favorite button */}
       <button className="see-my-favorite" onClick={openMyFavorite} >
@@ -263,6 +269,9 @@ const Map = () => {
                 );
               })
             : null}
+          <div className="d-flex justify-content-end p-0">
+          <SearchBar/>
+          </div>
         </GoogleMap>
         {
           selectedStation ? (
@@ -274,10 +283,8 @@ const Map = () => {
       )
     
       }
-  
+
     </div>
   );
 };
 export default Map;
-
-
