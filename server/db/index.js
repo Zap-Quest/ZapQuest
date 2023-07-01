@@ -67,7 +67,42 @@ const syncAndSeed = async()=> {
     state:"IL",
   });
 
+
   const favorite3 = await Favorite.create({ 
+    userId: moe.id,
+    stationId:76523,
+    stationName:"PRUDENTIALPLAZA STATION 01",
+    street:"130 E Randolph St",
+    city:"Chicago",
+    state:"IL",
+  });
+
+  const favorite4 = await Favorite.create({ 
+    userId: moe.id,
+    stationId:193888,
+    stationName:"ONNI ATRIUM STATION",
+    street:"230 W Hill St",
+    city:"Chicago",
+    state:"IL",
+  });
+  const favorite5 = await Favorite.create({ 
+    userId: moe.id,
+    stationId:170750,
+    stationName:"NICHE 905 EV STATION 02",
+    street:"905 N Orleans St",
+    city:"Chicago",
+    state:"IL",
+  });
+  const favorite6 = await Favorite.create({ 
+    userId: moe.id,
+    stationId:205431,
+    stationName:"Cityfront Place Parking Garage - 3rd Floor Left",
+    street:"400 N. McClurg Court",
+    city:"Chicago",
+    state:"IL",
+  });
+
+  const favorite7 = await Favorite.create({ 
     userId: lucy.id,
     stationId:117262,
     stationName:"Northwestern Memorial HealthCare",
