@@ -1,13 +1,16 @@
-import React, { useState, useCallback, useRef } from "react";
+import React, { useState, useCallback, useRef, useEffect } from "react";
 import { GoogleMap, Marker, useLoadScript } from "@react-google-maps/api";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
-import { fetchNearbyStations, fetchSearchAddress, setToNearby } from "../store";
+import { addFavorite, fetchNearbyStations, fetchSearchAddress, setToNearby } from "../store";
 
 import "dotenv/config";
 import MapFilter from "./MapFilter";
 import StationModal from "./StationModal";
 import SearchBar from "./SearchBar";
+import StationInfo from "./StationInfo";
+import StationsList from "./StationsLIst";
+import FavoriteList from "./FavoriteList";
 
 const Map = () => {
   const { isLoaded } = useLoadScript({
@@ -20,12 +23,15 @@ const Map = () => {
   const [EVSList, setEVSList] = useState(null);
   const [selectedStation, setSelectedStation] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isFavoritelOpen, setIsFavoriteOpen] = useState(false);//show my favorite list
   const [zoomParameter, setZoomParameter] = useState(15);
+  const [warn,setWarn] = useState('');
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { searchAddress, allStations } = useSelector((state) => state);
+  const { searchAddress, allStations,favorite } = useSelector((state) => state);
   const { address, stationId } = useParams();
-
+  
+  //filter module
   const handleFilterChange = useCallback(
     (newFilters) => {
       if (allStations) {
@@ -72,10 +78,21 @@ const Map = () => {
     setIsModalOpen(false);
   };
 
-  //check if URL is an address or nearby
+  // my favorite module
+  const openMyFavorite = () => {
+    setIsFavoriteOpen(true);
+  };
+
+  const closeMyFavorite = () => {
+    setIsFavoriteOpen(false);
+  };
+
+
+  //check if URL params is an address or nearby
   React.useEffect(() => {
     if (address === "nearby") {
       if (navigator.geolocation) {
+        setWarn("");
         navigator.geolocation.getCurrentPosition(
           (position) => {
             const { latitude, longitude } = position.coords;
@@ -86,6 +103,8 @@ const Map = () => {
             console.error(error.message);
           }
         );
+      }else{
+        StreetViewPanorama(" YOu do not hae location enabled")
       }
     } else {
       dispatch(fetchSearchAddress(address));
@@ -111,7 +130,7 @@ const Map = () => {
     }
   }, [searchAddress]);
 
-  //if we use neaby to search
+  //use neaby to search
   React.useEffect(() => {
     if (myLocation) {
       setCenter(myLocation);
@@ -150,11 +169,18 @@ const Map = () => {
   const setToMyLocation = () =>{
     navigate(`/map/${encodeURIComponent("nearby")}`);
   }
+  //probably can add use watchPosition feature.
 
-  console.log("selected station:", selectedStation);
+
+  // console.log("selected station:", selectedStation);
+  // console.log('evlist',EVSList)
+
   return (
     <div className="Map">
+      {/* show specific station info */}
+
       <SearchBar/>
+      {/* filter modal */}
       <button className="open-modal-button" onClick={openModal}>
         <i className="fa-solid fa-filter"></i>
       </button>
@@ -168,18 +194,32 @@ const Map = () => {
           </div>
         </div>
       )}
+      {/* set my location button */}
       <button className="set-mylocation-button" onClick={setToMyLocation} >
           <i className="fa-solid fa-location-dot"></i>
+      </button>
+      {/* show my favorite button */}
+      <button className="see-my-favorite" onClick={openMyFavorite} >
+        <i className="fa fa-heart" aria-hidden="true"></i>
       </button>
       {!isLoaded ? (
         <h1>Loading...</h1>
       ) : (
+        <>
         <GoogleMap
           mapContainerClassName="map-container"
           center={center}
           zoom={14}
           options={mapOptions}
         >
+          {/* Favorite List Modal*/}
+          {
+            isFavoritelOpen&&(
+              <FavoriteList onClose={closeMyFavorite}/>
+            )
+          }
+
+          {/* My Location Marker */}
           {myLocation ? (
             <Marker
               position={myLocation}
@@ -191,6 +231,7 @@ const Map = () => {
             />
           ) : null}
 
+          {/* Search Location Marker */}
           {searchLocation ? (
             <Marker
               position={searchLocation}
@@ -202,6 +243,7 @@ const Map = () => {
             />
           ) : null}
 
+          {/* EVSList Markers */}
           {EVSList
             ? EVSList.map((s) => {
                 let location = {
@@ -222,17 +264,17 @@ const Map = () => {
               })
             : null}
         </GoogleMap>
-      )}
-      {
-        selectedStation ? (
-          <div>
-            <p>{`${selectedStation.properties.street_address}, ${selectedStation.properties.city}`}</p>
-            <p>{`Charging points: ${selectedStation.properties.ev_connector_types}`}</p>
-            <p>{`Tel: ${selectedStation.properties.station_phone}`}</p>
-          </div>
-        ) : null /* if we have a selectdStation, we can have specific station infor. if not, should we show the list of all the nearby stations?*/
+        {
+          selectedStation ? (
+              <StationInfo value={selectedStation}/>
+          ) : (<StationsList />) /* if we have a selectdStation, we can have specific station infor. if not, should we show the list of all the nearby stations?*/
+        }
+        </>
+    
+      )
+    
       }
-      ;
+  
     </div>
   );
 };

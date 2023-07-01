@@ -4,9 +4,8 @@ const Vehicle = require('./Vehicle');
 const Favorite = require('./Favorite');
 const LineItem  = require('./LineItem');
 
-
-LineItem.belongsTo(Favorite);
-Favorite.hasMany(LineItem);
+User.hasMany(Favorite);
+Favorite.belongsTo(User);
 
 const syncAndSeed = async()=> {
   await conn.sync({ force: true });
@@ -49,11 +48,39 @@ const syncAndSeed = async()=> {
     chargertype: 'CchadeMO',
     userId: moe.id
   });
+
+  const favorite1 = await Favorite.create({ 
+    userId: moe.id,
+    stationId:259592,
+    stationName:"Navy Pier",
+    street:"600 E Grand Ave",
+    city:"Chicago",
+    state:"IL",
+  });
+
+  const favorite2 = await Favorite.create({ 
+    userId: moe.id,
+    stationId:117262,
+    stationName:"Northwestern Memorial HealthCare",
+    street:"425 E Erie St",
+    city:"Chicago",
+    state:"IL",
+  });
+
+  const favorite3 = await Favorite.create({ 
+    userId: lucy.id,
+    stationId:117262,
+    stationName:"Northwestern Memorial HealthCare",
+    street:"425 E Erie St",
+    city:"Chicago",
+    state:"IL",
+  });
 };
 
 
 module.exports = {
   syncAndSeed,
   User,
-  Vehicle
+  Vehicle,
+  Favorite
 };

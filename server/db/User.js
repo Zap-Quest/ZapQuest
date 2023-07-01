@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken');
 const JWT = process.env.JWT;
 
 
+
 const User = conn.define('user', {
   id: {
     type: UUID,
@@ -57,59 +58,33 @@ User.prototype.createFavorite = async function(){
 }
 
 User.prototype.getFavorite = async function(){
-  let favorite = await conn.models.favorite.findOne({
+  let favorite = await conn.models.favorite.findAll({
     where: {
       userId: this.id,
-      isFavorite: true
     }
   });
-  if(!favorite){
-    favorite = await conn.models.favorite.create({
-      userId: this.id
-    });
-  }
-  favorite = await conn.models.favorite.findByPk(
-    favorite.id,
-    {
-      include: [
-        {
-          model: conn.models.lineItem,
-        }
-      ]
-    }
-  );
+
   return favorite;
 }
 
-User.prototype.addToFavorite = async function({ product, quantity}){
-  const favorite = await this.getFavorite();
-  let lineItem = favorite.lineItems.find( lineItem => {
-    return lineItem.productId === product.id; 
+User.prototype.addToFavorite = async function(station){
+  console.log('station:',station)
+  const favorite = conn.models.favorite.create({ 
+    userId: this.id, 
+    stationId:station.stationId, 
+    stationName:station.stationName,
+    street:station.street,
+    city:station.city,
+    state:station.state
   });
-  if(lineItem){
-    lineItem.quantity += quantity;
-    await lineItem.save();
-  }
-  else {
-    await conn.models.lineItem.create({ orderId: favorite.id, productId: product.id, quantity });
-  }
-  return this.getFavorite();
-};
+  return favorite;
+  };
 
-User.prototype.removeFromFavorite = async function({ product, quantityToRemove}){
-  const favorite = await this.getFavorite();
-  const lineItem = favorite.lineItems.find( lineItem => {
-    return lineItem.productId === product.id; 
-  });
-  lineItem.quantity = lineItem.quantity - quantityToRemove;
-  if(lineItem.quantity > 0){
-    await lineItem.save();
-  }
-  else {
-    await lineItem.destroy();
-  }
-  return this.getFavorite();
-};
+// User.prototype.removeFromFavorite = async function(station){
+//   const favorite = await this.getFavorite();
+
+//   return this.getFavorite();
+// };
 
 
 User.addHook('beforeSave', async(user)=> {

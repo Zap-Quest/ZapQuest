@@ -1,21 +1,44 @@
 const conn = require('./conn');
-const { BOOLEAN, UUID, UUIDV4 } = conn.Sequelize;
+const { DataTypes } = require('sequelize');
+const { BOOLEAN, UUID, UUIDV4, INTEGER, STRING } = conn.Sequelize;
 
 const Favorite = conn.define('favorite', {
-  id: {
-    type: UUID,
-    primaryKey: true,
-    defaultValue: UUIDV4
+  stationId:{
+    type:INTEGER,
+    allowNull: false,
+    validate: {
+      notEmpty: true
+    },
   },
-  isFavorite: {
-    type: BOOLEAN,
-    defaultValue: true,
-    allowNull: false
+  stationName:{
+    type:STRING,
+    allowNull: false,
+    validate: {
+      notEmpty: true
+    },
   },
-  userId: {
-    type: UUID,
-    allowNull: false
-  }
+  street:{
+    type:STRING,
+    allowNull: false,
+    validate: {
+      notEmpty: true
+    },
+  },
+  city:{
+    type:STRING,
+    allowNull: false,
+    validate: {
+      notEmpty: true
+    },
+  },
+  state:{
+    type:STRING,
+    allowNull: false,
+    validate: {
+      notEmpty: true
+    },
+  },
+
 });
 
 module.exports = Favorite;
