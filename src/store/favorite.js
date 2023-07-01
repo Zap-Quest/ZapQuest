@@ -1,15 +1,11 @@
 import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
 import axios from 'axios';
 
-const initialState={
-  lineItems: [],
-  total: 0
-}
-
-const orderFavorite = (favorite) => {
-  favorite.lineItems.sort((a, b) => (a.createdAt < b.createdAt) ? 1: -1);
-  return favorite;
-}
+const initialState=[];
+// const orderFavorite = (favorite) => {
+//   favorite.sort((a, b) => (a.createdAt < b.createdAt) ? 1: -1);
+//   return favorite;
+// }
 
 export const fetchFavorite = createAsyncThunk("fetchFavorite", async()=>{
   try{
@@ -25,10 +21,10 @@ export const fetchFavorite = createAsyncThunk("fetchFavorite", async()=>{
   }
 })
 
-export const removeItem = createAsyncThunk("removeItem", async(removeItems)=>{
+export const removeFavorite = createAsyncThunk("removeFavorite", async(id)=>{
   try{
     const token = window.localStorage.getItem('token');
-    const {data} = await axios.put('/api/favorite', removeItems, {
+    const {data} = await axios.delete(`/api/favorite/${id}`, {
       headers: {
         authorization: token
       }
@@ -39,11 +35,11 @@ export const removeItem = createAsyncThunk("removeItem", async(removeItems)=>{
   }
 })
 
-export const addItem = createAsyncThunk("addItem", async(addItem)=>{
-  
+export const addFavorite = createAsyncThunk("addFavorite", async(station)=>{
   try{
     const token = window.localStorage.getItem('token');
-    const {data} = await axios.post('/api/favorite', addItem, {
+    console.log('station:',station);
+    const {data} = await axios.post('/api/favorite', station, {
       headers:{
         authorization: token
       }
@@ -60,16 +56,13 @@ const favoriteSlice = createSlice({
   reducers: {},
   extraReducers: (builder)=>{
     builder.addCase(fetchFavorite.fulfilled, (state, action)=>{
-      orderFavorite(action.payload);
       return action.payload;
     }),
-    builder.addCase(removeItem.fulfilled, (state, action)=>{
-      orderFavorite(action.payload);
-      return action.payload;
+    builder.addCase(removeFavorite.fulfilled, (state, action)=>{
+      return state.filter((station) => station.id !== action.payload.id);
     }),
-    builder.addCase(addItem.fulfilled, (state, action)=>{
-      orderFavorite(action.payload);
-      return action.payload;
+    builder.addCase(addFavorite.fulfilled, (state, action)=>{
+      return [...state,action.payload];
     })
   }
 })

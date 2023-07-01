@@ -37,8 +37,8 @@ const Home = () => {
   useEffect(() => {
     let place;
     if (elPlace.current) {
-      console.log("set up autocomplete");
-      console.log("elPlace.current:", elPlace.current);
+      // console.log("set up autocomplete");
+      // console.log("elPlace.current:", elPlace.current);
       const options = {
         fields: ["formatted_address"],
       };
