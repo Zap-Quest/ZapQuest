@@ -180,9 +180,9 @@ const Map = () => {
   return (
     <div className="Map">
 
-      {/* show specific station info */}
+      {/* show specific station info 
 
-      <SearchBar/>
+      <SearchBar/>*/}
       {/* filter modal */}
 
       <button className="open-modal-button" onClick={openModal}>
