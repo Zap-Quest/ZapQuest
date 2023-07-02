@@ -105,7 +105,7 @@ const FavoriteList = ({onClose}) => {
     const handleSelectedStation=(input)=>{
         const address = input.street+' '+input.city+' '+input.state;
         console.log(address);
-        navigate(`/map/${encodeURIComponent(address)}/${input.stationId}`);
+        navigate(`/map/place/${encodeURIComponent(address)}/${input.stationId}`);
     }
     const handleRemoveFavorite=()=>{
         console.log(station)

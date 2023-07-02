@@ -104,7 +104,7 @@ const Map = () => {
           }
         );
       }else{
-        StreetViewPanorama(" YOu do not hae location enabled")
+        setWarn(" YOu do not haVe location enabled");
       }
     } else {
       dispatch(fetchSearchAddress(address));
@@ -155,7 +155,7 @@ const Map = () => {
 
   //navigate to specific station
   const handleStationId = (id) => {
-    navigate(`/map/${encodeURIComponent(address)}/${id}`);
+    navigate(`/map/place/${encodeURIComponent(address)}/${id}`);
   };
 
   //map style
