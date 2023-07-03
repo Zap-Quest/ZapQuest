@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchFavorite, removeFavorite } from "../store";
 import { useNavigate } from "react-router-dom";
+import Pagination from "./Pagination";
 
 
 
@@ -18,8 +19,6 @@ const FavoriteList = ({onClose}) => {
         setCurrentFavorite(currentFavoriteTemp);
     },[currentPage,favorite]);
    
-
-
     //helper
     const handleClose = () =>{
         onClose();
@@ -35,7 +34,6 @@ const FavoriteList = ({onClose}) => {
         setCurrentPage(inputPage);
      }
    
-
     return (
         <>
           <div 
@@ -82,12 +80,9 @@ const FavoriteList = ({onClose}) => {
                                 />
                             </>
                         )
-                    ):(<p>Please Log in to see your favorite.</p>)
-
+                      ):(<p>Please Log in to see your favorite.</p>)
                     }
-
                 </div>
-         
               </div>
             </div>
           </div>
@@ -95,17 +90,16 @@ const FavoriteList = ({onClose}) => {
     );
   };
 
-
   const Card = (props) =>{
     const navigate = useNavigate()
     const station = props.station;
     const dispatch= useDispatch();
     const address = station.street+', '+station.city+', '+station.state;
-
+    //helper
     const handleSelectedStation=(input)=>{
         const address = input.street+' '+input.city+' '+input.state;
         console.log(address);
-        navigate(`/map/${encodeURIComponent(address)}/${input.stationId}`);
+        navigate(`/map/place/${encodeURIComponent(address)}/${input.stationId}`);
     }
     const handleRemoveFavorite=()=>{
         console.log(station)
@@ -128,32 +122,6 @@ const FavoriteList = ({onClose}) => {
         </div>
       </div>
     )
-  }
+  };
   
-  const Pagination=(props) =>{
-    const {totalPages,currentPage,handleNextPage,handlePreviousPage,selectPage} = props
-    return (
-        <nav className="Page navigation mb-5 d-flex justify-content-center align-items-center">
-            <ul className="pagination my-4" style={{ gap: "10px" }}>
-               <li className={`page-item ${currentPage === 1 ? "disabled" : ""}`}>
-                  <button className="page-link" onClick={handlePreviousPage}>
-                     Previous
-                  </button>
-               </li>
-               {Array.from({ length: totalPages }, (_, index) => index + 1).map((page) => (
-                  <li className={`page-item ${page === currentPage ? "active" : ""}`} key={page}>
-                     <button className="page-link" onClick={() => selectPage(page)}>
-                        {page}
-                     </button>
-                  </li>
-               ))}
-               <li className={`page-item ${currentPage === totalPages ? "disabled" : ""}`}>
-                  <button className="page-link" onClick={handleNextPage}>
-                     Next
-                  </button>
-               </li>
-            </ul>
-         </nav>
-    )
-  }
   export default FavoriteList;

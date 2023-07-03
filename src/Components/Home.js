@@ -24,14 +24,14 @@ const Home = () => {
     ev.preventDefault();
     const place = selectedPlace ? selectedPlace : searchInput;
     try {
-      navigate(`/map/${encodeURIComponent(place)}`);
+      navigate(`/map/place/${encodeURIComponent(place)}`);
     } catch (ex) {
       console.log(ex);
     }
   };
 
   const handleMyLocation = () => {
-    navigate(`/map/${encodeURIComponent("nearby")}`);
+    navigate(`/map/place/${encodeURIComponent("nearby")}`);
   };
 
   useEffect(() => {

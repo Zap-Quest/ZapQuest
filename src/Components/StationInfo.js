@@ -1,13 +1,20 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { addFavorite, removeFavorite } from "../store";
+import { useNavigate } from "react-router-dom";
 
 
 const StationInfo= (props) => {
-    const station = props.value
+    const station = props.value;
+    const address = props.address;
+
+    //console.log(address);
     const {auth,favorite} = useSelector(state => state);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const [stationInFavorite,setStationInFavorite] = useState(false);
+    const stationAddress = `${station.properties.street_address}, ${station.properties.city}, ${station.properties.state}`
+    //console.log(stationAddress);
     
 
     //helper
@@ -27,6 +34,10 @@ const StationInfo= (props) => {
         console.log('remove favorite');
         dispatch(removeFavorite(station.properties.id));
     }
+
+    const handleDirection = () =>{
+        navigate(`/map/dir/${encodeURIComponent(address)}/${encodeURIComponent(stationAddress)}`);
+    }
     //
 
     //useEffect  
@@ -43,16 +54,17 @@ const StationInfo= (props) => {
     <div>
         <p>
             <span>{`${station.properties.station_name}`}</span>
-            <span>{` Address:${station.properties.street_address}, ${station.properties.city}`}</span>
+            <span>{` Address:${stationAddress}`}</span>
             <span>{` Charging points: ${station.properties.ev_connector_types}`}</span>
             <span>{` Tel: ${station.properties.station_phone}`}</span>
-        {auth.username&&(
-            stationInFavorite ?(
-                <button onClick={removeFromFavorite}>{`Unlike`}</button>
-            ):(
-                <button onClick={addToFavorite} >{`Like`}</button>
-            )
-        )}
+            {auth.username&&(
+                stationInFavorite ?(
+                    <button onClick={removeFromFavorite}>{`Unlike`}</button>
+                ):(
+                    <button onClick={addToFavorite} >{`Like`}</button>
+                )
+            )}
+            <button onClick={()=>handleDirection(address,)}>Direction</button>
         </p>
     </div>
     
