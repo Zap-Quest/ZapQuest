@@ -4,13 +4,10 @@ import React, { useState } from "react";
 
 
 const RouteModal = (props) => {
-    
-    console.log('Route Modal shown');
     const onClose = props.onClose;
     const steps = props.steps;
     const duration = props.duration;
     const distance = props.distance;
-    console.log("steps",steps);
     
     return (
         <>
