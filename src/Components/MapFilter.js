@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Select from "react-select";
 
-const MapFilter = ({ onFilterChange, closeModal }) => {
+const MapFilter = ({ onFilterChange, closeModal, onRadiusChange, radius }) => {
   const connectorTypeOptions = [
     { value: "J1772", label: "J1772" },
     { value: "TESLA", label: "TESLA" },
@@ -39,16 +39,18 @@ const MapFilter = ({ onFilterChange, closeModal }) => {
   });
 
   const handleFilterChange = (selectedOptions, filterType) => {
-    setSelectedFilters({
-      ...selectedFilters,
-      [filterType]: selectedOptions
-        ? selectedOptions.map((option) => option.value)
-        : "all",
-    });
+    if (filterType === 'radius') {
+      onRadiusChange(selectedOptions);
+    } else {
+      setSelectedFilters({
+        ...selectedFilters,
+        [filterType]: selectedOptions ? selectedOptions.map((option) => option.value) : "all",
+      });
+    }
   };
 
   const applyFilters = () => {
-    onFilterChange(selectedFilters);
+    onFilterChange({...selectedFilters, radius: radius})
     closeModal();
   };
 
@@ -62,8 +64,9 @@ const MapFilter = ({ onFilterChange, closeModal }) => {
         <input
           type="number"
           id="radius"
-          defaultValue={100}
+          defaultValue={radius}
           className="form-control"
+          onChange={onRadiusChange}
         />
       </div>
       <div className="filter-dropdown">

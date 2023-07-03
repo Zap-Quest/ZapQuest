@@ -38,6 +38,7 @@ const Map = () => {
   const [steps,setSteps] = useState(null);
   const [origin,setOrigin] = useState(null);
   const [destination,setDestination] = useState(null);
+  const [radius, setRadius] = useState(30)
 
 
   /* helper function */
@@ -51,6 +52,11 @@ const Map = () => {
     },
     [allStations]
   );
+
+  const handleRadiusChange = useCallback((event) => {
+    const newRadius = event.target.value;
+    setRadius(newRadius)
+  }, []);
 
   const applyFilters = (list, filters) => {
     if (!list) return [];
@@ -196,11 +202,11 @@ const Map = () => {
         fetchNearbyStations({
           latitude: searchAddress.lat,
           longitude: searchAddress.lng,
-          inputRadius: 10,
+          inputRadius: radius,
         })
       );
     }
-  }, [searchAddress]);
+  }, [searchAddress, radius]);
 
   //use neaby to search
   React.useEffect(() => {
@@ -244,7 +250,7 @@ const Map = () => {
           <div className="modal-map-overlay">
             <div className="modal-map">
               <div className="modal-map-content">
-                <MapFilter onFilterChange={handleFilterChange} closeModal={closeModal}/>
+                <MapFilter onFilterChange={handleFilterChange} onRadiusChange={handleRadiusChange} radius={radius} closeModal={closeModal}/>
               </div>
             </div>
           </div>
