@@ -255,8 +255,7 @@ const Map = () => {
           <div className="modal-map-overlay">
             <div className="modal-map">
               <div className="modal-map-content">
-                <button onClick={closeModal}>Close Modal</button>
-                <MapFilter onFilterChange={handleFilterChange} />
+                <MapFilter onFilterChange={handleFilterChange} closeModal={closeModal}/>
               </div>
             </div>
           </div>
