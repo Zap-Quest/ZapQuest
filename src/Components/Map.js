@@ -1,22 +1,28 @@
 import React, { useState, useCallback, useRef, useEffect } from "react";
-import { GoogleMap, Marker, useLoadScript } from "@react-google-maps/api";
+import { GoogleMap, Marker, useLoadScript, DirectionsRenderer } from "@react-google-maps/api";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 import { addFavorite, fetchNearbyStations, fetchSearchAddress, setToNearby } from "../store";
 
 import "dotenv/config";
 import MapFilter from "./MapFilter";
-import StationModal from "./StationModal";
 import SearchBar from "./SearchBar";
 import StationInfo from "./StationInfo";
 import StationsList from "./StationsLIst";
 import FavoriteList from "./FavoriteList";
+import RouteModal from "./RoutesModal";
 
 const Map = () => {
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
   });
 
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  //redux store
+  const { searchAddress, allStations,favorite } = useSelector((state) => state);
+  const { address, stationId,startAddress,endAddress } = useParams();
+  //set
   const [center, setCenter] = useState(null);
   const [myLocation, setMyLocation] = useState(null);
   const [searchLocation, setSearchLocation] = useState(null);
@@ -24,14 +30,18 @@ const Map = () => {
   const [selectedStation, setSelectedStation] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isFavoritelOpen, setIsFavoriteOpen] = useState(false);//show my favorite list
-  const [zoomParameter, setZoomParameter] = useState(15);
+  const [isRoutesOpen, setIsRoutesOpen] = useState(true);//show my favorite list
   const [warn,setWarn] = useState('');
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const { searchAddress, allStations,favorite } = useSelector((state) => state);
-  const { address, stationId } = useParams();
-  
-  //filter module
+  const [directionsResponse, setDirectionsResponse] = useState(null);
+  const [distance,setDistance] = useState('');
+  const [duration,setDuration] = useState('');
+  const [steps,setSteps] = useState(null);
+  const [origin,setOrigin] = useState(null);
+  const [destination,setDestination] = useState(null);
+
+
+  /* helper function */
+    //filter module
   const handleFilterChange = useCallback(
     (newFilters) => {
       if (allStations) {
@@ -80,6 +90,7 @@ const Map = () => {
 
   // my favorite module
   const openMyFavorite = () => {
+    setIsRoutesOpen(false);
     setIsFavoriteOpen(true);
   };
 
@@ -87,29 +98,98 @@ const Map = () => {
     setIsFavoriteOpen(false);
   };
 
+    // my route module
+    const openRoutes = () => {
+      setIsFavoriteOpen(false);
+      setIsRoutesOpen(true);
+    };
+  
+    const closeRoutes = () => {
+      setIsRoutesOpen(false);
+    };
 
-  //check if URL params is an address or nearby
-  React.useEffect(() => {
-    if (address === "nearby") {
-      if (navigator.geolocation) {
-        setWarn("");
-        navigator.geolocation.getCurrentPosition(
-          (position) => {
-            const { latitude, longitude } = position.coords;
-            const userLocation = { lat: latitude, lng: longitude };
-            setMyLocation(userLocation);
-          },
-          (error) => {
-            console.error(error.message);
-          }
-        );
-      }else{
-        setWarn(" YOu do not haVe location enabled");
-      }
-    } else {
-      dispatch(fetchSearchAddress(address));
+
+    //navigate to specific station
+  const handleStationId = (id) => {
+    navigate(`/map/place/${encodeURIComponent(address)}/${id}`);
+  };
+
+    //map style
+  const mapOptions = {
+    streetViewControl: false,
+    mapId: "8a036518220c529",
+    fullscreenControl: false,
+  };
+
+    //set to my location button
+  const setToMyLocation = () => {
+    navigate(`/map/place/${encodeURIComponent("nearby")}`);
+
+  }
+  //probably can add use watchPosition feature.
+
+    //direction
+  const calculateRoute = async() =>{
+
+    console.log("calculate route")
+    if(origin && destination){
+      const directionsService = new google.maps.DirectionsService()
+      console.log('origin',origin);
+      console.log('destination',destination);
+      const results = await directionsService.route({
+        origin:origin,
+        destination: destination,
+        travelMode: google.maps.TravelMode.DRIVING
+      })
+      console.log('results:',results)
+      setDirectionsResponse(results);
+      setDistance(results.routes[0].legs[0].distance.text);
+      setDuration(results.routes[0].legs[0].duration.text);
+      setSteps(results.routes[0].legs[0].steps);
     }
-  }, [address]);
+  }
+
+    //
+  const getMyLocation = () =>{
+    if (navigator.geolocation) {
+      setWarn("");
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          const userLocation = { lat: latitude, lng: longitude };
+          setMyLocation(userLocation);
+          setOrigin(userLocation);
+        },
+        (error) => {
+          console.error(error.message);
+        }
+      );
+    }else{
+      setWarn(" YOu do not have location enabled");
+    }
+  } 
+
+
+  /* useEffect */
+
+    //check if URL params is an address or nearby
+  React.useEffect(() => { 
+    if(startAddress===undefined){
+      if (address === "nearby") {//this might need to change for the route search, because address can be undefine
+        getMyLocation();
+        setSearchLocation(null);
+      } else {
+        dispatch(fetchSearchAddress(address));
+      }
+  }else{
+    if(startAddress==="nearby") {
+      getMyLocation();
+    }else{
+      setOrigin(startAddress);
+    }
+    setDestination(endAddress);
+  }
+  }, [startAddress,address]);
 
   // if search specific address
   /*
@@ -152,139 +232,179 @@ const Map = () => {
     });
     setSelectedStation(station[0]);
   }, [allStations, stationId]);
+  
+  React.useEffect(()=>{
+    calculateRoute()
 
-  //navigate to specific station
-  const handleStationId = (id) => {
-    navigate(`/map/place/${encodeURIComponent(address)}/${id}`);
-  };
-
-  //map style
-  const mapOptions = {
-    streetViewControl: false,
-    mapId: "8a036518220c529",
-    fullscreenControl: false,
-  };
-
-  //set to my location button
-  const setToMyLocation = () => {
-    navigate(`/map/${encodeURIComponent("nearby")}`);
-
-  }
-  //probably can add use watchPosition feature.
+  },[origin,destination])
 
 
-  // console.log("selected station:", selectedStation);
-  // console.log('evlist',EVSList)
 
-
-  return (
-    <div className="Map">
-
-      {/* show specific station info 
-
-      <SearchBar/>*/}
-      {/* filter modal */}
-
-      <button className="open-modal-button" onClick={openModal}>
-        <i className="fa-solid fa-filter"></i>
-      </button>
-      {isModalOpen && (
-        <div className="modal-map-overlay">
-          <div className="modal-map">
-            <div className="modal-map-content">
-              <button onClick={closeModal}>Close Modal</button>
-              <MapFilter onFilterChange={handleFilterChange} />
+  /*return, base on the URL , 
+    if address exist, it means URL is "/map/place/:address/",will return the result searching all EVstations, 
+    else, it indicates URL is "/map/dir/:startAddress/:endAddress", will return the result searching for routes*/
+  if(address){
+    return (
+      <div className="Map">
+  
+        {/* filter modal */}
+        <button className="open-modal-button" onClick={openModal}>
+          <i className="fa-solid fa-filter"></i>
+        </button>
+        {isModalOpen && (
+          <div className="modal-map-overlay">
+            <div className="modal-map">
+              <div className="modal-map-content">
+                <button onClick={closeModal}>Close Modal</button>
+                <MapFilter onFilterChange={handleFilterChange} />
+              </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
+  
+        {/* set my location button */}
+        <button className="set-mylocation-button" onClick={setToMyLocation} >
+            <i className="fa-solid fa-location-dot"></i>
+        </button>
 
-      {/* set my location button */}
-      <button className="set-mylocation-button" onClick={setToMyLocation} >
-          <i className="fa-solid fa-location-dot"></i>
+        {/* show my favorite button */}
+        <button className="see-my-favorite" onClick={openMyFavorite} >
+          <i className="fa fa-heart" aria-hidden="true"></i>
+        </button>
 
-      </button>
-      {/* show my favorite button */}
-      <button className="see-my-favorite" onClick={openMyFavorite} >
-        <i className="fa fa-heart" aria-hidden="true"></i>
-      </button>
-      {!isLoaded ? (
-        <h1>Loading...</h1>
-      ) : (
-        <>
-        <GoogleMap
-          mapContainerClassName="map-container"
-          center={center}
-          zoom={14}
-          options={mapOptions}
-        >
-          {/* Favorite List Modal*/}
-          {
-            isFavoritelOpen&&(
-              <FavoriteList onClose={closeMyFavorite}/>
-            )
-          }
-
-          {/* My Location Marker */}
-          {myLocation ? (
-            <Marker
-              position={myLocation}
-              icon={{
-                url: "https://cdn-icons-png.flaticon.com/512/8065/8065913.png",
-                scaledSize: new window.google.maps.Size(36, 36), // Adjust the size here
-              }}
-              zIndex={999}
-            />
-          ) : null}
-
-          {/* Search Location Marker */}
-          {searchLocation ? (
-            <Marker
-              position={searchLocation}
-              icon={{
-                url: "https://cdn-icons-png.flaticon.com/512/9131/9131546.png",
-                scaledSize: new window.google.maps.Size(36, 36), // Adjust the size here
-              }}
-              zIndex={998}
-            />
-          ) : null}
-
-          {/* EVSList Markers */}
-          {EVSList
-            ? EVSList.map((s) => {
-                let location = {
-                  lat: s.geometry.coordinates[1],
-                  lng: s.geometry.coordinates[0],
-                };
-                return (
+        {/* loading Map */}
+        {!isLoaded ? (
+          <h1>Loading...</h1>
+        ) : (
+          <>
+          <GoogleMap
+            mapContainerClassName="map-container"
+            center={center}
+            zoom={14}
+            options={mapOptions}
+          >
+            {/* Favorite List Modal*/}
+            {
+              isFavoritelOpen&&(
+                <FavoriteList onClose={closeMyFavorite}/>
+              )
+            }
+  
+            {/* My Location Marker */}
+                {myLocation ? (
                   <Marker
-                    position={location}
+                    position={myLocation}
                     icon={{
-                      url: "https://cdn-icons-png.flaticon.com/512/5868/5868069.png",
-                      scaledSize: new window.google.maps.Size(32, 32), // Adjust the size here
+                      url: "https://cdn-icons-png.flaticon.com/512/8065/8065913.png",
+                      scaledSize: new window.google.maps.Size(36, 36), // Adjust the size here
                     }}
-                    key={s.properties.id}
-                    onClick={() => handleStationId(s.properties.id)}
+                    zIndex={999}
                   />
-                );
-              })
-            : null}
-          <div className="d-flex justify-content-end p-0">
-          <SearchBar/>
-          </div>
-        </GoogleMap>
-        {
-          selectedStation ? (
-              <StationInfo value={selectedStation}/>
-          ) : (<StationsList />) /* if we have a selectdStation, we can have specific station infor. if not, should we show the list of all the nearby stations?*/
+                ) : null}
+      
+            {/* Search Location Marker */}
+                {searchLocation ? (
+                  <Marker
+                    position={searchLocation}
+                    icon={{
+                      url: "https://cdn-icons-png.flaticon.com/512/9131/9131546.png",
+                      scaledSize: new window.google.maps.Size(36, 36), // Adjust the size here
+                    }}
+                    zIndex={998}
+                  />
+                ) : null}
+      
+            {/* EVSList Markers */}
+                {EVSList
+                  ? EVSList.map((s) => {
+                      let location = {
+                        lat: s.geometry.coordinates[1],
+                        lng: s.geometry.coordinates[0],
+                      };
+                      return (
+                        <Marker
+                          position={location}
+                          icon={{
+                            url: "https://cdn-icons-png.flaticon.com/512/5868/5868069.png",
+                            scaledSize: new window.google.maps.Size(32, 32), // Adjust the size here
+                          }}
+                          key={s.properties.id}
+                          onClick={() => handleStationId(s.properties.id)}
+                        />
+                      );
+                    })
+                  : null}
+              {/* Search Bar */}
+              <div className="d-flex justify-content-end p-0">
+                <SearchBar/>
+              </div>
+          </GoogleMap>
+          {
+            selectedStation ? (
+                <StationInfo value={selectedStation} address={address}/>
+            ) : (<StationsList />) /* if we have a selectdStation, we can have specific station infor. if not, should we show the list of all the nearby stations?*/
+          }
+          </>
+      
+        )
+      
         }
-        </>
-    
-      )
-    
-      }
+  
+      </div>
+    );
+  }else{
+    return (
+      <div className="Map">
+        {/* set my location button */}
+        <button className="set-mylocation-button" onClick={setToMyLocation} >
+            <i className="fa-solid fa-location-dot"></i>
+        </button>
 
-    </div>
-  );
+        {/* show my favorite button */}
+        <button className="see-my-favorite" onClick={openMyFavorite} >
+          <i className="fa fa-heart" aria-hidden="true"></i>
+        </button>
+
+        {/* show direction button */}
+        <button className="see-direction" disabled={isRoutesOpen===true} onClick={openRoutes} >
+          <i className="fa fa-sharp fa-solid fa-turn-down fa-rotate-90"></i>
+        </button>
+
+        {/* loading Map */}
+        {!isLoaded ? (
+            <h1>Loading...</h1>
+          ) : (
+            <>
+            <GoogleMap
+              mapContainerClassName="map-container"
+              center={center}
+              zoom={14}
+              options={mapOptions}
+            >
+              <div className="d-flex justify-content-end p-0">
+                <SearchBar/>
+              </div>
+              {directionsResponse && <DirectionsRenderer directions={directionsResponse}/>}
+              {
+                isRoutesOpen&&(
+                  <RouteModal onClose={closeRoutes} steps={steps} duration={duration} distance={distance}/>
+                )
+              }
+              {/* Favorite List Modal*/}
+              {
+                isFavoritelOpen&&(
+                  <FavoriteList onClose={closeMyFavorite}/>
+                )
+              }
+            </GoogleMap>
+            </>
+          )
+      }
+  
+      </div>
+    );
+
+  }
+  
 };
 export default Map;

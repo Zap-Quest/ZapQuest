@@ -13,7 +13,7 @@ const SearchBar = () => {
       ev.preventDefault();
       const place = selectedPlace ? selectedPlace : searchInput;
       try {
-        navigate(`/map/${encodeURIComponent(place)}`);
+        navigate(`/map/place/${encodeURIComponent(place)}`);
       } catch (ex) {
         console.log(ex);
       }
@@ -28,8 +28,8 @@ const SearchBar = () => {
     useEffect(() => {
       let place;
       if (elPlace.current) {
-        console.log("set up autocomplete");
-        console.log("elPlace.current:", elPlace.current);
+        //console.log("set up autocomplete");
+        //console.log("elPlace.current:", elPlace.current);
         const options = {
           fields: ["formatted_address"],
         };
