@@ -124,24 +124,18 @@ const Map = () => {
     //set to my location button
   const setToMyLocation = () => {
     navigate(`/map/place/${encodeURIComponent("nearby")}`);
-
   }
   //probably can add use watchPosition feature.
 
     //direction
   const calculateRoute = async() =>{
-
-    console.log("calculate route")
     if(origin && destination){
       const directionsService = new google.maps.DirectionsService()
-      console.log('origin',origin);
-      console.log('destination',destination);
       const results = await directionsService.route({
         origin:origin,
         destination: destination,
         travelMode: google.maps.TravelMode.DRIVING
       })
-      console.log('results:',results)
       setDirectionsResponse(results);
       setDistance(results.routes[0].legs[0].distance.text);
       setDuration(results.routes[0].legs[0].duration.text);
@@ -149,7 +143,6 @@ const Map = () => {
     }
   }
 
-    //
   const getMyLocation = () =>{
     if (navigator.geolocation) {
       setWarn("");
@@ -169,7 +162,6 @@ const Map = () => {
     }
   } 
 
-
   /* useEffect */
 
     //check if URL params is an address or nearby
@@ -181,14 +173,14 @@ const Map = () => {
       } else {
         dispatch(fetchSearchAddress(address));
       }
-  }else{
-    if(startAddress==="nearby") {
-      getMyLocation();
     }else{
-      setOrigin(startAddress);
+      if(startAddress==="nearby") {
+        getMyLocation();
+      }else{
+        setOrigin(startAddress);
+      }
+      setDestination(endAddress);
     }
-    setDestination(endAddress);
-  }
   }, [startAddress,address]);
 
   // if search specific address
@@ -235,10 +227,7 @@ const Map = () => {
   
   React.useEffect(()=>{
     calculateRoute()
-
   },[origin,destination])
-
-
 
   /*return, base on the URL , 
     if address exist, it means URL is "/map/place/:address/",will return the result searching all EVstations, 
@@ -345,9 +334,7 @@ const Map = () => {
             ) : (<StationsList />) /* if we have a selectdStation, we can have specific station infor. if not, should we show the list of all the nearby stations?*/
           }
           </>
-      
         )
-      
         }
   
       </div>
@@ -400,11 +387,9 @@ const Map = () => {
             </>
           )
       }
-  
       </div>
     );
-
   }
-  
 };
+
 export default Map;

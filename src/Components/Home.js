@@ -14,13 +14,11 @@ const Home = () => {
   const [selectedPlace, setSelectedPlace] = useState(null);
 
   const onChange = (ev) => {
-    console.log(ev.target.value);
     setSearchInput(ev.target.value);
   };
 
   //handle input search location and go to the map page
   const handleSearch = async (ev) => {
-    console.log("handlesearch");
     ev.preventDefault();
     const place = selectedPlace ? selectedPlace : searchInput;
     try {
@@ -37,8 +35,6 @@ const Home = () => {
   useEffect(() => {
     let place;
     if (elPlace.current) {
-      // console.log("set up autocomplete");
-      // console.log("elPlace.current:", elPlace.current);
       const options = {
         fields: ["formatted_address"],
       };
