@@ -65,11 +65,6 @@ const Home = () => {
 
   return (
     <>
-      {
-        isFavoriteOpen&&(
-          <Favorite onClose={closeMyFavorite}/>
-        )
-      }
       <div className="container d-flex flex-column align-items-center justify-content-center">
         <div className="my-5 py-5">
           <div className="text-center mb-4">
@@ -132,6 +127,7 @@ const Home = () => {
           </div>
         </div>
       </div>
+      {isFavoriteOpen&&<Favorite onClose={closeMyFavorite}/>}
     </>
   );
 };
