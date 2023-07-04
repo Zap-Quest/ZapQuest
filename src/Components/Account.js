@@ -110,7 +110,7 @@ const MyAccount = () => {
                 </div>
               )}
               {userVehicle && (
-                <div className="card mt-5" style={{ borderRadius: ".5rem" }}>
+                <div className="card my-5" style={{ borderRadius: ".5rem" }}>
                   <div className="my-account-vehicledatacontainer">
                     <div className="text-center">
                       <img
