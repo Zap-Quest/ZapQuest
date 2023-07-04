@@ -11,11 +11,14 @@ import StationInfo from "./StationInfo";
 import StationsList from "./StationsLIst";
 import FavoriteList from "./FavoriteList";
 import RouteModal from "./RoutesModal";
+import LoadingSpinner from "./LoadingSpinner";
 
 const Map = () => {
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
   });
+
+ 
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -38,7 +41,8 @@ const Map = () => {
   const [steps,setSteps] = useState(null);
   const [origin,setOrigin] = useState(null);
   const [destination,setDestination] = useState(null);
-  const [radius, setRadius] = useState(30)
+  const [radius, setRadius] = useState(30);
+  const [isLoadingModalOpen,setIsLoadingModalOpen] = useState(true);
 
 
   /* helper function */
@@ -244,6 +248,14 @@ const Map = () => {
     calculateRoute()
   },[origin,destination])
 
+  useEffect(() => {
+    // Simulate a loading delay
+    setTimeout(() => {
+      setIsLoadingModalOpen(false);
+    }, 500);
+  }, []);
+  
+
   /*return, base on the URL , 
     if address exist, it means URL is "/map/place/:address/",will return the result searching all EVstations, 
     else, it indicates URL is "/map/dir/:startAddress/:endAddress", will return the result searching for routes*/
@@ -276,8 +288,8 @@ const Map = () => {
         </button>
 
         {/* loading Map */}
-        {!isLoaded ? (
-          <h1>Loading...</h1>
+        {!isLoaded ||isLoadingModalOpen ? (
+           <LoadingSpinner/>
         ) : (
           <>
           <GoogleMap
@@ -373,7 +385,8 @@ const Map = () => {
 
         {/* loading Map */}
         {!isLoaded ? (
-            <h1>Loading...</h1>
+            <LoadingSpinner/>
+
           ) : (
             <>
             <GoogleMap
