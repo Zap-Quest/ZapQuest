@@ -36,7 +36,12 @@ const StationInfo= (props) => {
     }
 
     const handleDirection = () =>{
-        navigate(`/map/dir/${encodeURIComponent(address)}/${encodeURIComponent(stationAddress)}`);
+        //console.log("address:",address.split(',').join(''), "stationAddress:",stationAddress.split(',').join(''),address.split(',').join('') !== stationAddress.split(',').join(''));
+        if(address.split(',').join('') !== stationAddress.split(',').join('')){
+            navigate(`/map/dir/${encodeURIComponent(address)}/${encodeURIComponent(stationAddress)}`);
+        }
+        navigate(`/map/dir/nearby/${encodeURIComponent(stationAddress)}`);
+        
     }
     //
 
@@ -57,14 +62,19 @@ const StationInfo= (props) => {
             <span>{` Address:${stationAddress}`}</span>
             <span>{` Charging points: ${station.properties.ev_connector_types}`}</span>
             <span>{` Tel: ${station.properties.station_phone}`}</span>
-            {auth.username&&(
-                stationInFavorite ?(
+            {auth.username?
+                (<>
+                {stationInFavorite ?(
                     <button onClick={removeFromFavorite}>{`Unlike`}</button>
                 ):(
                     <button onClick={addToFavorite} >{`Like`}</button>
-                )
-            )}
-            <button onClick={()=>handleDirection(address,)}>Direction</button>
+                )}
+                <button onClick={()=>handleDirection(address,)}>Quest From My Locaiton</button>
+                </>
+
+                
+            ):(<button onClick={()=>handleDirection(address,)}>Direction</button>)}
+            
         </p>
     </div>
     
