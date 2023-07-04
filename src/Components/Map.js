@@ -116,9 +116,18 @@ const Map = () => {
 
 
     //navigate to specific station
-  const handleStationId = (id) => {
-    navigate(`/map/place/${encodeURIComponent(address)}/${id}`);
-  };
+    const handleStationId = (id) => {
+      const selectedStation = allStations.find((s) => s.properties.id === id);
+      if (selectedStation) {
+        const { coordinates } = selectedStation.geometry;
+        setCenter({ lat: coordinates[1], lng: coordinates[0] });
+      }
+      navigate(`/map/place/${encodeURIComponent(address)}/${id}`);
+    };
+    
+    
+    
+    
 
     //map style
   const mapOptions = {
