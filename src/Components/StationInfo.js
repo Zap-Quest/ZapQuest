@@ -69,12 +69,11 @@ const StationInfo= (props) => {
                 ):(
                     <button onClick={addToFavorite} >{`Like`}</button>
                 )}
-                <button onClick={()=>handleDirection(address,)}>Quest From My Locaiton</button>
+                <button onClick={()=>handleDirection(address,)}>Quest From Nearby</button>
                 </>
-
-                
-            ):(<button onClick={()=>handleDirection(address,)}>Direction</button>)}
-            
+                ):(
+                <button onClick={()=>handleDirection(address,)}>Direction</button>
+                )}
         </p>
     </div>
     
