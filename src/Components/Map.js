@@ -29,7 +29,7 @@ const Map = () => {
   const [EVSList, setEVSList] = useState(null);
   const [selectedStation, setSelectedStation] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isFavoritelOpen, setIsFavoriteOpen] = useState(false);//show my favorite list
+  const [isFavoriteOpen, setIsFavoriteOpen] = useState(false);//show my favorite list
   const [isRoutesOpen, setIsRoutesOpen] = useState(true);//show my favorite list
   const [warn,setWarn] = useState('');
   const [directionsResponse, setDirectionsResponse] = useState(null);
@@ -288,7 +288,7 @@ const Map = () => {
           >
             {/* Favorite List Modal*/}
             {
-              isFavoritelOpen&&(
+              isFavoriteOpen&&(
                 <FavoriteList onClose={closeMyFavorite}/>
               )
             }
@@ -393,7 +393,7 @@ const Map = () => {
               }
               {/* Favorite List Modal*/}
               {
-                isFavoritelOpen&&(
+                isFavoriteOpen&&(
                   <FavoriteList onClose={closeMyFavorite}/>
                 )
               }
