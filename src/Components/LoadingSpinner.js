@@ -6,7 +6,9 @@ const LoadingSpinner = () => {
     <div className={"show"} tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
         <div className="modal-dialog modal-sm" >
             <div className="modal-content ">
+
                 <div className="modal-header" style={{background:"#779DA6"}}>
+
                   <h5 className="modal-title" id="exampleModalLabel" style={{color:"white"}}> 
                     <i
                       className="fa-solid fa-charging-station"
@@ -17,7 +19,9 @@ const LoadingSpinner = () => {
                 </div>
                 <div className="modal-body" style={{ height: '20%', overflowY: 'auto' }}>
                     <div className="d-flex justify-content-center align-items-center">
-                        <div className="spinner-border" role="status" style={{color:"#779DA6"}}>
+
+                        <div className="spinner-border" role="status" style={{color:"#5f919d"}}>
+
                         </div>
                     </div>
                 </div>

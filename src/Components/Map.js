@@ -11,11 +11,14 @@ import StationInfo from "./StationInfo";
 import StationsList from "./StationsLIst";
 import FavoriteList from "./FavoriteList";
 import RouteModal from "./RoutesModal";
+import LoadingSpinner from "./LoadingSpinner";
 
 const Map = () => {
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
   });
+
+ 
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -29,7 +32,7 @@ const Map = () => {
   const [EVSList, setEVSList] = useState(null);
   const [selectedStation, setSelectedStation] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isFavoritelOpen, setIsFavoriteOpen] = useState(false);//show my favorite list
+  const [isFavoriteOpen, setIsFavoriteOpen] = useState(false);//show my favorite list
   const [isRoutesOpen, setIsRoutesOpen] = useState(true);//show my favorite list
   const [warn,setWarn] = useState('');
   const [directionsResponse, setDirectionsResponse] = useState(null);
@@ -38,6 +41,8 @@ const Map = () => {
   const [steps,setSteps] = useState(null);
   const [origin,setOrigin] = useState(null);
   const [destination,setDestination] = useState(null);
+  const [radius, setRadius] = useState(30);
+  const [isLoadingModalOpen,setIsLoadingModalOpen] = useState(true);
 
 
   /* helper function */
@@ -51,6 +56,11 @@ const Map = () => {
     },
     [allStations]
   );
+
+  const handleRadiusChange = useCallback((event) => {
+    const newRadius = event.target.value;
+    setRadius(newRadius)
+  }, []);
 
   const applyFilters = (list, filters) => {
     if (!list) return [];
@@ -110,9 +120,18 @@ const Map = () => {
 
 
     //navigate to specific station
-  const handleStationId = (id) => {
-    navigate(`/map/place/${encodeURIComponent(address)}/${id}`);
-  };
+    const handleStationId = (id) => {
+      const selectedStation = allStations.find((s) => s.properties.id === id);
+      if (selectedStation) {
+        const { coordinates } = selectedStation.geometry;
+        setCenter({ lat: coordinates[1], lng: coordinates[0] });
+      }
+      navigate(`/map/place/${encodeURIComponent(address)}/${id}`);
+    };
+    
+    
+    
+    
 
     //map style
   const mapOptions = {
@@ -196,11 +215,11 @@ const Map = () => {
         fetchNearbyStations({
           latitude: searchAddress.lat,
           longitude: searchAddress.lng,
-          inputRadius: 10,
+          inputRadius: radius,
         })
       );
     }
-  }, [searchAddress]);
+  }, [searchAddress, radius]);
 
   //use neaby to search
   React.useEffect(() => {
@@ -229,6 +248,14 @@ const Map = () => {
     calculateRoute()
   },[origin,destination])
 
+  useEffect(() => {
+    // Simulate a loading delay
+    setTimeout(() => {
+      setIsLoadingModalOpen(false);
+    }, 500);
+  }, []);
+  
+
   /*return, base on the URL , 
     if address exist, it means URL is "/map/place/:address/",will return the result searching all EVstations, 
     else, it indicates URL is "/map/dir/:startAddress/:endAddress", will return the result searching for routes*/
@@ -244,8 +271,7 @@ const Map = () => {
           <div className="modal-map-overlay">
             <div className="modal-map">
               <div className="modal-map-content">
-                <button onClick={closeModal}>Close Modal</button>
-                <MapFilter onFilterChange={handleFilterChange} />
+                <MapFilter onFilterChange={handleFilterChange} onRadiusChange={handleRadiusChange} radius={radius} closeModal={closeModal}/>
               </div>
             </div>
           </div>
@@ -262,8 +288,8 @@ const Map = () => {
         </button>
 
         {/* loading Map */}
-        {!isLoaded ? (
-          <h1>Loading...</h1>
+        {!isLoaded ||isLoadingModalOpen ? (
+           <LoadingSpinner/>
         ) : (
           <>
           <GoogleMap
@@ -274,7 +300,7 @@ const Map = () => {
           >
             {/* Favorite List Modal*/}
             {
-              isFavoritelOpen&&(
+              isFavoriteOpen&&(
                 <FavoriteList onClose={closeMyFavorite}/>
               )
             }
@@ -359,7 +385,8 @@ const Map = () => {
 
         {/* loading Map */}
         {!isLoaded ? (
-            <h1>Loading...</h1>
+            <LoadingSpinner/>
+
           ) : (
             <>
             <GoogleMap
@@ -379,7 +406,7 @@ const Map = () => {
               }
               {/* Favorite List Modal*/}
               {
-                isFavoritelOpen&&(
+                isFavoriteOpen&&(
                   <FavoriteList onClose={closeMyFavorite}/>
                 )
               }
