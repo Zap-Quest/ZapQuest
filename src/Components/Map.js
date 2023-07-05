@@ -34,6 +34,7 @@ const Map = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isFavoriteOpen, setIsFavoriteOpen] = useState(false);//show my favorite list
   const [isRoutesOpen, setIsRoutesOpen] = useState(true);//show my favorite list
+  const [isStationInfoOpen, setIsStationInfoOpen] = useState(true);//show my favorite list
   const [warn,setWarn] = useState('');
   const [directionsResponse, setDirectionsResponse] = useState(null);
   const [distance,setDistance] = useState('');
@@ -101,6 +102,7 @@ const Map = () => {
   // my favorite module
   const openMyFavorite = () => {
     setIsRoutesOpen(false);
+    setIsStationInfoOpen(false);
     setIsFavoriteOpen(true);
   };
 
@@ -108,15 +110,27 @@ const Map = () => {
     setIsFavoriteOpen(false);
   };
 
-    // my route module
-    const openRoutes = () => {
-      setIsFavoriteOpen(false);
-      setIsRoutesOpen(true);
-    };
-  
-    const closeRoutes = () => {
-      setIsRoutesOpen(false);
-    };
+  // my route module
+  const openRoutes = () => {
+    setIsFavoriteOpen(false);
+    setIsStationInfoOpen(false);
+    setIsRoutesOpen(true);
+  };
+
+  const closeRoutes = () => {
+    setIsRoutesOpen(false);
+  };
+
+  // my StationInfo modal
+  const openStationInfo = () => {
+    setIsFavoriteOpen(false);
+    setIsRoutesOpen(false);
+    setIsStationInfoOpen(true);
+  };
+
+  const closeStationInfo = () => {
+    setIsStationInfoOpen(false);
+  };
 
 
     //navigate to specific station
@@ -312,6 +326,13 @@ const Map = () => {
                 <FavoriteList onClose={closeMyFavorite}/>
               )
             }
+            {/* StationInfo Modal*/}
+            {
+            selectedStation ? (
+                <StationInfo value={selectedStation} address={address} closeMyFavorite={closeMyFavorite} closeStationInfo={closeStationInfo}/>
+            ) : (<StationsList />) /* if we have a selectdStation, we can have specific station infor. if not, should we show the list of all the nearby stations?*/
+            }
+
             {address?
               (
                 <>
@@ -380,11 +401,7 @@ const Map = () => {
               <SearchBar/>
             </div>
           </GoogleMap>
-          {
-            selectedStation ? (
-                <StationInfo value={selectedStation} address={address} closeMyFavorite={closeMyFavorite}/>
-            ) : (<StationsList />) /* if we have a selectdStation, we can have specific station infor. if not, should we show the list of all the nearby stations?*/
-          }
+         
           </>
         )
         }
