@@ -129,6 +129,7 @@ const Map = () => {
   };
 
   const closeStationInfo = () => {
+    console.log("close Station")
     setIsStationInfoOpen(false);
   };
 
@@ -328,7 +329,7 @@ const Map = () => {
             }
             {/* StationInfo Modal*/}
             {
-            selectedStation ? (
+            selectedStation && isStationInfoOpen? (
                 <StationInfo value={selectedStation} address={address} closeMyFavorite={closeMyFavorite} closeStationInfo={closeStationInfo}/>
             ) : (<StationsList />) /* if we have a selectdStation, we can have specific station infor. if not, should we show the list of all the nearby stations?*/
             }
