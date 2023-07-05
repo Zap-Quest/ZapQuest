@@ -256,7 +256,7 @@ const Map = () => {
     // Simulate a loading delay
     setTimeout(() => {
       setIsLoadingModalOpen(false);
-    }, 500);
+    }, 1500);
   }, []);
   
 
