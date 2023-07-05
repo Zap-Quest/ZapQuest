@@ -44,7 +44,7 @@ const Map = () => {
   const [radius, setRadius] = useState(30);
   const [isLoadingModalOpen,setIsLoadingModalOpen] = useState(true);
 
-
+  console.log('is loading modal open:',isLoadingModalOpen);
   /* helper function */
     //filter module
   const handleFilterChange = useCallback(
@@ -142,6 +142,10 @@ const Map = () => {
 
     //set to my location button
   const setToMyLocation = () => {
+    // setIsLoadingModalOpen();
+    // setTimeout(() => {
+    //   setIsLoadingModalOpen(false);
+    // }, 500);
     navigate(`/map/place/${encodeURIComponent("nearby")}`);
   }
   //probably can add use watchPosition feature.

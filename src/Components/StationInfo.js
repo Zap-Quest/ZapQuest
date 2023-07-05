@@ -62,18 +62,15 @@ const StationInfo= (props) => {
             <span>{` Address:${stationAddress}`}</span>
             <span>{` Charging points: ${station.properties.ev_connector_types}`}</span>
             <span>{` Tel: ${station.properties.station_phone}`}</span>
-            {auth.username?
-                (<>
-                {stationInFavorite ?(
+            {auth.username&&
+                (
+                stationInFavorite?(
                     <button onClick={removeFromFavorite}>{`Unlike`}</button>
                 ):(
                     <button onClick={addToFavorite} >{`Like`}</button>
+                )
                 )}
-                <button onClick={()=>handleDirection(address,)}>Quest From Nearby</button>
-                </>
-                ):(
-                <button onClick={()=>handleDirection(address,)}>Direction</button>
-                )}
+                <button onClick={()=>handleDirection()}>Direction</button>
         </p>
     </div>
     
