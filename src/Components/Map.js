@@ -263,7 +263,7 @@ const Map = () => {
   /*return, base on the URL , 
     if address exist, it means URL is "/map/place/:address/",will return the result searching all EVstations, 
     else, it indicates URL is "/map/dir/:startAddress/:endAddress", will return the result searching for routes*/
-  if(address){
+
     return (
       <div className="Map">
   
@@ -290,6 +290,10 @@ const Map = () => {
         <button className="see-my-favorite" onClick={openMyFavorite} >
           <i className="fa fa-heart" aria-hidden="true"></i>
         </button>
+        {/* show direction button */}
+        <button className="see-direction" disabled={isRoutesOpen===true} onClick={openRoutes} >
+          <i className="fa fa-sharp fa-solid fa-turn-down fa-rotate-90"></i>
+        </button>
 
         {/* loading Map */}
         {!isLoaded ||isLoadingModalOpen ? (
@@ -308,59 +312,77 @@ const Map = () => {
                 <FavoriteList onClose={closeMyFavorite}/>
               )
             }
-  
-            {/* My Location Marker */}
-                {myLocation ? (
-                  <Marker
-                    position={myLocation}
-                    icon={{
-                      url: "https://cdn-icons-png.flaticon.com/512/8065/8065913.png",
-                      scaledSize: new window.google.maps.Size(36, 36), // Adjust the size here
-                    }}
-                    zIndex={999}
-                  />
-                ) : null}
-      
-            {/* Search Location Marker */}
-                {searchLocation ? (
-                  <Marker
-                    position={searchLocation}
-                    icon={{
-                      url: "https://cdn-icons-png.flaticon.com/512/9131/9131546.png",
-                      scaledSize: new window.google.maps.Size(36, 36), // Adjust the size here
-                    }}
-                    zIndex={998}
-                  />
-                ) : null}
-      
-            {/* EVSList Markers */}
-                {EVSList
-                  ? EVSList.map((s) => {
-                      let location = {
-                        lat: s.geometry.coordinates[1],
-                        lng: s.geometry.coordinates[0],
-                      };
-                      return (
-                        <Marker
-                          position={location}
-                          icon={{
-                            url: "https://cdn-icons-png.flaticon.com/512/5868/5868069.png",
-                            scaledSize: new window.google.maps.Size(32, 32), // Adjust the size here
-                          }}
-                          key={s.properties.id}
-                          onClick={() => handleStationId(s.properties.id)}
-                        />
-                      );
-                    })
-                  : null}
-              {/* Search Bar */}
-              <div className="d-flex justify-content-end p-0">
-                <SearchBar/>
-              </div>
+            {address?
+              (
+                <>
+                  {/* My Location Marker */}
+                  {myLocation ? (
+                    <Marker
+                      position={myLocation}
+                      icon={{
+                        url: "https://cdn-icons-png.flaticon.com/512/8065/8065913.png",
+                        scaledSize: new window.google.maps.Size(36, 36), // Adjust the size here
+                      }}
+                      zIndex={999}
+                    />
+                  ) : null
+                  }
+            
+                  {/* Search Location Marker */}
+                  {searchLocation ? (
+                    <Marker
+                      position={searchLocation}
+                      icon={{
+                        url: "https://cdn-icons-png.flaticon.com/512/9131/9131546.png",
+                        scaledSize: new window.google.maps.Size(36, 36), // Adjust the size here
+                      }}
+                      zIndex={998}
+                    />
+                  ) : null
+                  }
+            
+                  {/* EVSList Markers */}
+                  {EVSList
+                    ? EVSList.map((s) => {
+                        let location = {
+                          lat: s.geometry.coordinates[1],
+                          lng: s.geometry.coordinates[0],
+                        };
+                        return (
+                          <Marker
+                            position={location}
+                            icon={{
+                              url: "https://cdn-icons-png.flaticon.com/512/5868/5868069.png",
+                              scaledSize: new window.google.maps.Size(32, 32), // Adjust the size here
+                            }}
+                            key={s.properties.id}
+                            onClick={() => handleStationId(s.properties.id)}
+                          />
+                        );
+                      })
+                    : null
+                  }
+                </>
+              ):(
+                <>
+                  {directionsResponse && <DirectionsRenderer directions={directionsResponse}/>}
+                  {
+                    isRoutesOpen&&(
+                      <RouteModal onClose={closeRoutes} steps={steps} duration={duration} distance={distance}/>
+                    )
+                  }
+                </>
+              )
+            }
+            
+            {/* Search Bar */}
+            <div className="d-flex justify-content-end p-0">
+              <SearchBar/>
+            </div>
           </GoogleMap>
           {
             selectedStation ? (
-                <StationInfo value={selectedStation} address={address}/>
+                <StationInfo value={selectedStation} address={address} closeMyFavorite={closeMyFavorite}/>
             ) : (<StationsList />) /* if we have a selectdStation, we can have specific station infor. if not, should we show the list of all the nearby stations?*/
           }
           </>
@@ -369,58 +391,7 @@ const Map = () => {
   
       </div>
     );
-  }else{
-    return (
-      <div className="Map">
-        {/* set my location button */}
-        <button className="set-mylocation-button" onClick={setToMyLocation} >
-            <i className="fa-solid fa-location-dot"></i>
-        </button>
-
-        {/* show my favorite button */}
-        <button className="see-my-favorite" onClick={openMyFavorite} >
-          <i className="fa fa-heart" aria-hidden="true"></i>
-        </button>
-
-        {/* show direction button */}
-        <button className="see-direction" disabled={isRoutesOpen===true} onClick={openRoutes} >
-          <i className="fa fa-sharp fa-solid fa-turn-down fa-rotate-90"></i>
-        </button>
-
-        {/* loading Map */}
-        {!isLoaded ? (
-            <LoadingSpinner/>
-
-          ) : (
-            <>
-            <GoogleMap
-              mapContainerClassName="map-container"
-              center={center}
-              zoom={14}
-              options={mapOptions}
-            >
-              <div className="d-flex justify-content-end p-0">
-                <SearchBar/>
-              </div>
-              {directionsResponse && <DirectionsRenderer directions={directionsResponse}/>}
-              {
-                isRoutesOpen&&(
-                  <RouteModal onClose={closeRoutes} steps={steps} duration={duration} distance={distance}/>
-                )
-              }
-              {/* Favorite List Modal*/}
-              {
-                isFavoriteOpen&&(
-                  <FavoriteList onClose={closeMyFavorite}/>
-                )
-              }
-            </GoogleMap>
-            </>
-          )
-      }
-      </div>
-    );
-  }
+ 
 };
 
 export default Map;
