@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 const StationInfo= (props) => {
     const station = props.value;
     const address = props.address;
+    const closeMyFavorite = props.closeMyFavorite;
 
     //console.log(address);
     const {auth,favorite} = useSelector(state => state);
@@ -36,6 +37,7 @@ const StationInfo= (props) => {
     }
 
     const handleDirection = () =>{
+        closeMyFavorite();
         //console.log("address:",address.split(',').join(''), "stationAddress:",stationAddress.split(',').join(''),address.split(',').join('') !== stationAddress.split(',').join(''));
         if(address.split(',').join('') !== stationAddress.split(',').join('')){
             navigate(`/map/dir/${encodeURIComponent(address)}/${encodeURIComponent(stationAddress)}`);

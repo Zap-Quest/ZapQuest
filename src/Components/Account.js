@@ -110,17 +110,24 @@ const MyAccount = () => {
                 </div>
               )}
               {userVehicle && (
-                <div className="card my-5" style={{ borderRadius: ".5rem" }}>
-                  <div className="my-account-vehicledatacontainer">
-                    <div className="text-center">
+                <div className="card my-3" style={{ borderRadius: ".5rem" }}>
+                  <div className="row g-0">
+                  <div
+                      className="col-md-4 text-center"
+                      style={{
+                        borderTopLeftRadius: ".5rem",
+                        borderBottomLeftRadius: ".5rem",
+                        backgroundColor: "#779DA6",
+                      }}
+                    >
                       <img
-                        className="user-avatar"
+                        className="user-avatar mt-5"
                         src={userVehicle.image}
                         alt="Vehicle"
                         style={{ width: "200px" }}
                       />
                     </div>
-                    <div className="card-body p-4 text-center">
+                    <div className="card-body p-5">
                       <h6>Vehicle Information</h6>
                       <hr className="mt-0 mb-4" />
                       <div className="row pt-1">
