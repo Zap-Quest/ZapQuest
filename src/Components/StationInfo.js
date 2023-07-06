@@ -11,6 +11,7 @@ const StationInfo = (props) => {
     const address = props.address;
     const closeMyFavorite = props.closeMyFavorite;
     const closeStationInfo = props.closeStationInfo;
+    const openRoutes = props.openRoutes;
 
 
     console.log('Station Modal shown');
@@ -42,7 +43,7 @@ const StationInfo = (props) => {
     }
 
     const handleDirection = () =>{
-        closeMyFavorite();
+        openRoutes();
         //console.log("address:",address.split(',').join(''), "stationAddress:",stationAddress.split(',').join(''),address.split(',').join('') !== stationAddress.split(',').join(''));
         if(address.split(',').join('') !== stationAddress.split(',').join('')){
             navigate(`/map/dir/${encodeURIComponent(address)}/${encodeURIComponent(stationAddress)}`);
@@ -125,10 +126,10 @@ const StationInfo = (props) => {
                         <div className="card" style={{ width: '265px',fontSize:"0.8rem" }}>
                             <div className="card-body">
                             <p className="card-title d-flex w-100 justify-content-between">
-                                <p>
+                                <span>
                                     <i className="fa-solid fa-charging-station" style={{ color: "#779DA6" }}/>
                                     <span>{` ${station.properties.ev_network.toUpperCase()}`}</span>
-                                </p>
+                                </span>
                                 <small> {`${station.properties.ev_level2_evse_num}plugs`} </small>
                             </p>
                             <hr/>
