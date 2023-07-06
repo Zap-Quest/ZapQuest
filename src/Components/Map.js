@@ -143,7 +143,7 @@ const Map = () => {
       setIsFavoriteOpen(false);
       setIsRoutesOpen(false);
       setIsStationInfoOpen(true);
-      setSelectedCenter({ lat: coordinates[1]-0.0005, lng: coordinates[0] });
+      setSelectedCenter({ lat: coordinates[1]-0.00005, lng: coordinates[0] });
     }
     navigate(`/map/place/${encodeURIComponent(address)}/${id}`);
   };
@@ -270,7 +270,7 @@ const Map = () => {
     // Simulate a loading delay
     setTimeout(() => {
       setIsLoadingModalOpen(false);
-    }, 1500);
+    }, 3000);
   }, []);
   
 
@@ -343,6 +343,7 @@ const Map = () => {
                         icon={{
                           url: "https://cdn-icons-png.flaticon.com/512/8065/8065913.png",
                           scaledSize: new window.google.maps.Size(36, 36), // Adjust the size here
+                        
                         }}
                         zIndex={999}
                       />
@@ -373,8 +374,8 @@ const Map = () => {
                             <Marker
                               position={location}
                               icon={{
-                                url: "https://cdn-icons-png.flaticon.com/512/5868/5868069.png",
-                                scaledSize: new window.google.maps.Size(32, 32), // Adjust the size here
+                                url: '../static/images/ElecMapPin.png',/*"https://cdn-icons-png.flaticon.com/512/5868/5868069.png", */
+                                scaledSize: new window.google.maps.Size(23,30), // Adjust the size here
                               }}
                               key={s.properties.id}
                               onClick={() => handleStationId(s.properties.id)}
@@ -391,7 +392,7 @@ const Map = () => {
                                 scaledSize: new window.google.maps.Size(20, 10), // Adjust the size here
                                 opacity: 0.1,
                               }}
-                              zIndex={904}
+                              zIndex={5}
                             />
                           )
                     }
