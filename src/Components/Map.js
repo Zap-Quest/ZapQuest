@@ -329,7 +329,7 @@ const Map = () => {
               {/* StationInfo Modal*/}
               {
               selectedStation && isStationInfoOpen? (
-                  <StationInfo value={selectedStation} address={address} closeMyFavorite={closeMyFavorite} closeStationInfo={closeStationInfo}/>
+                  <StationInfo value={selectedStation} address={address} closeMyFavorite={closeMyFavorite} closeStationInfo={closeStationInfo}  openRoutes={openRoutes}/>
               ) : (<StationsList />) /* if we have a selectdStation, we can have specific station infor. if not, should we show the list of all the nearby stations?*/
               }
 
@@ -402,7 +402,7 @@ const Map = () => {
                     {directionsResponse && <DirectionsRenderer directions={directionsResponse}/>}
                     {
                       isRoutesOpen&&(
-                        <RouteModal onClose={closeRoutes} steps={steps} duration={duration} distance={distance} openRoutes={openRoutes}/>
+                        <RouteModal onClose={closeRoutes} steps={steps} duration={duration} distance={distance}/>
                       )
                     }
                   </>
