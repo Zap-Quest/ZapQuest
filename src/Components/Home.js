@@ -102,12 +102,12 @@ const Home = () => {
                 </button>
               </div>
               <div className="col">
-                <Link to="/map">
+                <Link to="/about">
                   <button
                     className="btn btn-dark mb-2 default-button"
                     style={{ width: "200px" }}
                   >
-                    Show Map
+                    About
                   </button>
                 </Link>
               </div>

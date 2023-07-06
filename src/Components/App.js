@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { loginWithToken, fetchFavorite } from '../store';
 import { Link, Routes, Route } from 'react-router-dom';
 import MyAccount from './Account';
+import About from './About';
 // require('dotenv').config({path: '../.env'})
 
 
@@ -33,6 +34,7 @@ const App = ()=> {
           <Route path="/map/place/:address" element={<Map />} />
           <Route path="/map/dir/:startAddress/:endAddress" element={<Map />} />
           <Route path="/myaccount" element={<MyAccount />} />
+          <Route path="/about" element={<About />} />
         </Routes>
       </div>
     </div>
