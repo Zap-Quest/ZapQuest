@@ -214,3 +214,27 @@ nav {
   z-index: 997;
 }
 
+/* ----- pagination -----*/
+.pagination .page-link {
+  background-color: white;
+  color: black;
+  border-color: white;
+}
+
+.pagination .page-link:hover {
+  background-color: black;
+  color: white;
+  border-color: black;
+}
+
+.pagination .page-item.disabled .page-link {
+  background-color: white;
+  color: gray;
+  border-color: white;
+}
+
+.pagination .page-item.active .page-link {
+  background-color: black;
+  color: white;
+  border-color: black;
+}
