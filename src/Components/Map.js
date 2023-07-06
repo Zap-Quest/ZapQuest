@@ -32,9 +32,9 @@ const Map = () => {
   const [EVSList, setEVSList] = useState(null);
   const [selectedStation, setSelectedStation] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isFavoriteOpen, setIsFavoriteOpen] = useState(false);//show my favorite list
-  const [isRoutesOpen, setIsRoutesOpen] = useState(true);//show my favorite list
-  const [isStationInfoOpen, setIsStationInfoOpen] = useState(true);//show my favorite list
+  const [isFavoriteOpen, setIsFavoriteOpen] = useState(false);
+  const [isRoutesOpen, setIsRoutesOpen] = useState(true);
+  const [isStationInfoOpen, setIsStationInfoOpen] = useState(true);
   const [warn,setWarn] = useState('');
   const [directionsResponse, setDirectionsResponse] = useState(null);
   const [distance,setDistance] = useState('');
@@ -44,6 +44,7 @@ const Map = () => {
   const [destination,setDestination] = useState(null);
   const [radius, setRadius] = useState(30);
   const [isLoadingModalOpen,setIsLoadingModalOpen] = useState(true);
+ 
 
   console.log('is loading modal open:',isLoadingModalOpen);
   /* helper function */
@@ -264,7 +265,7 @@ const Map = () => {
     calculateRoute()
   },[origin,destination])
 
-  useEffect(() => {
+  React.useEffect(() => {
     // Simulate a loading delay
     setTimeout(() => {
       setIsLoadingModalOpen(false);
@@ -327,7 +328,7 @@ const Map = () => {
               {/* StationInfo Modal*/}
               {
               selectedStation && isStationInfoOpen? (
-                  <StationInfo value={selectedStation} address={address} closeMyFavorite={closeMyFavorite} closeStationInfo={closeStationInfo}/>
+                  <StationInfo value={selectedStation} address={address} closeMyFavorite={closeMyFavorite} closeStationInfo={closeStationInfo} openRoutes={openRoutes}/>
               ) : (<StationsList />) /* if we have a selectdStation, we can have specific station infor. if not, should we show the list of all the nearby stations?*/
               }
 

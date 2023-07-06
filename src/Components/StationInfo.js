@@ -1,28 +1,21 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { addFavorite, removeFavorite } from "../store";
+import { addFavorite, fetchNearbyStations, removeFavorite } from "../store";
 import { useNavigate } from "react-router-dom";
 import Pagination from "./Pagination";
-
-
 
 const StationInfo = (props) => {
     const station = props.value;
     const address = props.address;
     const closeMyFavorite = props.closeMyFavorite;
     const closeStationInfo = props.closeStationInfo;
-
-
-    console.log('Station Modal shown');
-    console.log("station:",station);
-    console.log("station EV1:",station.properties.ev_level1_evse_num);
-    console.log("station EV2:",station.properties.ev_level2_evse_num);
-    console.log("station type:",station.properties.ev_connector_types);
+    const openRoutes = props.openRoutes;
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const {auth,favorite} = useSelector(state => state);
     const [stationInFavorite,setStationInFavorite] = useState(false);
     const stationAddress = `${station.properties.street_address}, ${station.properties.city}, ${station.properties.state}`
+
     //helper
     const addToFavorite = () => {
         const stationToAdd ={
@@ -34,7 +27,7 @@ const StationInfo = (props) => {
         }
         console.log(stationToAdd) ;
         dispatch(addFavorite(stationToAdd ));
-      }
+    }
 
     const removeFromFavorite = () =>{
         console.log('remove favorite');
@@ -43,27 +36,25 @@ const StationInfo = (props) => {
 
     const handleDirection = () =>{
         closeMyFavorite();
+        openRoutes();
         //console.log("address:",address.split(',').join(''), "stationAddress:",stationAddress.split(',').join(''),address.split(',').join('') !== stationAddress.split(',').join(''));
         if(address.split(',').join('') !== stationAddress.split(',').join('')){
             navigate(`/map/dir/${encodeURIComponent(address)}/${encodeURIComponent(stationAddress)}`);
         }
         navigate(`/map/dir/nearby/${encodeURIComponent(stationAddress)}`);
-        
     }
-    //
 
     //useEffect  
-    React.useEffect(() =>{
+    React.useEffect(() => {
         if(favorite){
             const tempstationInFavorite = favorite.reduce((acc,curr) =>{
                 return ((curr.stationId*1===station.properties.id*1)||acc);
             },false);
             setStationInFavorite(tempstationInFavorite);
         }
+       
     },[favorite,station.properties.id]); 
-    
- 
-   
+
     return (
         <>
           <div 
@@ -125,10 +116,10 @@ const StationInfo = (props) => {
                         <div className="card" style={{ width: '265px',fontSize:"0.8rem" }}>
                             <div className="card-body">
                             <p className="card-title d-flex w-100 justify-content-between">
-                                <p>
+                                <span>
                                     <i className="fa-solid fa-charging-station" style={{ color: "#779DA6" }}/>
                                     <span>{` ${station.properties.ev_network.toUpperCase()}`}</span>
-                                </p>
+                                </span>
                                 <small> {`${station.properties.ev_level2_evse_num}plugs`} </small>
                             </p>
                             <hr/>
