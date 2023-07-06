@@ -7,7 +7,7 @@ const Pagination=(props) =>{
     const {totalPages,currentPage,handleNextPage,handlePreviousPage,selectPage} = props
     return (
         <nav className="Page navigation mb-5 d-flex justify-content-center align-items-center">
-            <ul className="pagination my-4" style={{ gap: "10px" }}>
+            <ul className="pagination my-4" style={{ gap: "10px", fontSize:"0.75rem"}}>
                <li className={`page-item ${currentPage === 1 ? "disabled" : ""}`}>
                   <button className="page-link" onClick={handlePreviousPage}>
                      Previous

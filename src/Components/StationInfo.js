@@ -111,6 +111,15 @@ const StationInfo = (props) => {
                                 <i className="fa-solid fa-phone" style={{ color: "#779DA6" }}/>
                                 <span>{` ${station.properties.station_phone}`}</span>
                             </p>
+                            {station.access_days_time&&(
+                                <>
+                                    <hr/>
+                                    <p className="card-text">
+                                    <i className="fa-solid fa-clock" style={{ color: "#779DA6" }}></i>
+                                    <span>{`  24/7`}</span>
+                                    </p>
+                                </>
+                            )}
                             </div>
                         </div>
                         <div className="card" style={{ width: '265px',fontSize:"0.8rem" }}>
@@ -136,37 +145,20 @@ const StationInfo = (props) => {
                     </>
                 </div>
                 <div className="modal-footer">
-                {auth.username&&
-                                (
-                                stationInFavorite?(
-                                    <button type="button" className="btn btn-secondary" data-dismiss="modal"  onClick={removeFromFavorite}><i className="fa fa-heart" aria-hidden="true" style={{color:"#EABD00" }}></i></button>
-                                ):(
-                                    <button type="button" className="btn btn-secondary" data-dismiss="modal"  onClick={addToFavorite}><i className="fa fa-heart" aria-hidden="true"></i></button>
-                                )
-                                )}
-                 
+                {auth.username&&(
+                    stationInFavorite?(
+                        <button type="button" className="btn btn-secondary" data-dismiss="modal"  onClick={removeFromFavorite}><i className="fa fa-heart" aria-hidden="true" style={{color:"#EABD00" }}></i></button>
+                    ):(
+                        <button type="button" className="btn btn-secondary" data-dismiss="modal"  onClick={addToFavorite}><i className="fa fa-heart" aria-hidden="true"></i></button>
+                    )
+                )}
                   <button type="button" className="btn btn-secondary" onClick={()=>handleDirection()}><i className="fa fa-sharp fa-solid fa-turn-down fa-rotate-90"></i></button>
                 </div>
-                
               </div>
             </div>
           </div>
       </>
     );
   };
-
-const Card = () =>{
-return (
-    <div>
-    <div className="card" style={{ width: '265px' }}>
-        <div className="card-body">
-        <h5 className="card-title">title</h5>
-        <p className="card-text">text</p>
-        </div>
-    </div>
-    </div>
-)
-}
- 
   
   export default StationInfo;
