@@ -387,7 +387,7 @@ const Map = () => {
                     {directionsResponse && <DirectionsRenderer directions={directionsResponse}/>}
                     {
                       isRoutesOpen&&(
-                        <RouteModal onClose={closeRoutes} steps={steps} duration={duration} distance={distance}/>
+                        <RouteModal onClose={closeRoutes} steps={steps} duration={duration} distance={distance} openRoutes={openRoutes}/>
                       )
                     }
                   </>
