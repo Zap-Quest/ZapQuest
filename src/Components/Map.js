@@ -34,6 +34,7 @@ const Map = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isFavoriteOpen, setIsFavoriteOpen] = useState(false);//show my favorite list
   const [isRoutesOpen, setIsRoutesOpen] = useState(true);//show my favorite list
+  const [isStationInfoOpen, setIsStationInfoOpen] = useState(true);//show my favorite list
   const [warn,setWarn] = useState('');
   const [directionsResponse, setDirectionsResponse] = useState(null);
   const [distance,setDistance] = useState('');
@@ -101,6 +102,7 @@ const Map = () => {
   // my favorite module
   const openMyFavorite = () => {
     setIsRoutesOpen(false);
+    setIsStationInfoOpen(false);
     setIsFavoriteOpen(true);
   };
 
@@ -108,39 +110,50 @@ const Map = () => {
     setIsFavoriteOpen(false);
   };
 
-    // my route module
-    const openRoutes = () => {
-      setIsFavoriteOpen(false);
-      setIsRoutesOpen(true);
-    };
-  
-    const closeRoutes = () => {
-      setIsRoutesOpen(false);
-    };
+  // my route module
+  const openRoutes = () => {
+    setIsFavoriteOpen(false);
+    setIsStationInfoOpen(false);
+    setIsRoutesOpen(true);
+  };
 
+  const closeRoutes = () => {
+    setIsRoutesOpen(false);
+  };
+
+  // my StationInfo modal
+  const openStationInfo = () => {
+    setIsFavoriteOpen(false);
+    setIsRoutesOpen(false);
+    setIsStationInfoOpen(true);
+  };
+
+  const closeStationInfo = () => {
+    console.log("close Station")
+    setIsStationInfoOpen(false);
+  };
 
     //navigate to specific station
-    const handleStationId = (id) => {
-      const selectedStation = allStations.find((s) => s.properties.id === id);
-      if (selectedStation) {
-        const { coordinates } = selectedStation.geometry;
-        setCenter({ lat: coordinates[1], lng: coordinates[0] });
-      }
-      navigate(`/map/place/${encodeURIComponent(address)}/${id}`);
-    };
+  const handleStationId = (id) => {
+    const selectedStation = allStations.find((s) => s.properties.id === id);
+    if (selectedStation) {
+      const { coordinates } = selectedStation.geometry;
+      setCenter({ lat: coordinates[1], lng: coordinates[0] });
+      setIsFavoriteOpen(false);
+      setIsRoutesOpen(false);
+      setIsStationInfoOpen(true);
+    }
+    navigate(`/map/place/${encodeURIComponent(address)}/${id}`);
+  };
     
-    
-    
-    
-
-    //map style
+  //map style
   const mapOptions = {
     streetViewControl: false,
     mapId: "8a036518220c529",
     fullscreenControl: false,
   };
 
-    //set to my location button
+  //set to my location button
   const setToMyLocation = () => {
     // setIsLoadingModalOpen();
     // setTimeout(() => {
@@ -148,9 +161,8 @@ const Map = () => {
     // }, 500);
     navigate(`/map/place/${encodeURIComponent("nearby")}`);
   }
-  //probably can add use watchPosition feature.
 
-    //direction
+  //direction
   const calculateRoute = async() =>{
     if(origin && destination){
       const directionsService = new google.maps.DirectionsService()
@@ -300,98 +312,97 @@ const Map = () => {
            <LoadingSpinner/>
         ) : (
           <>
-          <GoogleMap
-            mapContainerClassName="map-container"
-            center={center}
-            zoom={14}
-            options={mapOptions}
-          >
-            {/* Favorite List Modal*/}
-            {
-              isFavoriteOpen&&(
-                <FavoriteList onClose={closeMyFavorite}/>
-              )
-            }
-            {address?
-              (
-                <>
-                  {/* My Location Marker */}
-                  {myLocation ? (
-                    <Marker
-                      position={myLocation}
-                      icon={{
-                        url: "https://cdn-icons-png.flaticon.com/512/8065/8065913.png",
-                        scaledSize: new window.google.maps.Size(36, 36), // Adjust the size here
-                      }}
-                      zIndex={999}
-                    />
-                  ) : null
-                  }
-            
-                  {/* Search Location Marker */}
-                  {searchLocation ? (
-                    <Marker
-                      position={searchLocation}
-                      icon={{
-                        url: "https://cdn-icons-png.flaticon.com/512/9131/9131546.png",
-                        scaledSize: new window.google.maps.Size(36, 36), // Adjust the size here
-                      }}
-                      zIndex={998}
-                    />
-                  ) : null
-                  }
-            
-                  {/* EVSList Markers */}
-                  {EVSList
-                    ? EVSList.map((s) => {
-                        let location = {
-                          lat: s.geometry.coordinates[1],
-                          lng: s.geometry.coordinates[0],
-                        };
-                        return (
-                          <Marker
-                            position={location}
-                            icon={{
-                              url: "https://cdn-icons-png.flaticon.com/512/5868/5868069.png",
-                              scaledSize: new window.google.maps.Size(32, 32), // Adjust the size here
-                            }}
-                            key={s.properties.id}
-                            onClick={() => handleStationId(s.properties.id)}
-                          />
-                        );
-                      })
-                    : null
-                  }
-                </>
-              ):(
-                <>
-                  {directionsResponse && <DirectionsRenderer directions={directionsResponse}/>}
-                  {
-                    isRoutesOpen&&(
-                      <RouteModal onClose={closeRoutes} steps={steps} duration={duration} distance={distance}/>
-                    )
-                  }
-                </>
-              )
-            }
-            
-            {/* Search Bar */}
-            <div className="d-flex justify-content-end p-0">
-              <SearchBar/>
-            </div>
-          </GoogleMap>
-          {
-            selectedStation ? (
-                <StationInfo value={selectedStation} address={address} closeMyFavorite={closeMyFavorite}/>
-            ) : (<StationsList />) /* if we have a selectdStation, we can have specific station infor. if not, should we show the list of all the nearby stations?*/
-          }
+            <GoogleMap
+              mapContainerClassName="map-container"
+              center={center}
+              zoom={14}
+              options={mapOptions}
+            >
+              {/* Favorite List Modal*/}
+              {
+                isFavoriteOpen&&(
+                  <FavoriteList onClose={closeMyFavorite}/>
+                )
+              }
+              {/* StationInfo Modal*/}
+              {
+              selectedStation && isStationInfoOpen? (
+                  <StationInfo value={selectedStation} address={address} closeMyFavorite={closeMyFavorite} closeStationInfo={closeStationInfo}/>
+              ) : (<StationsList />) /* if we have a selectdStation, we can have specific station infor. if not, should we show the list of all the nearby stations?*/
+              }
+
+              {address?
+                (
+                  <>
+                    {/* My Location Marker */}
+                    {myLocation ? (
+                      <Marker
+                        position={myLocation}
+                        icon={{
+                          url: "https://cdn-icons-png.flaticon.com/512/8065/8065913.png",
+                          scaledSize: new window.google.maps.Size(36, 36), // Adjust the size here
+                        }}
+                        zIndex={999}
+                      />
+                    ) : null
+                    }
+              
+                    {/* Search Location Marker */}
+                    {searchLocation ? (
+                      <Marker
+                        position={searchLocation}
+                        icon={{
+                          url: "https://cdn-icons-png.flaticon.com/512/9131/9131546.png",
+                          scaledSize: new window.google.maps.Size(36, 36), // Adjust the size here
+                        }}
+                        zIndex={998}
+                      />
+                    ) : null
+                    }
+              
+                    {/* EVSList Markers */}
+                    {EVSList
+                      ? EVSList.map((s) => {
+                          let location = {
+                            lat: s.geometry.coordinates[1],
+                            lng: s.geometry.coordinates[0],
+                          };
+                          return (
+                            <Marker
+                              position={location}
+                              icon={{
+                                url: "https://cdn-icons-png.flaticon.com/512/5868/5868069.png",
+                                scaledSize: new window.google.maps.Size(32, 32), // Adjust the size here
+                              }}
+                              key={s.properties.id}
+                              onClick={() => handleStationId(s.properties.id)}
+                            />
+                          );
+                        })
+                      : null
+                    }
+                  </>
+                ):(
+                  <>
+                    {directionsResponse && <DirectionsRenderer directions={directionsResponse}/>}
+                    {
+                      isRoutesOpen&&(
+                        <RouteModal onClose={closeRoutes} steps={steps} duration={duration} distance={distance}/>
+                      )
+                    }
+                  </>
+                )
+              }
+              
+              {/* Search Bar */}
+              <div className="d-flex justify-content-end p-0">
+                <SearchBar/>
+              </div>
+            </GoogleMap>
           </>
-        )
-        }
-  
+        )}
       </div>
     );
- 
 };
 
 export default Map;
