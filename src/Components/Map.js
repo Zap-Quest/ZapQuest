@@ -42,7 +42,7 @@ const Map = () => {
   const [steps,setSteps] = useState(null);
   const [origin,setOrigin] = useState(null);
   const [destination,setDestination] = useState(null);
-  const [radius, setRadius] = useState(30);
+  const [radius, setRadius] = useState(10);
   const [isLoadingModalOpen,setIsLoadingModalOpen] = useState(true);
 
   console.log('is loading modal open:',isLoadingModalOpen);
@@ -245,7 +245,7 @@ const Map = () => {
         fetchNearbyStations({
           latitude: myLocation.lat,
           longitude: myLocation.lng,
-          inputRadius: 10,
+          inputRadius: radius,
         })
       );
     }
