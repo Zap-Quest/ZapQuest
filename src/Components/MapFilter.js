@@ -4,7 +4,12 @@ import Select from "react-select";
 const MapFilter = ({ onFilterChange, closeModal, onRadiusChange, radius }) => {
   const connectorTypeOptions = [
     { value: "J1772", label: "J1772" },
+    { value: "J1772COMBO", label: "CCS" },
     { value: "TESLA", label: "TESLA" },
+    { value: "CHADEMO", label: "CHAdeMO" },
+    { value: "NEMA515", label: "NEMA 5-15" },
+    { value: "NEMA520", label: "NEMA 5-20" },
+    { value: "NEMA1450", label: "NEMA 14-50" },
   ];
 
   const chargingSpeedOptions = [
