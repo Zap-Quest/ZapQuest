@@ -19,11 +19,14 @@ const StationInfo = (props) => {
     console.log("station EV1:",station.properties.ev_level1_evse_num);
     console.log("station EV2:",station.properties.ev_level2_evse_num);
     console.log("station type:",station.properties.ev_connector_types);
+    console.log("station:",station);
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const {auth,favorite} = useSelector(state => state);
+    const {auth,favorite,allStations} = useSelector(state => state);
     const [stationInFavorite,setStationInFavorite] = useState(false);
     const stationAddress = `${station.properties.street_address}, ${station.properties.city}, ${station.properties.state}`
+    const [nearbyStations, setNearbyStations] = useState(null);
+    
     //helper
     const addToFavorite = () => {
         const stationToAdd ={
@@ -62,6 +65,18 @@ const StationInfo = (props) => {
             setStationInFavorite(tempstationInFavorite);
         }
     },[favorite,station.properties.id]); 
+    
+    React.useEffect(() => {
+        const tempStationList = allStations.filter((s) => {
+            return s.properties.zip === station.properties.zip;
+        })
+        console.log('allStations',allStations)
+        console.log('tempStationList',tempStationList);
+        setNearbyStations(tempStationList);
+
+    },[allStations])
+
+    
     
  
    
@@ -123,14 +138,13 @@ const StationInfo = (props) => {
                             )}
                             </div>
                         </div>
-                        <div className="card" style={{ width: '265px',fontSize:"0.8rem" }}>
+                        <div className="card" style={{ width: '265px', marginBottom:"0.5rem",fontSize:"0.8rem" }}>
                             <div className="card-body">
                             <p className="card-title d-flex w-100 justify-content-between">
                                 <span>
                                     <i className="fa-solid fa-charging-station" style={{ color: "#779DA6" }}/>
                                     <span>{` ${station.properties.ev_network.toUpperCase()}`}</span>
                                 </span>
-                                <small> {`${station.properties.ev_level2_evse_num}plugs`} </small>
                             </p>
                             <hr/>
                             <p className="card-text">
@@ -141,6 +155,28 @@ const StationInfo = (props) => {
                                     </span>
                                 )})}
                             </p>
+                            </div>
+                        </div>
+                        <div className="card" style={{ width: '265px',fontSize:"0.8rem" }}>
+                            <div className="card-body">
+                            <p className="card-title d-flex w-100 justify-content-between">
+                                <span>
+                                    <i className="fa-solid fa-charging-station" style={{ color: "#EABD00" }}/>
+                                    <span>{' NEARBY CHARGING STATION'}</span>
+                                </span>
+                            </p>
+                            <div className="card-text">
+                                {nearbyStations &&
+                                    nearbyStations.map((s)=>{
+                                        console.log("s:",s);
+                                    return (<div key={s.properties.id}>
+                                                <hr/>
+                                                <p><i className="fa-solid fa-location-dot" style={{ color: "#EABD00" }}/>{`  ${s.properties.station_name}`}</p>
+                                                <p style={{fontSize:"0.6rem"}}>{` ${s.properties.street_address.toUpperCase()} ${s.properties.city.toUpperCase()}`}</p>
+                                            </div>
+                                    )})
+                                }
+                            </div>
                             </div>
                         </div>
                     </>
