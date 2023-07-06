@@ -42,7 +42,8 @@ const Map = () => {
   const [steps,setSteps] = useState(null);
   const [origin,setOrigin] = useState(null);
   const [destination,setDestination] = useState(null);
-  const [radius, setRadius] = useState(10);
+  const [radius, setRadius] = useState(30);
+  const [selectedCenter,setSelectedCenter] = useState(null);
   const [isLoadingModalOpen,setIsLoadingModalOpen] = useState(true);
 
   console.log('is loading modal open:',isLoadingModalOpen);
@@ -142,6 +143,7 @@ const Map = () => {
       setIsFavoriteOpen(false);
       setIsRoutesOpen(false);
       setIsStationInfoOpen(true);
+      setSelectedCenter({ lat: coordinates[1]-0.0005, lng: coordinates[0] });
     }
     navigate(`/map/place/${encodeURIComponent(address)}/${id}`);
   };
@@ -245,7 +247,7 @@ const Map = () => {
         fetchNearbyStations({
           latitude: myLocation.lat,
           longitude: myLocation.lng,
-          inputRadius: radius,
+          inputRadius: 10,
         })
       );
     }
@@ -381,13 +383,25 @@ const Map = () => {
                         })
                       : null
                     }
+                    {selectedCenter&&(
+                            <Marker
+                              position={selectedCenter}
+                              icon={{
+                                url: "https://cdn-icons-png.flaticon.com/512/686/686751.png",
+                                scaledSize: new window.google.maps.Size(20, 10), // Adjust the size here
+                                opacity: 0.1,
+                              }}
+                              zIndex={904}
+                            />
+                          )
+                    }
                   </>
                 ):(
                   <>
                     {directionsResponse && <DirectionsRenderer directions={directionsResponse}/>}
                     {
                       isRoutesOpen&&(
-                        <RouteModal onClose={closeRoutes} steps={steps} duration={duration} distance={distance}/>
+                        <RouteModal onClose={closeRoutes} steps={steps} duration={duration} distance={distance} openRoutes={openRoutes}/>
                       )
                     }
                   </>
