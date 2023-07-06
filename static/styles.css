@@ -1,5 +1,6 @@
 body {
   font-family: verdana;
+  min-width: 485px;
 }
 
 form {
@@ -9,6 +10,10 @@ form {
 
 form > * {
   margin: 1rem;
+}
+
+.navbar {
+  min-width: 485px;
 }
 
 nav {
