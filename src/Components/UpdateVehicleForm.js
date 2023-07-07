@@ -25,8 +25,8 @@ const UpdateVehicleForm = () =>{
 
     console.log("vehicle", vehicle);
     useEffect(() => {
-        dispatch(fetchVehicleById())
-    }, [dispatch])
+      dispatch(fetchVehicleById(vehicle.id)); // Pass the vehicle.id parameter
+    }, [dispatch, vehicle.id]);
     console.log("vehicle", vehicle);
     
 
