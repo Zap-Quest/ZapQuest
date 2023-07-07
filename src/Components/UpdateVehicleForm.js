@@ -1,35 +1,45 @@
 import React, { useState , useEffect } from 'react';
-import { useParams, Link, Navigate, useNavigate } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAllUsers, fetchVehicleById, updateVehicle } from '../store';
 
 
 const UpdateVehicleForm = () =>{
+    const { id } = useParams();
     const dispatch = useDispatch();
     const userAuthObj = useSelector(state => state.auth)
     const user = useSelector(state => state.user.usersList.find(e => e.id === userAuthObj.id));
-    const vehicle = useSelector((state) => state.vehicle);
+    const vehicle = useSelector((state) => state.vehicle.activeVehicle);
     const navigate = useNavigate();
 
-    const [vehicleMake, setVehicleMake] = useState(vehicle.make);
-    const [vehicleModel, setVehicleModel] = useState(vehicle.model);
-    const [vehicleYear, setVehicleYear] = useState(vehicle.year);
-    const [vehicleChargertype, setVehicleChargertype] = useState(vehicle.chargertype);
-    const [vehicleImage, setVehicleImage] = useState(vehicle.image);
+    const [vehicleMake, setVehicleMake] = useState('');
+    const [vehicleModel, setVehicleModel] = useState('');
+    const [vehicleYear, setVehicleYear] = useState('');
+    const [vehicleChargertype, setVehicleChargertype] = useState('');
+    const [vehicleImage, setVehicleImage] = useState('');
 
-    const handleModelChange = (e) => setVehicleMake(e.target.value);
-    const handleMakeChange = (e) => setVehicleModel(e.target.value);
+    const handleModelChange = (e) => setVehicleModel(e.target.value);
+    const handleMakeChange = (e) => setVehicleMake(e.target.value);
     const handleYearChange = (e) => setVehicleYear(e.target.value);
     const handleChargertypeChange = (e) => setVehicleChargertype(e.target.value);
     const handleImageChange = (e) => setVehicleImage(e.target.value);
 
-    console.log("vehicle", vehicle);
     useEffect(() => {
-        dispatch(fetchVehicleById())
-    }, [dispatch])
+      if(id && vehicle) {
+        dispatch(fetchVehicleById(id)).then(res => { 
+            if(res.payload){
+                setVehicleMake(res.payload.make || '');
+                setVehicleModel(res.payload.model || '');
+                setVehicleYear(res.payload.year || '');
+                setVehicleChargertype(res.payload.chargertype || '');
+                setVehicleImage(res.payload.image || '');
+            }
+        });
+      }
+    }, [dispatch, id, vehicle]);
+    
     console.log("vehicle", vehicle);
     
-
     const handleSubmit = (e) => {
         e.preventDefault();
         const updatedVehicleData = {
@@ -54,7 +64,7 @@ const UpdateVehicleForm = () =>{
           <Link to={`/myaccount`}>
             <p>Back to Dashboard</p>
           </Link>
-          {user && (
+          {user && vehicle && (
             <div className='vehicle-details-container'>
               <p>Make: {vehicle.make}</p>
               <p>Model: {vehicle.model}</p>

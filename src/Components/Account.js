@@ -8,7 +8,7 @@ const MyAccount = () => {
   const userAuthObj = useSelector((state) => state.auth);
   const usersList = useSelector((state) => state.user.usersList);
   const userStatus = useSelector((state) => state.user.status);
-  const vehicle = useSelector((state) => state.vehicle);
+  const vehicle = useSelector((state) => state.vehicle.vehicles);
   const [showPassword, setShowPassword] = React.useState(false);
 
   useEffect(() => {
@@ -151,7 +151,7 @@ const MyAccount = () => {
                         </div>
                       </div>
                       <div className="col-md-6 mt-5">
-                        <Link to={`/myaccount/updatevehicle`}>
+                        <Link to={`/myaccount/updatevehicle/${vehicle.id}`}>
                           <button className="btn default-button">
                             Update your information
                           </button>
