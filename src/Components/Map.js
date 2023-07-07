@@ -361,6 +361,7 @@ const Map = () => {
                           scaledSize: new window.google.maps.Size(36, 36), // Adjust the size here
                         }}
                         zIndex={998}
+                        animation={google.maps.Animation.DROP}
                       />
                     ) : null
                     }
