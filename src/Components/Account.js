@@ -25,7 +25,7 @@ const MyAccount = () => {
   } else if (userStatus === "succeeded") {
     const user = usersList.find((e) => e.id === userAuthObj.id);
     console.log("user", user);
-    console.log("userAurthObj:", userAuthObj);
+    console.log("userAuthObj:", userAuthObj);
     const userVehicle = vehicle.find((v) => v.userId === userAuthObj.id);
     console.log("userVehicle:", userVehicle);
 
@@ -97,7 +97,7 @@ const MyAccount = () => {
                             <p className="text-muted">{user.address}</p>
                           </div>
                           <div className="col-md-6 mt-5">
-                            <Link to={`/myaccount/updateuserinfo`}>
+                            <Link to={`/myaccount/updateuser`}>
                               <button className="btn default-button">
                                 Update your information
                               </button>

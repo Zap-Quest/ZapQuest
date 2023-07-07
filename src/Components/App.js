@@ -8,6 +8,8 @@ import { loginWithToken, fetchFavorite } from '../store';
 import { Link, Routes, Route } from 'react-router-dom';
 import MyAccount from './Account';
 import About from './About';
+import UpdateUserForm from './UpdateUserForm';
+import UpdateVehicleForm from './UpdateVehicleForm';
 // require('dotenv').config({path: '../.env'})
 
 
@@ -33,9 +35,19 @@ const App = ()=> {
           <Route path="/map/place/:address/:stationId" element={<Map />} />
           <Route path="/map/place/:address" element={<Map />} />
           <Route path="/map/dir/:startAddress/:endAddress" element={<Map />} />
-          <Route path="/myaccount" element={<MyAccount />} />
           <Route path="/about" element={<About />} />
         </Routes>
+        {
+        !!auth.id  && (        
+          <div>
+            <Routes>
+              <Route path='/myaccount/updateuser' element={<UpdateUserForm />} />
+              <Route path='/myaccount/updatevehicle' element={<UpdateVehicleForm />} />
+              <Route path="/myaccount" element={<MyAccount />} />
+            </Routes>
+          </div>
+        )
+      }
       </div>
     </div>
   );
