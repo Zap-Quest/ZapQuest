@@ -2,7 +2,7 @@ import React, { useState, useCallback, useRef, useEffect } from "react";
 import { GoogleMap, Marker, useLoadScript, DirectionsRenderer,  MarkerClusterer } from "@react-google-maps/api";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
-import { addFavorite, fetchNearbyStations, fetchSearchAddress, setToNearby } from "../store";
+import { fetchNearbyStations, fetchSearchAddress, setToNearby } from "../store";
 
 import "dotenv/config";
 import MapFilter from "./MapFilter";
