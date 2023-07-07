@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useRef, useEffect } from "react";
-import { GoogleMap, Marker, useLoadScript, DirectionsRenderer } from "@react-google-maps/api";
+import { GoogleMap, Marker, useLoadScript, DirectionsRenderer,  MarkerClusterer } from "@react-google-maps/api";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 import { addFavorite, fetchNearbyStations, fetchSearchAddress, setToNearby } from "../store";
@@ -45,6 +45,7 @@ const Map = () => {
   const [radius, setRadius] = useState(30);
   const [selectedCenter,setSelectedCenter] = useState(null);
   const [isLoadingModalOpen,setIsLoadingModalOpen] = useState(true);
+  const [activeMarker, setActiveMarker] = useState(null);
 
   console.log('is loading modal open:',isLoadingModalOpen);
   /* helper function */
@@ -134,7 +135,7 @@ const Map = () => {
     setIsStationInfoOpen(false);
   };
 
-    //navigate to specific station
+  //navigate to specific station
   const handleStationId = (id) => {
     const selectedStation = allStations.find((s) => s.properties.id === id);
     if (selectedStation) {
@@ -144,6 +145,7 @@ const Map = () => {
       setIsRoutesOpen(false);
       setIsStationInfoOpen(true);
       setSelectedCenter({ lat: coordinates[1]-0.00005, lng: coordinates[0] });
+      setActiveMarker(id);
     }
     navigate(`/map/place/${encodeURIComponent(address)}/${id}`);
   };
@@ -343,8 +345,8 @@ const Map = () => {
                         icon={{
                           url: "https://cdn-icons-png.flaticon.com/512/8065/8065913.png",
                           scaledSize: new window.google.maps.Size(36, 36), // Adjust the size here
-                        
                         }}
+                        animation={google.maps.Animation.DROP}
                         zIndex={999}
                       />
                     ) : null
@@ -378,6 +380,7 @@ const Map = () => {
                                 scaledSize: new window.google.maps.Size(23,30), // Adjust the size here
                               }}
                               key={s.properties.id}
+                              animation = {activeMarker === s.properties.id?window.google.maps.Animation.BOUNCE: null}
                               onClick={() => handleStationId(s.properties.id)}
                             />
                           );
