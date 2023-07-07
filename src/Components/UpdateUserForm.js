@@ -7,18 +7,14 @@ import { fetchAllUsers, updateUserProfile } from '../store';
 const UpdateUserForm = () =>{
     const dispatch = useDispatch();
     const userAuthObj = useSelector(state => state.auth);
-    const user = useSelector(state=>state.users.usersList.find(e=>e.id === userAuthObj.id));
-    const navigate = useNavigate();
-    
+    const user = useSelector(state => state.user.usersList.find(e => e.id === userAuthObj.id));
+    const navigate = useNavigate();  
 
-    const [userFirstName, setUserFirstName] = useState(user.firstName);
-    const [userLastName, setUserLastName] = useState(user.lastName);
     const [userEmail, setUserEmail] = useState(user.email);
     const [userAvatar, setUserAvatar] = useState(user.avatar);
     const [userPassword, setUserPassword] = useState(user.password);
 
-    const handleFirstNameChange = (e) => setUserFirstName(e.target.value);
-    const handleLastNameChange = (e) => setUserLastName(e.target.value);
+
     const handleEmailChange = (e) => setUserEmail(e.target.value);
     const handleAvatarChange = (e) => setUserAvatar(e.target.value);
     const handlePasswordChange = (e) => setUserPassword(e.target.value);
@@ -31,15 +27,11 @@ const UpdateUserForm = () =>{
         e.preventDefault();
         const updatedUserData = {
             id: user.id,
-            firstName: userFirstName,
-            lastName: userLastName,
             email: userEmail,
             password: userPassword,
             avatar: userAvatar,
         }
         dispatch(updateUserProfile(updatedUserData))
-        setUserFirstName('')
-        setUserLastName('')
         setUserEmail('')
         setUserAvatar('')
         setUserPassword('')
@@ -53,29 +45,12 @@ const UpdateUserForm = () =>{
           </Link>
           {user && (
             <div className='user-details-container'>
-              <p>Full Name: {user.firstName} {user.lastName}</p>
               <p>Email: {user.email}</p>
               <p>Avatar: {user.avatar}</p>
             </div>
           )}
           <h2>Update Information</h2>
           <form onSubmit={handleSubmit}>
-            <div className="form-group">
-              <label>First Name</label>
-              <input
-                name="firstName"
-                value={userFirstName}
-                onChange={handleFirstNameChange}
-              />
-            </div>
-            <div className="form-group">
-              <label>Last Name</label>
-              <input
-                name="lastName"
-                value={userLastName}
-                onChange={handleLastNameChange}
-              />
-            </div>
             <div className="form-group">
               <label>Email</label>
               <input

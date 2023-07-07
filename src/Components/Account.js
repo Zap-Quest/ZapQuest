@@ -150,9 +150,13 @@ const MyAccount = () => {
                           </p>
                         </div>
                       </div>
-                      <button className="btn default-button mt-3">
-                        Update vehicle information
-                      </button>
+                      <div className="col-md-6 mt-5">
+                        <Link to={`/myaccount/updatevehicle`}>
+                          <button className="btn default-button">
+                            Update your information
+                          </button>
+                        </Link>
+                      </div>
                     </div>
                   </div>
                 </div>

@@ -7,7 +7,7 @@ import { fetchAllUsers, fetchVehicleById, updateVehicle } from '../store';
 const UpdateVehicleForm = () =>{
     const dispatch = useDispatch();
     const userAuthObj = useSelector(state => state.auth)
-    const user = useSelector(state=>state.users.usersList.find(e=>e.id === userAuthObj.id));
+    const user = useSelector(state => state.user.usersList.find(e => e.id === userAuthObj.id));
     const vehicle = useSelector((state) => state.vehicle);
     const navigate = useNavigate();
 
@@ -23,9 +23,12 @@ const UpdateVehicleForm = () =>{
     const handleChargertypeChange = (e) => setVehicleChargertype(e.target.value);
     const handleImageChange = (e) => setVehicleImage(e.target.value);
 
+    console.log("vehicle", vehicle);
     useEffect(() => {
         dispatch(fetchVehicleById())
     }, [dispatch])
+    console.log("vehicle", vehicle);
+    
 
     const handleSubmit = (e) => {
         e.preventDefault();
