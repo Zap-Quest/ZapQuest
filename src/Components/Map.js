@@ -14,9 +14,9 @@ import RouteModal from "./RoutesModal";
 import LoadingSpinner from "./LoadingSpinner";
 
 const Map = () => {
-  const { isLoaded } = useLoadScript({
-    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
-  });
+  // const { isLoaded } = useLoadScript({
+  //   googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
+  // });
 
  
 
@@ -42,7 +42,7 @@ const Map = () => {
   const [steps,setSteps] = useState(null);
   const [origin,setOrigin] = useState(null);
   const [destination,setDestination] = useState(null);
-  const [radius, setRadius] = useState(30);
+  const [radius, setRadius] = useState(10);
   const [selectedCenter,setSelectedCenter] = useState(null);
   const [isLoadingModalOpen,setIsLoadingModalOpen] = useState(true);
   const [activeMarker, setActiveMarker] = useState(null);
@@ -312,7 +312,7 @@ const Map = () => {
         </button>
 
         {/* loading Map */}
-        {!isLoaded ||isLoadingModalOpen ? (
+        {/*!isLoaded ||*/isLoadingModalOpen ? (
            <LoadingSpinner/>
         ) : (
           <>
@@ -325,7 +325,7 @@ const Map = () => {
               {/* Favorite List Modal*/}
               {
                 isFavoriteOpen&&(
-                  <FavoriteList onClose={closeMyFavorite}/>
+                  <FavoriteList onClose={closeMyFavorite} openStationInfo={openStationInfo}/>
                 )
               }
               {/* StationInfo Modal*/}
