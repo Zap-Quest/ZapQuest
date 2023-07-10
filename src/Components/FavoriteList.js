@@ -112,7 +112,7 @@ const FavoriteList = (props) => {
 
     return (
       <div>
-        <div className="card" style={{ width: '265px',marginBottom:'0.25rem'}}>
+        <div className="card" style={{ width: '100%',marginBottom:'0.25rem'}}>
           <div className="card-body" style={{padding:'0.5rem'}}>
             <p className="card-title"style={{fontSize:"0.8rem",marginBottom:'0.25rem',cursor:"pointer", color:"#5f919d"}} onClick={()=>handleSelectedStation(station)}>
                 <i className="fa-solid fa-charging-station">
