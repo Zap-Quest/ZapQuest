@@ -50,8 +50,10 @@ const StationInfo = (props) => {
         //console.log("address:",address.split(',').join(''), "stationAddress:",stationAddress.split(',').join(''),address.split(',').join('') !== stationAddress.split(',').join(''));
         if(address.split(',').join('') !== stationAddress.split(',').join('')){
             navigate(`/map/dir/${encodeURIComponent(address)}/${encodeURIComponent(stationAddress)}`);
+        }else{
+            navigate(`/map/dir/nearby/${encodeURIComponent(stationAddress)}`);
         }
-        navigate(`/map/dir/nearby/${encodeURIComponent(stationAddress)}`);
+        
         
     }
     //
@@ -145,6 +147,7 @@ const StationInfo = (props) => {
                                     <i className="fa-solid fa-charging-station" style={{ color: "#779DA6" }}/>
                                     <span>{` ${station.properties.ev_network.toUpperCase()}`}</span>
                                 </span>
+                                <small>{station.properties.ev_pricing&&station.properties.ev_pricing.toUpperCase()!=="FREE"?("PAID"):("FREE")}</small>
                             </p>
                             <hr/>
                             <p className="card-text">
@@ -168,7 +171,7 @@ const StationInfo = (props) => {
                             <div className="card-text">
                                 {nearbyStations &&
                                     nearbyStations.map((s)=>{
-                                        console.log("s:",s);
+                                    console.log("s:",s);
                                     return (<div key={s.properties.id}>
                                                 <hr/>
                                                 <p><i className="fa-solid fa-location-dot" style={{ color: "#EABD00" }}/>{`  ${s.properties.station_name}`}</p>

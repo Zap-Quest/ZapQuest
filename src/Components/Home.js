@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { logout } from "../store";
 import Favorite from "./Favorite";
+import Help from "./Help";
 
 const Home = () => {
   const { auth } = useSelector((state) => state);
@@ -14,6 +15,7 @@ const Home = () => {
   const [searchInput, setSearchInput] = useState("");
   const [selectedPlace, setSelectedPlace] = useState(null);
   const [isFavoriteOpen,setIsFavoriteOpen] = useState(false);
+  const [isHelpOpen,setIsHelpOpen] = useState(false);
 
   const onChange = (ev) => {
     setSearchInput(ev.target.value);
@@ -36,12 +38,24 @@ const Home = () => {
 
   // my favorite module
   const openMyFavorite = () => {
+    setIsHelpOpen(false);
     setIsFavoriteOpen(true);
   };
 
   const closeMyFavorite = () => {
     setIsFavoriteOpen(false);
   };
+
+    // my favorite module
+    const openHelp = () => {
+      setIsFavoriteOpen(false);
+      setIsHelpOpen(true);
+    };
+  
+    const closeHelp = () => {
+      setIsHelpOpen(false);
+    };
+  
 
   useEffect(() => {
     let place;
@@ -119,8 +133,9 @@ const Home = () => {
                 </button>
               </div>
               <div className="col">
-                <button className="btn btn-dark default-button" style={{ width: "200px" }}>
-                  Help
+                <button className="btn btn-dark default-button" style={{ width: "200px" }} onClick={openHelp}>
+                  <i className="fa-sharp fa-solid fa-circle-question"></i>
+                  <span>Help</span>
                 </button>
               </div>
             </div>
@@ -128,6 +143,7 @@ const Home = () => {
         </div>
       </div>
       {isFavoriteOpen&&<Favorite onClose={closeMyFavorite}/>}
+      {isHelpOpen&&<Help closeHelp={closeHelp}/>}
     </>
   );
 };

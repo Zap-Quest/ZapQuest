@@ -212,6 +212,66 @@ nav {
   background-color: #e6e6e6;
 }
 
+/* ----- copy URL button -----*/
+.copy-URL {
+  position: absolute;
+  top: 275px;
+  right: 30px;
+  z-index: 999;
+  background-color: #fff;
+  border: 1px solid transparent;
+  border-radius: 2px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+  color: #333;
+  cursor: pointer;
+  font-family: Roboto, Arial, sans-serif;
+  line-height: 38px;
+  padding: 0 12px;
+  text-align: center;
+  font-size: 14px;
+  width: 38px;
+  height: 38px;
+}
+
+.copy-URL:hover {
+  background-color: #e6e6e6;
+}
+
+.copy-URL {
+  outline: none;
+  background-color: #e6e6e6;
+}
+
+/* ----- see help button -----*/
+.see-help {
+  position: absolute;
+  top: 325px;
+  right: 30px;
+  z-index: 999;
+  background-color: #fff;
+  border: 1px solid transparent;
+  border-radius: 2px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+  color: #333;
+  cursor: pointer;
+  font-family: Roboto, Arial, sans-serif;
+  line-height: 38px;
+  padding: 0 12px;
+  text-align: center;
+  font-size: 14px;
+  width: 38px;
+  height: 38px;
+}
+
+.see-help{
+  background-color: #e6e6e6;
+}
+
+.see-help {
+  outline: none;
+  background-color: #e6e6e6;
+}
+
 /* ----- input -----*/
 .input-group {
   width: 60%;
@@ -250,4 +310,3 @@ nav {
   margin-left: 30%;
   margin-bottom: 20px;
 }
-

@@ -17,7 +17,7 @@ export const fetchVehicleById = createAsyncThunk('fetchVehicleById', async (id) 
     return { ...data, user: data.User };
   } catch (err) {
     console.log(err);
-    throw err; // Re-throw the error
+    throw err;
   }
 });
 
@@ -28,7 +28,7 @@ export const updateVehicle = createAsyncThunk('updateVehicle', async (formData) 
     return response.data;
   } catch (err) {
     console.log(err);
-    throw err; // Re-throw the error
+    throw err;
   }
 });
 

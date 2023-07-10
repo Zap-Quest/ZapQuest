@@ -6,8 +6,10 @@ import Pagination from "./Pagination";
 
 
 
-const FavoriteList = ({onClose}) => {
+const FavoriteList = (props) => {
     console.log('Station Modal shown');
+    const onClose = props.onClose;
+    const openStationInfo = props.openStationInfo
     const dispatch = useDispatch();
     const {auth,favorite} = useSelector(state => state);
     const [currentPage, setCurrentPage] = useState(1);
@@ -69,7 +71,7 @@ const FavoriteList = ({onClose}) => {
                         currentFavorite && (
                             <>
                                 {currentFavorite.map((f) => {
-                                    return(<Card key={f.stationId} station={f}/>)
+                                    return(<Card key={f.stationId} station={f} openStationInfo={openStationInfo}/>)
                                 })}
                                 <Pagination 
                                     totalPages={totalPages} 
@@ -94,11 +96,13 @@ const FavoriteList = ({onClose}) => {
     const navigate = useNavigate()
     const station = props.station;
     const dispatch= useDispatch();
+    const openStationInfo=props.openStationInfo;
     const address = station.street+', '+station.city+', '+station.state;
     //helper
     const handleSelectedStation=(input)=>{
         const address = input.street+' '+input.city+' '+input.state;
         console.log(address);
+        openStationInfo();
         navigate(`/map/place/${encodeURIComponent(address)}/${input.stationId}`);
     }
     const handleRemoveFavorite=()=>{
