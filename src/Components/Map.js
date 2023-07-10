@@ -254,7 +254,7 @@ const Map = () => {
       }
       setDestination(endAddress);
     }
-  }, [startAddress,address]);
+  }, [startAddress, address, radius]);
 
   // if search specific address
   /*
@@ -283,11 +283,11 @@ const Map = () => {
         fetchNearbyStations({
           latitude: myLocation.lat,
           longitude: myLocation.lng,
-          inputRadius: 10,
+          inputRadius: radius,
         })
       );
     }
-  }, [myLocation]);
+  }, [myLocation, radius]);
 
   //fetch stations
   React.useEffect(() => {

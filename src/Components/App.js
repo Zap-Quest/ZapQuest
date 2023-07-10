@@ -43,6 +43,7 @@ const App = ()=> {
             <Routes>
               <Route path='/myaccount/updateuser' element={<UpdateUserForm />} />
               <Route path='/myaccount/updatevehicle' element={<UpdateVehicleForm />} />
+              <Route path='/myaccount/updatevehicle/:id' element={<UpdateVehicleForm />} />
               <Route path="/myaccount" element={<MyAccount />} />
             </Routes>
           </div>

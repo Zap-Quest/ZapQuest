@@ -8,7 +8,7 @@ const MyAccount = () => {
   const userAuthObj = useSelector((state) => state.auth);
   const usersList = useSelector((state) => state.user.usersList);
   const userStatus = useSelector((state) => state.user.status);
-  const vehicle = useSelector((state) => state.vehicle);
+  const vehicle = useSelector((state) => state.vehicle.vehicles);
   const [showPassword, setShowPassword] = React.useState(false);
 
   useEffect(() => {
@@ -58,9 +58,16 @@ const MyAccount = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="col-md-8">
+                    <div className="col-md-8 d-flex flex-column">
                       <div className="card-body p-4">
-                        <h6>Information</h6>
+                        <div className="d-flex justify-content-between align-items-center mb-3">
+                          <h6>Information</h6>
+                          <Link to={`/myaccount/updateuser`}>
+                            <button className="btn">
+                              <i className="fa-solid fa-pen-to-square"></i>
+                            </button>
+                          </Link>
+                        </div>
                         <hr className="mt-0 mb-4" />
                         <div className="row pt-1">
                           <div className="col-md-6 mt-1">
@@ -96,13 +103,6 @@ const MyAccount = () => {
                             <h6 className="my-account-p">Address</h6>
                             <p className="text-muted">{user.address}</p>
                           </div>
-                          <div className="col-md-6 mt-5">
-                            <Link to={`/myaccount/updateuser`}>
-                              <button className="btn default-button">
-                                Update your information
-                              </button>
-                            </Link>
-                          </div>
                         </div>
                       </div>
                     </div>
@@ -110,9 +110,9 @@ const MyAccount = () => {
                 </div>
               )}
               {userVehicle && (
-                <div className="card my-3" style={{ borderRadius: ".5rem" }}>
+                <div className="card mb-3" style={{ borderRadius: ".5rem" }}>
                   <div className="row g-0">
-                  <div
+                    <div
                       className="col-md-4 text-center"
                       style={{
                         borderTopLeftRadius: ".5rem",
@@ -121,41 +121,47 @@ const MyAccount = () => {
                       }}
                     >
                       <img
-                        className="user-avatar mt-5"
+                        className="img-fluid mt-5"
                         src={userVehicle.image}
-                        alt="Vehicle"
-                        style={{ width: "200px" }}
+                        alt="Vehicle Image"
+                        style={{ width: "150px" }}
                       />
                     </div>
-                    <div className="card-body p-5">
-                      <h6>Vehicle Information</h6>
-                      <hr className="mt-0 mb-4" />
-                      <div className="row pt-1">
-                        <div className="col-md-6 mt-1">
-                          <h6 className="my-account-p">Make</h6>
-                          <p className="text-muted mt-1">{userVehicle.make}</p>
+                    <div className="col-md-8 d-flex flex-column">
+                      <div className="card-body p-4">
+                        <div className="d-flex justify-content-between align-items-center mb-3">
+                          <h6>Vehicle Information</h6>
+                          <Link to={`/myaccount/updateuser`}>
+                            <button className="btn">
+                              <i className="fa-solid fa-pen-to-square"></i>
+                            </button>
+                          </Link>
                         </div>
-                        <div className="col-md-6 mt-1">
-                          <h6 className="my-account-p">Model</h6>
-                          <p className="text-muted mt-1">{userVehicle.model}</p>
+                        <hr className="mt-0 mb-4" />
+                        <div className="row pt-1">
+                          <div className="col-md-6 mt-1">
+                            <h6 className="my-account-p">Make</h6>
+                            <p className="text-muted mt-1">
+                              {userVehicle.make}
+                            </p>
+                          </div>
+                          <div className="col-md-6 mt-1">
+                            <h6 className="my-account-p">Model</h6>
+                            <p className="text-muted mt-1">
+                              {userVehicle.model}
+                            </p>
+                          </div>
+                          <div className="col-md-6 mt-4">
+                            <h6 className="my-account-p">Year</h6>
+                            <p className="text-muted">{userVehicle.year}</p>
+                          </div>
+                          <div className="col-md-6 mt-4">
+                            <h6 className="my-account-p">Charger Type</h6>
+                            <p className="text-muted">
+                              {userVehicle.chargertype}
+                            </p>
+                          </div>
                         </div>
-                        <div className="col-md-6 mt-1">
-                          <h6 className="my-account-p">Year</h6>
-                          <p className="text-muted mt-1">{userVehicle.year}</p>
-                        </div>
-                        <div className="col-md-6 mt-1">
-                          <h6 className="my-account-p">Charger Type</h6>
-                          <p className="text-muted mt-1">
-                            {userVehicle.chargertype}
-                          </p>
-                        </div>
-                      </div>
-                      <div className="col-md-6 mt-5">
-                        <Link to={`/myaccount/updatevehicle`}>
-                          <button className="btn default-button">
-                            Update your information
-                          </button>
-                        </Link>
                       </div>
                     </div>
                   </div>
