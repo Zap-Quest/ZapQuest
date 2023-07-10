@@ -1,32 +1,40 @@
 /* ----- Help Legend CSS -----*/
-.help [class*="fa-"] {
+.map-modal [class*="fa-"] {
     font-size:150%;
   }
-  .help .d-flex {
+.map-modal .d-flex {
     gap: 15px;
     margin-bottom: 1rem;
     font-size: 10px;
   }
-  .help h4{
+.map-modal h4{
     font-size: 16px;
   }
-  .help p{
+.map-modal p{
     font-size: 12px;
   }
   
   
   
   
-  @media (max-width: 767px) {
-      .map-modal .modal-dialog {
+@media (max-width: 767px) {
+    .map-modal .modal-dialog {
           width: 90%;
           max-width: none;
-          margin-top:30%;
-
-  
-        }
-  
+          margin-left: 5%;
+          margin-right:auto;
+          margin-bottom: 6%;
+          margin-top: auto;
     }
+    .map-modal .modal-body {
+            height:200px;
+    }
+    .map-modal .modal-content {
+        position: absolute;
+        bottom:10%
+    }
+}
+
   
     
   @media (min-width: 768px) and (max-width: 991px) {
