@@ -8,7 +8,7 @@ const MyAccount = () => {
   const userAuthObj = useSelector((state) => state.auth);
   const usersList = useSelector((state) => state.user.usersList);
   const userStatus = useSelector((state) => state.user.status);
-  const vehicle = useSelector((state) => state.vehicle);
+  const vehicle = useSelector((state) => state.vehicle.vehicles);
   const [showPassword, setShowPassword] = React.useState(false);
 
   useEffect(() => {
