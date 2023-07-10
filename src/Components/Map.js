@@ -12,6 +12,8 @@ import StationsList from "./StationsLIst";
 import FavoriteList from "./FavoriteList";
 import RouteModal from "./RoutesModal";
 import LoadingSpinner from "./LoadingSpinner";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Map = () => {
   // const { isLoaded } = useLoadScript({
@@ -149,6 +151,18 @@ const Map = () => {
     }
     navigate(`/map/place/${encodeURIComponent(address)}/${id}`);
   };
+
+  //handle copy URL
+  const handleCopyURL = async() =>{
+    const currentURL = window.location.href;
+    try{
+      navigator.clipboard.writeText(currentURL);
+      toast.success(`URL copied to clipboard`);
+    }catch(error){
+      console.error("Failed to copy URL to clipboard:", error);
+    }
+    console.log("copy");
+  }
     
   //map style
   const mapOptions = {
@@ -163,6 +177,7 @@ const Map = () => {
     // setTimeout(() => {
     //   setIsLoadingModalOpen(false);
     // }, 500);
+    toast.success(`Direct to My Location`);
     navigate(`/map/place/${encodeURIComponent("nearby")}`);
   }
 
@@ -311,6 +326,16 @@ const Map = () => {
           <i className="fa fa-sharp fa-solid fa-turn-down fa-rotate-90"></i>
         </button>
 
+        {/* copy URL */}
+        <button className="copy-URL" onClick={handleCopyURL} >
+          <i className="fa-solid fa-share-nodes"></i>
+        </button>
+
+        {/* see-help */}
+        <button className="see-help">
+          <i className="fa-sharp fa-solid fa-circle-question"></i>
+        </button>
+
         {/* loading Map */}
         {/*!isLoaded ||*/isLoadingModalOpen ? (
            <LoadingSpinner/>
@@ -343,10 +368,10 @@ const Map = () => {
                       <Marker
                         position={myLocation}
                         icon={{
-                          url: "https://cdn-icons-png.flaticon.com/512/8065/8065913.png",
+                          url: "https://cdn-icons-png.flaticon.com/512/5501/5501965.png",//"https://cdn-icons-png.flaticon.com/512/8065/8065913.png"
                           scaledSize: new window.google.maps.Size(36, 36), // Adjust the size here
                         }}
-                        animation={google.maps.Animation.DROP}
+                        animation={google.maps.Animation.BOUNCE}
                         zIndex={999}
                       />
                     ) : null
@@ -361,7 +386,7 @@ const Map = () => {
                           scaledSize: new window.google.maps.Size(36, 36), // Adjust the size here
                         }}
                         zIndex={998}
-                        animation={google.maps.Animation.DROP}
+                        animation={google.maps.Animation.BOUNCE}
                       />
                     ) : null
                     }
@@ -417,7 +442,20 @@ const Map = () => {
               <div className="d-flex justify-content-end p-0">
                 <SearchBar/>
               </div>
+                <ToastContainer
+                    position="top-right"
+                    autoClose={2000}
+                    hideProgressBar={false}
+                    newestOnTop
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss={false}
+                    draggable
+                    pauseOnHover
+                    theme="light"
+                />
             </GoogleMap>
+          
           </>
         )}
       </div>
