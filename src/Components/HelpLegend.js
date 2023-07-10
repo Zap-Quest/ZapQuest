@@ -20,10 +20,10 @@ const HelpLegend = (props) => {
             data-mdb-keyboard="true"
           >
             <div 
-              className="modal-dialog modal-side modal-dialog-left  modal-dialog-centered" 
+              className="modal-dialog modal-side modal-dialog-left modal-dialog-centered modal-dialog-scrollable " 
               role="document" 
             >
-              <div className="modal-content" style={{ marginTop: '-10px' }}>
+              <div className="modal-content">
                 <div className="modal-header" style={{background:"#214042"}}>
                     <h5 
                         className="modal-title" 
@@ -47,7 +47,7 @@ const HelpLegend = (props) => {
                         <span aria-hidden="true" style={{color:"grey"}}>&times;</span>
                     </button>
                 </div>
-                <div className="modal-body" style={{ height: 'auto', overflowY: 'auto' }}>
+                <div className="modal-body" style={{overflowY: 'auto' }}>
                       <Card/>
                 </div>
               </div>
