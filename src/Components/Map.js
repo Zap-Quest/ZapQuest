@@ -12,6 +12,7 @@ import StationsList from "./StationsLIst";
 import FavoriteList from "./FavoriteList";
 import RouteModal from "./RoutesModal";
 import LoadingSpinner from "./LoadingSpinner";
+import HelpLegend from "./HelpLegend";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -35,8 +36,9 @@ const Map = () => {
   const [selectedStation, setSelectedStation] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isFavoriteOpen, setIsFavoriteOpen] = useState(false);//show my favorite list
-  const [isRoutesOpen, setIsRoutesOpen] = useState(true);//show my favorite list
-  const [isStationInfoOpen, setIsStationInfoOpen] = useState(true);//show my favorite list
+  const [isRoutesOpen, setIsRoutesOpen] = useState(true);//show Route
+  const [isStationInfoOpen, setIsStationInfoOpen] = useState(true);//show StationInfo
+  const [isHelpLegendOpen, setIsHelpLegendOpen] = useState(true);//show Help Legend
   const [warn,setWarn] = useState('');
   const [directionsResponse, setDirectionsResponse] = useState(null);
   const [distance,setDistance] = useState('');
@@ -107,6 +109,7 @@ const Map = () => {
   const openMyFavorite = () => {
     setIsRoutesOpen(false);
     setIsStationInfoOpen(false);
+    setIsHelpLegendOpen(false);
     setIsFavoriteOpen(true);
   };
 
@@ -118,6 +121,7 @@ const Map = () => {
   const openRoutes = () => {
     setIsFavoriteOpen(false);
     setIsStationInfoOpen(false);
+    setIsHelpLegendOpen(false);
     setIsRoutesOpen(true);
   };
 
@@ -129,6 +133,7 @@ const Map = () => {
   const openStationInfo = () => {
     setIsFavoriteOpen(false);
     setIsRoutesOpen(false);
+    setIsHelpLegendOpen(false);
     setIsStationInfoOpen(true);
   };
 
@@ -136,6 +141,31 @@ const Map = () => {
     console.log("close Station")
     setIsStationInfoOpen(false);
   };
+
+  // help Legend module
+  const openHelpLegend = () => {
+  setIsFavoriteOpen(false);
+  setIsStationInfoOpen(false);
+  setIsRoutesOpen(false);
+  setIsHelpLegendOpen(true);
+  };
+
+  const closeHelpLegend = () => {
+    setIsHelpLegendOpen(false);
+  };
+ 
+  //handle copy URL
+  const handleCopyURL = async() =>{
+    const currentURL = window.location.href;
+    try{
+      navigator.clipboard.writeText(currentURL);
+      toast.success(`URL copied to clipboard`);
+    }catch(error){
+      console.error("Failed to copy URL to clipboard:", error);
+    }
+    console.log("copy");
+  }
+
 
   //navigate to specific station
   const handleStationId = (id) => {
@@ -152,18 +182,7 @@ const Map = () => {
     navigate(`/map/place/${encodeURIComponent(address)}/${id}`);
   };
 
-  //handle copy URL
-  const handleCopyURL = async() =>{
-    const currentURL = window.location.href;
-    try{
-      navigator.clipboard.writeText(currentURL);
-      toast.success(`URL copied to clipboard`);
-    }catch(error){
-      console.error("Failed to copy URL to clipboard:", error);
-    }
-    console.log("copy");
-  }
-    
+ 
   //map style
   const mapOptions = {
     streetViewControl: false,
@@ -313,7 +332,7 @@ const Map = () => {
         )}
   
         {/* set my location button */}
-        <button className="set-mylocation-button" onClick={setToMyLocation} >
+        <button className="set-mylocation-button" onClick={setToMyLocation} style={{fontSize:"115%"}}>
             <i className="fa-solid fa-location-dot"></i>
         </button>
 
@@ -322,7 +341,7 @@ const Map = () => {
           <i className="fa fa-heart" aria-hidden="true"></i>
         </button>
         {/* show direction button */}
-        <button className="see-direction" disabled={isRoutesOpen===true} onClick={openRoutes} >
+        <button className="see-direction" disabled={isRoutesOpen===true} onClick={openRoutes} style={{fontSize:"115%"}}>
           <i className="fa fa-sharp fa-solid fa-turn-down fa-rotate-90"></i>
         </button>
 
@@ -332,8 +351,8 @@ const Map = () => {
         </button>
 
         {/* see-help */}
-        <button className="see-help">
-          <i className="fa-sharp fa-solid fa-circle-question"></i>
+        <button className="see-help" style={{fontSize:"135%"}} onClick={openHelpLegend}>
+          <i class="fa-sharp fa-solid fa-question"></i>
         </button>
 
         {/* loading Map */}

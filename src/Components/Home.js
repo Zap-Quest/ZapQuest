@@ -134,7 +134,6 @@ const Home = () => {
               </div>
               <div className="col">
                 <button className="btn btn-dark default-button" style={{ width: "200px" }} onClick={openHelp}>
-                  <i className="fa-sharp fa-solid fa-circle-question"></i>
                   <span>Help</span>
                 </button>
               </div>
