@@ -38,7 +38,7 @@ const Map = () => {
   const [isFavoriteOpen, setIsFavoriteOpen] = useState(false);//show my favorite list
   const [isRoutesOpen, setIsRoutesOpen] = useState(true);//show Route
   const [isStationInfoOpen, setIsStationInfoOpen] = useState(true);//show StationInfo
-  const [isHelpLegendOpen, setIsHelpLegendOpen] = useState(true);//show Help Legend
+  const [isHelpLegendOpen, setIsHelpLegendOpen] = useState(false);//show Help Legend
   const [warn,setWarn] = useState('');
   const [directionsResponse, setDirectionsResponse] = useState(null);
   const [distance,setDistance] = useState('');
@@ -316,6 +316,7 @@ const Map = () => {
 
     return (
       <div className="Map">
+        
   
         {/* filter modal */}
         <button className="open-modal-button" onClick={openModal}>
@@ -352,7 +353,7 @@ const Map = () => {
 
         {/* see-help */}
         <button className="see-help" style={{fontSize:"135%"}} onClick={openHelpLegend}>
-          <i class="fa-sharp fa-solid fa-question"></i>
+          <i className="fa-sharp fa-solid fa-question"></i>
         </button>
 
         {/* loading Map */}
@@ -366,6 +367,10 @@ const Map = () => {
               zoom={14}
               options={mapOptions}
             >
+              {/* Search Bar */}
+              <div className="d-flex justify-content-end p-0">
+                <SearchBar/>
+              </div>
               {/* Favorite List Modal*/}
               {
                 isFavoriteOpen&&(
@@ -377,6 +382,12 @@ const Map = () => {
               selectedStation && isStationInfoOpen? (
                   <StationInfo value={selectedStation} address={address} closeMyFavorite={closeMyFavorite} closeStationInfo={closeStationInfo}  openRoutes={openRoutes}/>
               ) : (<StationsList />) /* if we have a selectdStation, we can have specific station infor. if not, should we show the list of all the nearby stations?*/
+              }
+              {/* HelpLegend Modal*/}
+              {
+                isHelpLegendOpen&&(
+                  <HelpLegend closeHelpLegend={closeHelpLegend} />
+                )
               }
 
               {address?
@@ -457,10 +468,7 @@ const Map = () => {
                 )
               }
               
-              {/* Search Bar */}
-              <div className="d-flex justify-content-end p-0">
-                <SearchBar/>
-              </div>
+              
                 <ToastContainer
                     position="top-right"
                     autoClose={2000}
