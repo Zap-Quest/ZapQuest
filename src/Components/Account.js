@@ -8,7 +8,7 @@ const MyAccount = () => {
   const userAuthObj = useSelector((state) => state.auth);
   const usersList = useSelector((state) => state.user.usersList);
   const userStatus = useSelector((state) => state.user.status);
-  const vehicle = useSelector((state) => state.vehicle.vehicles);
+  const vehicle = useSelector((state) => state.vehicle);
   const [showPassword, setShowPassword] = React.useState(false);
 
   useEffect(() => {
@@ -24,10 +24,11 @@ const MyAccount = () => {
     content = <div>Loading...</div>;
   } else if (userStatus === "succeeded") {
     const user = usersList.find((e) => e.id === userAuthObj.id);
-    console.log("user", user);
-    console.log("userAuthObj:", userAuthObj);
-    const userVehicle = vehicle.find((v) => v.userId === userAuthObj.id);
-    console.log("userVehicle:", userVehicle);
+    console.log("user:", user)
+    console.log("vehicle:", vehicle)
+    const userVehicle = vehicle && vehicle.find((e) => e.userId === userAuthObj.id);
+
+    
 
     content = (
       <>
