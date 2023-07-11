@@ -54,15 +54,12 @@ const Map = () => {
   console.log('is loading modal open:',isLoadingModalOpen);
   /* helper function */
     //filter module
-  const handleFilterChange = useCallback(
-    (newFilters) => {
+    const handleFilterChange = useCallback((newFilters) => {
       if (allStations) {
         const filteredStations = applyFilters(allStations, newFilters);
         setEVSList(filteredStations);
       }
-    },
-    [allStations]
-  );
+    }, [allStations]);
 
   const handleRadiusChange = useCallback((event) => {
     const newRadius = event.target.value;
