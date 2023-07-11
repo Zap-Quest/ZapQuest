@@ -132,7 +132,7 @@ const MyAccount = () => {
                       <div className="card-body p-4">
                         <div className="d-flex justify-content-between align-items-center mb-3">
                           <h6>Vehicle Information</h6>
-                          <Link to={`/myaccount/updateuser`}>
+                          <Link to={`/myaccount/updatevehicle`}>
                             <button className="btn">
                               <i className="fa-solid fa-pen-to-square"></i>
                             </button>
