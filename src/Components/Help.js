@@ -41,7 +41,9 @@ const Help = (props) => {
                   className="fa-solid fa-charging-station"
                   style={{ color: "#EABD00",fontSize:"100%" }}
                 />
-                {`  HELP`}
+                <span>
+                  {`  HELP`}
+                </span>
               </h5>
               <button
                 type="button"

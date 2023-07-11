@@ -51,7 +51,6 @@ const Map = () => {
   const [isLoadingModalOpen,setIsLoadingModalOpen] = useState(true);
   const [activeMarker, setActiveMarker] = useState(null);
 
-  console.log('is loading modal open:',isLoadingModalOpen);
   /* helper function */
     //filter module
   const handleFilterChange = useCallback(
@@ -188,6 +187,7 @@ const Map = () => {
     streetViewControl: false,
     mapId: "8a036518220c529",
     fullscreenControl: false,
+   
   };
 
   //set to my location button

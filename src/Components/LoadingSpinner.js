@@ -4,7 +4,7 @@ const LoadingSpinner = () => {
     console.log("spinner");
   return (
     <div className={"show"} tabIndex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-        <div className="modal-dialog modal-sm" >
+        <div className="modal-dialog " style={{width:"40%"}}>
             <div className="modal-content ">
 
                 <div className="modal-header" style={{background:"#779DA6"}}>
