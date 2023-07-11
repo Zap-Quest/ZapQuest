@@ -36,7 +36,7 @@ const User = conn.define("user", {
   },
   address: {
     type: STRING,
-    allowNull: false,
+    allowNull: true,
     validate: {
       notEmpty: true,
     },
