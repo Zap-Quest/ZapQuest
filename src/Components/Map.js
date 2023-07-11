@@ -54,45 +54,6 @@ const Map = () => {
   console.log('is loading modal open:',isLoadingModalOpen);
   /* helper function */
     //filter module
-    const handleFilterChange = useCallback((newFilters) => {
-      if (allStations) {
-        const filteredStations = applyFilters(allStations, newFilters);
-        setEVSList(filteredStations);
-      }
-    }, [allStations]);
-
-  const handleRadiusChange = useCallback((event) => {
-    const newRadius = event.target.value;
-    setRadius(newRadius)
-  }, []);
-
-  const applyFilters = (list, filters) => {
-    if (!list) return [];
-
-    const { connectorType, chargingSpeed, provider, cost } = filters;
-
-    const connectorTypeArray = Array.isArray(connectorType)
-      ? connectorType
-      : [connectorType];
-
-    return list.filter((station) => {
-      const connectorMatch =
-        connectorTypeArray.some((connector) =>
-          station.properties.ev_connector_types.includes(connector)
-        ) || connectorType === "all";
-      const chargingSpeedMatch =
-        chargingSpeed.includes(String(station.properties.ev_level2_evse_num)) ||
-        chargingSpeed.includes("all");
-      const providerMatch =
-        provider.includes(station.properties.ev_network) ||
-        provider.includes("all");
-      const costMatch =
-        cost.includes(station.properties.ev_pricing ? "paid" : "free") ||
-        cost.includes("all");
-
-      return connectorMatch && chargingSpeedMatch && providerMatch && costMatch;
-    });
-  };
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -306,6 +267,47 @@ const Map = () => {
     }, 3000);
   }, []);
   
+  const handleFilterChange = useCallback((newFilters) => {
+    if (allStations) {
+      const filteredStations = applyFilters(allStations, newFilters);
+      setEVSList(filteredStations);
+    }
+  }, [allStations]);
+
+const handleRadiusChange = useCallback((event) => {
+  const newRadius = event.target.value;
+  setRadius(newRadius)
+}, []);
+
+const applyFilters = (list, filters) => {
+  if (!list) return [];
+
+  const { connectorType, chargingSpeed, provider, cost } = filters;
+
+  return list.filter((station) => {
+    const connectorMatch =
+      !connectorType ||
+      connectorType.includes("all") ||
+      connectorType.includes(station.properties.ev_connector_types);
+    const chargingSpeedMatch =
+      !chargingSpeed ||
+      chargingSpeed.includes("all") ||
+      chargingSpeed.includes(String(station.properties.ev_level2_evse_num));
+    const providerMatch =
+      !provider ||
+      provider.includes("all") ||
+      provider.includes(station.properties.ev_network);
+    const costMatch =
+      !cost ||
+      cost.includes("all") ||
+      (station.properties.ev_pricing && cost.includes("paid")) ||
+      (!station.properties.ev_pricing && cost.includes("free"));
+
+    return connectorMatch && chargingSpeedMatch && providerMatch && costMatch;
+  });
+};
+
+
 
   /*return, base on the URL , 
     if address exist, it means URL is "/map/place/:address/",will return the result searching all EVstations, 
