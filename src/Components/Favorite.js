@@ -41,7 +41,7 @@ const Favorite = ({onClose}) => {
     return (
         <>
           <div 
-            className="modal fade show"
+            className="modal fade show favorite"
             id="exampleModal" 
             tabIndex="-1" 
             role="dialog" 
@@ -55,7 +55,7 @@ const Favorite = ({onClose}) => {
             <div 
               className="modal-dialog modal-side  modal-dialog-centered" 
               role="document" 
-              style={{ height: '700px', width: '30%', maxWidth: '800px', marginLeft: '5rem', marginRight: 'auto', }}
+              
             >
               <div className="modal-content" style={{ marginTop: '-100px' }} >
                 <div className="modal-header" style={{background:"#214042"}}>

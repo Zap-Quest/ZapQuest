@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchFavorite, removeFavorite } from "../store";
 import { useNavigate } from "react-router-dom";
-import "../../static/Help.css";
+
 
 
 const Help = (props) => {
@@ -41,7 +41,9 @@ const Help = (props) => {
                   className="fa-solid fa-charging-station"
                   style={{ color: "#EABD00",fontSize:"100%" }}
                 />
-                {`  HELP`}
+                <span>
+                  {`  HELP`}
+                </span>
               </h5>
               <button
                 type="button"
