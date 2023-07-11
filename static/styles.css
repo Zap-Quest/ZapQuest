@@ -1,6 +1,6 @@
 body {
   font-family: verdana;
-  min-width: 485px;
+  /* min-width: 485px; */
 }
 
 form {
@@ -13,7 +13,8 @@ form > * {
 }
 
 .navbar {
-  min-width: 485px;
+  /* min-width: 485px; */
+  max-width: 100vw;
 }
 
 nav {
@@ -22,13 +23,13 @@ nav {
 }
 
 .Map {
-  height: 100vh;
+  height: 93vh;
   width: 100vw;
 }
 
 .map-container {
 
-  height: 90%;
+  height: 100%;
   width: 100%; 
   position: relative;
   /*flex: 1;*/
@@ -97,7 +98,7 @@ nav {
 .open-modal-button {
   position: absolute;
   top: 75px;
-  right: 30px;
+  right: 10px;
   z-index: 999;
   background-color: #fff;
   border: 1px solid transparent;
@@ -127,7 +128,7 @@ nav {
 .set-mylocation-button {
   position: absolute;
   top: 125px;
-  right: 30px;
+  right: 10px;
   z-index: 999;
   background-color: #fff;
   border: 1px solid transparent;
@@ -157,7 +158,7 @@ nav {
 .see-my-favorite {
   position: absolute;
   top: 175px;
-  right: 30px;
+  right: 10px;
   z-index: 999;
   background-color: #fff;
   border: 1px solid transparent;
@@ -187,7 +188,7 @@ nav {
 .see-direction {
   position: absolute;
   top: 225px;
-  right: 30px;
+  right: 10px;
   z-index: 999;
   background-color: #fff;
   border: 1px solid transparent;
@@ -217,7 +218,7 @@ nav {
 .copy-URL {
   position: absolute;
   top: 275px;
-  right: 30px;
+  right: 10px;
   z-index: 999;
   background-color: #fff;
   border: 1px solid transparent;
@@ -247,7 +248,7 @@ nav {
 .see-help {
   position: absolute;
   top: 325px;
-  right: 30px;
+  right: 10px;
   z-index: 999;
   background-color: #fff;
   border: 1px solid transparent;
@@ -328,72 +329,223 @@ nav {
   font-size: 12px;
 }
 
-@media (max-width: 767px) {
-    .favorite  .modal-dialog {
-        height: 500px;
-        width: 80%;
-        max-width: none;
-        margin-left: 10%;
-        margin-right:auto;
-      }
-  }
 
-  
-@media (min-width: 768px) and (max-width: 991px) {
-    .favorite  .modal-dialog {
-      height: 600px;
-      width: 50%;
-      max-width: none;
-      margin-left: 25%;
-      margin-right:auto;
-    }
-  }
-
-  /* Styles for screens bigger than or equal to 992 pixels */
-@media (min-width: 992px) {
-  .favorite   .modal-dialog {
-      height: 700px;
-      width: 30%;
-      max-width: 800px;
-      margin-left: 5rem;
-      margin-right: auto;
-    }
-}
-
-/* ----- Help CSS -----*/
-.favorite  [class*="fa-"] {
+/* ----- Help from home CSS -----*/
+.help [class*="fa-"] {
   font-size:150%;
 }
+.help .d-flex {
+  gap: 15px;
+  margin-bottom: 1rem;
+  font-size: 10px;
+}
+.help h4{
+  font-size: 16px;
+}
+.help p{
+  font-size: 12px;
+}
+
+
+
+/* ----- Help Legend from map CSS -----*/
+.map-modal [class*="fa-"] {
+  font-size:150%;
+}
+.map-modal .d-flex {
+  gap: 15px;
+  margin-bottom: 1rem;
+  font-size: 10px;
+}
+.map-modal h4{
+  font-size: 16px;
+}
+.map-modal p{
+  font-size: 12px;
+}
+.map-modal-legend span{
+  font-size: 0.7rem;
+}
+
+
+
+/* ---- media ----*/
 
 @media (max-width: 767px) {
-    .favorite  .modal-dialog {
-        height: 500px;
-        width: 80%;
-        max-width: none;
-        margin-left: 10%;
-        margin-right:auto;
-      }
+  /* help form  home */
+  .help .modal-dialog {
+    height: 500px;
+    width: 80%;
+    max-width: none;
+    margin-left: 10%;
+    margin-right:auto;
   }
+
+  /* help legend form  map */
+  .map-modal-legend .modal-dialog {
+        width: 90%;
+        max-width: none;
+        margin-left: 5%;
+        margin-right:auto;
+        margin-bottom: 6%;
+        margin-top: auto;
+  }
+  .map-modal-legend .modal-body {
+          height:200px;
+  }
+  .map-modal-legend .modal-content {
+      position: absolute;
+      bottom:10%
+  }
+
+  /* favorite modal form  home */
+  .favorite  .modal-dialog {
+    height: 500px;
+    width: 80%;
+    max-width: none;
+    margin-left: 10%;
+    margin-right:auto;
+  }
+
+  /* favoriteList modal form  map */
+  .map-modal-favoriteList .modal-dialog{
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 6%;
+    margin-top: auto;
+    height: 700px;
+    width: 90%;
+    max-width: none;
+  }
+  .map-modal-favoriteList .modal-body {
+    height:200px;
+  }
+  .map-modal-favoriteList .modal-content {
+  position: absolute;
+  bottom:10%
+  }
+
+
+  /* StationInfo modal form  map */
+  .map-modal-stationInfo .modal-dialog{
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 6%;
+    margin-top: auto;
+    height: 700px;
+    width: 90%;
+    max-width: none;
+  }
+  .map-modal-stationInfo .modal-body {
+    height:200px;
+  }
+  .map-modal-stationInfo .modal-content {
+  position: absolute;
+  bottom:10%
+  }
+}
+
 
   
 @media (min-width: 768px) and (max-width: 991px) {
-    .help .modal-dialog {
-      height: 600px;
-      width: 50%;
-      max-width: none;
-      margin-left: 25%;
-      margin-right:auto;
-    }
+  /* help form  home */
+  .help .modal-dialog {
+    height: 600px;
+    width: 50%;
+    max-width: none;
+    margin-left: 25%;
+    margin-right:auto;
   }
+  
+  /* help legend form  map */
+  .map-modal-legend .modal-dialog {
+    margin-left: 1rem;
+    margin-right: auto;
+    height: 700px;
+    width: 300px;
+    max-width: 800px;
+  }
+
+  /* favorite modal form  home */
+  .favorite  .modal-dialog {
+    height: 600px;
+    width: 50%;
+    max-width: none;
+    margin-left: 25%;
+    margin-right:auto;
+  }
+
+  /* favoriteList modal form  map */
+  .map-modal-favoriteList .modal-dialog{
+    margin-left: 1rem;
+    margin-right: auto;
+    height: 700px;
+    width: 300px;
+    max-width: 800px;
+  }
+
+  /* StationInfo modal form  map */
+  .map-modal-stationInfo .modal-dialog{
+    margin-left: 1rem;
+    margin-right: auto;
+    height: 700px;
+    width: 300px;
+    max-width: 800px;
+
+  }
+  .map-modal-stationInfo .modal-body{
+    height: 400px;
+  }  
+}
 
   /* Styles for screens bigger than or equal to 992 pixels */
 @media (min-width: 992px) {
+  /* help form  home */
   .help  .modal-dialog {
-      height: 700px;
-      width: 30%;
+    height: 700px;
+    width: 30%;
+    max-width: 800px;
+    margin-left: 5rem;
+    margin-right: auto;
+  }
+
+  /* help legend form  map */
+  .map-modal-legend  .modal-dialog {
+      height: auto;
+      width: 300px;
       max-width: 800px;
       margin-left: 5rem;
       margin-right: auto;
     }
-}
 
+  /* favorite  modal form  home */
+  .favorite   .modal-dialog {
+    height: 700px;
+    width: 30%;
+    max-width: 800px;
+    margin-left: 5rem;
+    margin-right: auto;
+  }
+  /* favoriteList modal form  map */
+  .map-modal-favoriteList .modal-dialog{
+    margin-left: 5rem;
+    margin-right: auto;
+    height: 700px;
+    width: 300px;
+    max-width: 800px;
+  }
+
+  /* StationInfo modal form  map */
+  .map-modal-stationInfo .modal-dialog{
+    margin-left: 5rem;
+    margin-right: auto;
+    height: 700px;
+    width: 300px;
+    max-width: 800px;
+
+  }
+  .map-modal-stationInfo .modal-body{
+    height: 400px;
+  }
+
+}

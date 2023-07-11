@@ -85,7 +85,7 @@ const StationInfo = (props) => {
     return (
         <>
           <div 
-            className={ 'show'} 
+            className={ 'show map-modal-stationInfo'} 
             id="exampleModal" 
             tabIndex="-1" 
             role="dialog" 
@@ -95,9 +95,9 @@ const StationInfo = (props) => {
             data-mdb-keyboard="true"
           >
             <div 
-              className="modal-dialog modal-side modal-dialog-left  modal-dialog-centered" 
+              className="modal-dialog modal-side modal-dialog-left  modal-dialog-centered modal-dialog-scrollable" 
               role="document" 
-              style={{ marginLeft: '5rem', marginRight: 'auto', height: '700px', width: '300px', maxWidth: '800px' }}
+
             >
               <div className="modal-content" style={{ marginTop: '-30px' }}>
                 <div className="modal-header" style={{background:"#214042"}}>
@@ -109,7 +109,7 @@ const StationInfo = (props) => {
                     <span aria-hidden="true" style={{color:"grey"}}>&times;</span>
                   </button>
                 </div>
-                <div className="modal-body" style={{ height: '400', overflowY: 'auto' }}>
+                <div className="modal-body" style={{  overflowY: 'auto' }}>
                     <>
                         <div className="d-flex w-100 justify-content-between">
                             <h5 className="mb-1" style={{ color: "#779DA6",fontWeight:"bold",fontSize:"1rem" }}>
@@ -118,7 +118,7 @@ const StationInfo = (props) => {
                             <small>{`${station.properties.distance.toFixed(1)} mile`}</small>
                         </div>
                         <hr/>
-                        <div className="card" style={{ width: '265px',marginBottom:"0.5rem", fontSize:"0.8rem"}}>
+                        <div className="card" style={{ width: '100%',marginBottom:"0.5rem", fontSize:"0.8rem"}}>
                             <div className="card-body">
                             <p className="card-text" >
                                 <i className="fa-solid fa-location-dot" style={{ color: "#779DA6" }}/>
@@ -140,7 +140,7 @@ const StationInfo = (props) => {
                             )}
                             </div>
                         </div>
-                        <div className="card" style={{ width: '265px', marginBottom:"0.5rem",fontSize:"0.8rem" }}>
+                        <div className="card" style={{ width: '100%', marginBottom:"0.5rem",fontSize:"0.8rem" }}>
                             <div className="card-body">
                             <p className="card-title d-flex w-100 justify-content-between">
                                 <span>
@@ -160,7 +160,7 @@ const StationInfo = (props) => {
                             </p>
                             </div>
                         </div>
-                        <div className="card" style={{ width: '265px',fontSize:"0.8rem" }}>
+                        <div className="card" style={{ width: '100%',fontSize:"0.8rem" }}>
                             <div className="card-body">
                             <p className="card-title d-flex w-100 justify-content-between">
                                 <span>

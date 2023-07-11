@@ -1,16 +1,16 @@
 /* ----- Help Legend CSS -----*/
-.map-modal [class*="fa-"] {
+.map-modal-legend [class*="fa-"] {
     font-size:150%;
   }
-.map-modal .d-flex {
+.map-modal-legend .d-flex {
     gap: 15px;
     margin-bottom: 1rem;
     font-size: 10px;
   }
-.map-modal h4{
+.map-modal-legend h4{
     font-size: 16px;
   }
-.map-modal p{
+.map-modal-legend p{
     font-size: 12px;
   }
   
@@ -18,7 +18,7 @@
   
   
 @media (max-width: 767px) {
-    .map-modal .modal-dialog {
+    .map-modal-legend .modal-dialog {
           width: 90%;
           max-width: none;
           margin-left: 5%;
@@ -26,10 +26,10 @@
           margin-bottom: 6%;
           margin-top: auto;
     }
-    .map-modal .modal-body {
+    .map-modal-legend .modal-body {
             height:200px;
     }
-    .map-modal .modal-content {
+    .map-modal-legend .modal-content {
         position: absolute;
         bottom:10%
     }
@@ -38,7 +38,7 @@
   
     
   @media (min-width: 768px) and (max-width: 991px) {
-      .map-modal .modal-dialog {
+      .map-modal-legend .modal-dialog {
         height: 600px;
         width: 30%;
         max-width: none;
@@ -50,7 +50,7 @@
   
     /* Styles for screens bigger than or equal to 992 pixels */
   @media (min-width: 992px) {
-    .map-modal  .modal-dialog {
+    .map-modal-legend  .modal-dialog {
         height: auto;
         width: 300px;
         max-width: 800px;
