@@ -3,6 +3,7 @@ import Select from "react-select";
 
 const MapFilter = ({ onFilterChange, closeModal, onRadiusChange, radius }) => {
   const connectorTypeOptions = [
+    { value: 'all', label: "All" },
     { value: "J1772", label: "J1772" },
     { value: "J1772COMBO", label: "CCS" },
     { value: "TESLA", label: "TESLA" },
@@ -13,24 +14,27 @@ const MapFilter = ({ onFilterChange, closeModal, onRadiusChange, radius }) => {
   ];
 
   const chargingSpeedOptions = [
+    { value: 'all', label: "All" },
     { value: "1", label: "1" },
     { value: "2", label: "2" },
     { value: "dc_fast", label: "DC Fast" },
   ];
 
   const providerOptions = [
+    { value: 'all', label: "All" },
     { value: "Tesla", label: "Tesla" },
+    { value: "ChargePoint Network", label: "ChargePoint" },
     { value: "Electrify America", label: "Electrify America" },
-    { value: "CHARGEUP", label: "ChargePoint" },
+    { value: "EVGATEWAY", label: "EVGATEWAY" },
     { value: "eVgo Network", label: "eVgo Network" },
     { value: "Volta", label: "Volta" },
     { value: "Blink Network", label: "Blink Network" },
-    { value: "EVGATEWAY", label: "EVGATEWAY" },
     { value: "EV Connect", label: "EV Connect" },
     { value: "FLO", label: "FLO" },
   ];
 
   const costOptions = [
+    { value: 'all', label: "All" },
     { value: "free", label: "Free" },
     { value: "paid", label: "Paid" },
   ];
