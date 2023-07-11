@@ -48,15 +48,16 @@ const MapFilter = ({ onFilterChange, closeModal, onRadiusChange, radius }) => {
   });
 
   const handleFilterChange = (selectedOptions, filterType) => {
-    if (filterType === 'radius') {
+    if (filterType === "radius") {
       onRadiusChange(selectedOptions);
     } else {
-      setSelectedFilters({
-        ...selectedFilters,
+      setSelectedFilters((prevFilters) => ({
+        ...prevFilters,
         [filterType]: selectedOptions ? selectedOptions.map((option) => option.value) : "all",
-      });
+      }));
     }
   };
+  
 
   const applyFilters = () => {
     onFilterChange({...selectedFilters, radius: radius})
@@ -79,34 +80,39 @@ const MapFilter = ({ onFilterChange, closeModal, onRadiusChange, radius }) => {
         />
       </div>
       <div className="filter-dropdown">
-        <Select
-          options={connectorTypeOptions}
-          isMulti
-          placeholder="Connector Type"
-          onChange={(selected) => handleFilterChange(selected, "connectorType")}
-          className="mb-2"
-        />
-        <Select
-          options={chargingSpeedOptions}
-          isMulti
-          placeholder="Charging Speed"
-          onChange={(selected) => handleFilterChange(selected, "chargingSpeed")}
-          className="mb-2"
-        />
-        <Select
-          options={providerOptions}
-          isMulti
-          placeholder="Provider"
-          onChange={(selected) => handleFilterChange(selected, "provider")}
-          className="mb-2"
-        />
-        <Select
-          options={costOptions}
-          isMulti
-          placeholder="Cost"
-          onChange={(selected) => handleFilterChange(selected, "cost")}
-          className="mb-2"
-        />
+      <Select
+        options={connectorTypeOptions}
+        isMulti
+        placeholder="Connector Type"
+        value={selectedFilters.connectorType}
+        onChange={(selected) => handleFilterChange(selected, "connectorType")}
+        className="mb-2"
+      />
+      <Select
+        options={chargingSpeedOptions}
+        isMulti
+        placeholder="Charging Speed"
+        value={selectedFilters.chargingSpeed}
+        onChange={(selected) => handleFilterChange(selected, "chargingSpeed")}
+        className="mb-2"
+      />
+      <Select
+        options={providerOptions}
+        isMulti
+        placeholder="Provider"
+        value={selectedFilters.provider}
+        onChange={(selected) => handleFilterChange(selected, "provider")}
+        className="mb-2"
+      />
+      <Select
+        options={costOptions}
+        isMulti
+        placeholder="Cost"
+        value={selectedFilters.cost}
+        onChange={(selected) => handleFilterChange(selected, "cost")}
+        className="mb-2"
+      />
+
         <button
           style={{ width: "100px" }}
           className="btn btn-dark default-button mr-5"
