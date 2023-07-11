@@ -325,7 +325,12 @@ const Map = () => {
           <div className="modal-map-overlay">
             <div className="modal-map">
               <div className="modal-map-content">
-                <MapFilter onFilterChange={handleFilterChange} onRadiusChange={handleRadiusChange} radius={radius} closeModal={closeModal}/>
+                <MapFilter
+                  onFilterChange={handleFilterChange}
+                  onRadiusChange={handleRadiusChange}
+                  radius={radius}
+                  closeModal={closeModal}
+                />
               </div>
             </div>
           </div>
