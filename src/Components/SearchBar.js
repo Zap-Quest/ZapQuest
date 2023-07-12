@@ -43,7 +43,7 @@ const SearchBar = () => {
   }, []);
 
   return (
-    <div className="input-group mt-2">
+    <div className="d-flex input-group mt-2 searchBar">
       <div className="form-outline">
         <input
           id="search-input"
@@ -53,7 +53,7 @@ const SearchBar = () => {
           value={searchInput}
           ref={elPlace}
           onChange={onChange}
-          style={{width: '350px'}}
+
         />
       </div>
       <button
