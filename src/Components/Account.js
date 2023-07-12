@@ -24,11 +24,7 @@ const MyAccount = () => {
     content = <div>Loading...</div>;
   } else if (userStatus === "succeeded") {
     const user = usersList.find((e) => e.id === userAuthObj.id);
-    console.log("user:", user)
-    console.log("vehicle:", vehicle)
     const userVehicle = vehicle && vehicle.find((e) => e.userId === userAuthObj.id);
-
-    
 
     content = (
       <>
@@ -110,64 +106,68 @@ const MyAccount = () => {
                   </div>
                 </div>
               )}
-              {userVehicle && (
-                <div className="card mb-3" style={{ borderRadius: ".5rem" }}>
-                  <div className="row g-0">
-                    <div
-                      className="col-md-4 text-center"
-                      style={{
-                        borderTopLeftRadius: ".5rem",
-                        borderBottomLeftRadius: ".5rem",
-                        backgroundColor: "#779DA6",
-                      }}
-                    >
+              <div className="card mb-3" style={{ borderRadius: ".5rem" }}>
+                <div className="row g-0">
+                  <div
+                    className="col-md-4 text-center"
+                    style={{
+                      borderTopLeftRadius: ".5rem",
+                      borderBottomLeftRadius: ".5rem",
+                      backgroundColor: "#779DA6",
+                    }}
+                  >
+                    {userVehicle && (
                       <img
                         className="img-fluid mt-5"
                         src={userVehicle.image}
                         alt="Vehicle Image"
                         style={{ width: "150px" }}
                       />
-                    </div>
-                    <div className="col-md-8 d-flex flex-column">
-                      <div className="card-body p-4">
-                        <div className="d-flex justify-content-between align-items-center mb-3">
-                          <h6>Vehicle Information</h6>
-                          <Link to={`/myaccount/updatevehicle`}>
-                            <button className="btn">
-                              <i className="fa-solid fa-pen-to-square"></i>
-                            </button>
-                          </Link>
-                        </div>
-                        <hr className="mt-0 mb-4" />
-                        <div className="row pt-1">
-                          <div className="col-md-6 mt-1">
-                            <h6 className="my-account-p">Make</h6>
-                            <p className="text-muted mt-1">
-                              {userVehicle.make}
-                            </p>
-                          </div>
-                          <div className="col-md-6 mt-1">
-                            <h6 className="my-account-p">Model</h6>
-                            <p className="text-muted mt-1">
-                              {userVehicle.model}
-                            </p>
-                          </div>
-                          <div className="col-md-6 mt-4">
-                            <h6 className="my-account-p">Year</h6>
-                            <p className="text-muted">{userVehicle.year}</p>
-                          </div>
-                          <div className="col-md-6 mt-4">
-                            <h6 className="my-account-p">Charger Type</h6>
-                            <p className="text-muted">
-                              {userVehicle.chargertype}
-                            </p>
-                          </div>
-                        </div>
+                    )}
+                  </div>
+                  <div className="col-md-8 d-flex flex-column">
+                    <div className="card-body p-4">
+                      <div className="d-flex justify-content-between align-items-center mb-3">
+                        <h6>Vehicle Information</h6>
+                        <Link to={`/myaccount/updatevehicle`}>
+                          <button className="btn">
+                            <i className="fa-solid fa-pen-to-square"></i>
+                          </button>
+                        </Link>
+                      </div>
+                      <hr className="mt-0 mb-4" />
+                      <div className="row pt-1">
+                        {userVehicle && (
+                          <>
+                            <div className="col-md-6 mt-1">
+                              <h6 className="my-account-p">Make</h6>
+                              <p className="text-muted mt-1">
+                                {userVehicle.make}
+                              </p>
+                            </div>
+                            <div className="col-md-6 mt-1">
+                              <h6 className="my-account-p">Model</h6>
+                              <p className="text-muted mt-1">
+                                {userVehicle.model}
+                              </p>
+                            </div>
+                            <div className="col-md-6 mt-4">
+                              <h6 className="my-account-p">Year</h6>
+                              <p className="text-muted">{userVehicle.year}</p>
+                            </div>
+                            <div className="col-md-6 mt-4">
+                              <h6 className="my-account-p">Charger Type</h6>
+                              <p className="text-muted">
+                                {userVehicle.chargertype}
+                              </p>
+                            </div>
+                          </>
+                        )}
                       </div>
                     </div>
                   </div>
                 </div>
-              )}
+              </div>
             </div>
           </div>
         </div>
