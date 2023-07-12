@@ -290,15 +290,18 @@ const applyFilters = (list, filters) => {
     const connectorMatch =
       !connectorType ||
       connectorType.includes("all") ||
-      connectorType.includes(station.properties.ev_connector_types);
+      connectorType.includes(String(station.properties.ev_connector_types));
+
     const chargingSpeedMatch =
       !chargingSpeed ||
       chargingSpeed.includes("all") ||
       chargingSpeed.includes(String(station.properties.ev_level2_evse_num));
+
     const providerMatch =
       !provider ||
       provider.includes("all") ||
       provider.includes(station.properties.ev_network);
+
     const costMatch =
       !cost ||
       cost.includes("all") ||
@@ -308,6 +311,17 @@ const applyFilters = (list, filters) => {
     return connectorMatch && chargingSpeedMatch && providerMatch && costMatch;
   });
 };
+
+const handleReset = () => {
+  setRadius(10)
+  handleFilterChange({
+    connectorType: 'all',
+    chargingSpeed: 'all',
+    provider: 'all',
+    cost: 'all',
+  });
+};
+
 
 
 
@@ -332,6 +346,7 @@ const applyFilters = (list, filters) => {
                   onRadiusChange={handleRadiusChange}
                   radius={radius}
                   closeModal={closeModal}
+                  handleReset={handleReset}
                 />
               </div>
             </div>
