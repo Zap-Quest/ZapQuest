@@ -342,10 +342,9 @@ const applyFilters = (list, filters) => {
         <button className="set-mylocation-button map-btn" onClick={setToMyLocation} style={{fontSize:"115%"}}>
             <i className="fa-solid fa-location-dot"></i>
         </button>
-
-        {/* show my favorite button */}
-        <button className="see-my-favorite map-btn" onClick={openMyFavorite} >
-          <i className="fa fa-heart" aria-hidden="true"></i>
+        {/* see-station */}
+        <button className="see-station map-btn" onClick={openStationInfo}>
+          <i className="fa-solid fa-charging-station"></i>
         </button>
         {/* show direction button */}
         <button className="see-direction map-btn" disabled={isRoutesOpen===true} onClick={openRoutes} style={{fontSize:"115%"}}>
@@ -360,6 +359,10 @@ const applyFilters = (list, filters) => {
         {/* see-help */}
         <button className="see-help map-btn" onClick={openHelpLegend}>
           <i className="fa-sharp fa-solid fa-question"></i>
+        </button>
+        {/* show my favorite button */}
+        <button className="see-my-favorite map-btn" onClick={openMyFavorite} >
+          <i className="fa fa-heart" aria-hidden="true"></i>
         </button>
 
         {/* loading Map */}

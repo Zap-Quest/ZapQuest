@@ -37,10 +37,7 @@ nav {
     width:100%;
     margin:auto;
   }
-  .map-container .gm-style-mtc,
-  .map-container .gmnoprint {
-    display: none !important;
-  }
+  
 }
 
 /* ------ Map ------ */
@@ -56,7 +53,8 @@ nav {
 }
 
 @media (max-width: 767px) {
-  .map-container .gm-style-mtc {
+  .map-container .gm-style-mtc,
+  .map-container .gmnoprint {
     display: none !important;
   }
 }
@@ -158,28 +156,28 @@ nav {
 .set-mylocation-button {
   top: 125px;
 }
-
-/* ----- My favorite button -----*/
-.see-my-favorite {
+/* ----- see station button -----*/
+.see-station {
   top: 175px;
 }
-
-
 /* ----- direction button -----*/
 .see-direction {
   top: 225px;
 }
-
 /* ----- copy URL button -----*/
 .copy-URL {
   top: 275px;
 }
-
 /* ----- see help button -----*/
 .see-help {
   top: 325px;
   font-size: 16px;
 }
+/* ----- My favorite button -----*/
+.see-my-favorite {
+  top:375px;
+}
+
 
 
 @media (max-width: 767px) {
@@ -195,7 +193,7 @@ nav {
   .set-mylocation-button {
     top: 115px;
   }
-  .see-my-favorite {
+  .see-station {
     top: 155px;
   }
   .see-direction {
@@ -207,7 +205,9 @@ nav {
   .see-help {
     top: 275px;
   }
-
+  .see-my-favorite {
+    top : 315px;
+  }
 }
 
 /* ----- input -----*/
@@ -366,22 +366,22 @@ nav {
   }
 
 
-  /* StationInfo modal form  map */
+  /* StationInfo modal form map */
   .map-modal-stationInfo .modal-dialog{
     margin-left: auto;
     margin-right: auto;
-    margin-bottom: 6%;
+    margin-bottom: 20vh;
     margin-top: auto;
-    height: 700px;
-    width: 90%;
+    height: 30vh;
+    width: 80%;
     max-width: none;
   }
   .map-modal-stationInfo .modal-body {
-    height:200px;
-  }
+    height:30vh;
+  } 
   .map-modal-stationInfo .modal-content {
   position: absolute;
-  bottom:10%
+  bottom:15%
   }
 }
 
