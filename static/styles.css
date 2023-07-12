@@ -1,6 +1,6 @@
 body {
   font-family: verdana;
-  /* min-width: 485px; */
+  /* min-width: 100%;   */
 }
 
 form {
@@ -15,6 +15,24 @@ form > * {
 .navbar {
   /* min-width: 485px; */
   max-width: 100vw;
+}
+
+/* home page element */
+.home-btn{
+  width:200px;
+}
+.home-input{
+  width:400px;
+}
+
+@media (max-width: 767px) {
+  .home-btn{
+    width:150px;
+  } 
+  .home-input{
+    width:100%;
+    margin:auto;
+  }
 }
 
 nav {
@@ -547,5 +565,7 @@ nav {
   .map-modal-stationInfo .modal-body{
     height: 400px;
   }
+
+
 
 }
