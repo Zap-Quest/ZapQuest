@@ -112,9 +112,9 @@ const StationInfo = (props) => {
                 <div className="modal-body" style={{  overflowY: 'auto' }}>
                     <>
                         <div className="d-flex w-100 justify-content-between">
-                            <h5 className="mb-1" style={{ color: "#779DA6",fontWeight:"bold",fontSize:"1rem" }}>
+                            <h6 className="mb-1" style={{ color: "#779DA6",fontWeight:"bold"}}>
                                 <span>{` ${station.properties.station_name}`}</span>
-                            </h5>
+                            </h6>
                             <small>{`${station.properties.distance.toFixed(1)} mile`}</small>
                         </div>
                         <hr/>
@@ -174,7 +174,7 @@ const StationInfo = (props) => {
                                     console.log("s:",s);
                                     return (<div key={s.properties.id}>
                                                 <hr/>
-                                                <p><i className="fa-solid fa-location-dot" style={{ color: "#EABD00" }}/>{`  ${s.properties.station_name}`}</p>
+                                                <p><i className="fa-solid fa-location-dot" style={{ color: "#EABD00" }}/><span>{`  ${s.properties.station_name}`}</span></p>
                                                 <p style={{fontSize:"0.6rem"}}>{` ${s.properties.street_address.toUpperCase()} ${s.properties.city.toUpperCase()}`}</p>
                                             </div>
                                     )})
@@ -184,7 +184,7 @@ const StationInfo = (props) => {
                         </div>
                     </>
                 </div>
-                <div className="modal-footer">
+                <div className="modal-footer" style={{padding:"0.5rem"}}>
                 {auth.username&&(
                     stationInFavorite?(
                         <button type="button" className="btn btn-secondary" data-dismiss="modal"  onClick={removeFromFavorite}><i className="fa fa-heart" aria-hidden="true" style={{color:"#EABD00" }}></i></button>

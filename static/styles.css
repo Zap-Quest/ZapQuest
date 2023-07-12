@@ -28,6 +28,12 @@ nav {
 .home-input{
   width:400px;
 }
+.home .pm{
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
 
 @media (max-width: 767px) {
   .home-btn{
@@ -36,6 +42,10 @@ nav {
   .home-input{
     width:100%;
     margin:auto;
+  }
+  .home .pm {
+    margin-top:1rem;
+    padding-top: 1rem;
   }
   
 }
@@ -372,22 +382,48 @@ nav {
     margin-right: auto;
     margin-bottom: 20vh;
     margin-top: auto;
-    height: 30vh;
-    width: 80%;
+    height: 25vh;
+    width: 85%;
     max-width: none;
   }
   .map-modal-stationInfo .modal-body {
-    height:30vh;
+    height:22vh;
   } 
   .map-modal-stationInfo .modal-content {
   position: absolute;
   bottom:15%
+  }
+  .map-modal-stationInfo h5{
+    font-size: 1rem;
+  }
+  .map-modal-stationInfo hr{
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+  .map-modal-stationInfo h6{
+    font-size: 0.85rem;
+  }
+  .card-text span{
+    font-size: 0.7rem;;
+  }
+  .card-body {
+    padding: 0.85rem;
+  }
+  .modal-footer .btn {
+    font-size: 0.85rem;
   }
 }
 
 
   
 @media (min-width: 768px) and (max-width: 991px) {
+  .modal-header {
+    padding: 0.5rem;
+  }
+  .modal-title {
+    line-height:1;
+}
+
   /* help form  home */
   .help .modal-dialog {
     height: 600px;

@@ -80,7 +80,7 @@ const Home = () => {
   return (
     <>
       <div className="container d-flex flex-column align-items-center justify-content-center home" >
-        <div className="my-5 py-5" >
+        <div className="pm" >
           <div className="text-center mb-4" style={{maxWidth: "100vw"}} >
             <img
               src="https://cdn1.iconfinder.com/data/icons/game-design-volume-2/512/Quest-512.png"
