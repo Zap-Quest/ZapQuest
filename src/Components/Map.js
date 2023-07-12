@@ -310,6 +310,17 @@ const applyFilters = (list, filters) => {
   });
 };
 
+const handleReset = () => {
+  setRadius(10)
+  handleFilterChange({
+    connectorType: 'all',
+    chargingSpeed: 'all',
+    provider: 'all',
+    cost: 'all',
+  });
+};
+
+
 
 
   /*return, base on the URL , 
@@ -333,6 +344,7 @@ const applyFilters = (list, filters) => {
                   onRadiusChange={handleRadiusChange}
                   radius={radius}
                   closeModal={closeModal}
+                  handleReset={handleReset}
                 />
               </div>
             </div>
