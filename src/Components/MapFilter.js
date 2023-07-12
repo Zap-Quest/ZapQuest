@@ -51,12 +51,13 @@ const MapFilter = ({ onFilterChange, closeModal, onRadiusChange, radius }) => {
     if (filterType === 'radius') {
       onRadiusChange(selectedOptions);
     } else {
-      setSelectedFilters({
-        ...selectedFilters,
+      setSelectedFilters((prevFilters) => ({
+        ...prevFilters,
         [filterType]: selectedOptions ? selectedOptions.map((option) => option.value) : "all",
-      });
+      }));
     }
   };
+  
 
   const applyFilters = () => {
     onFilterChange({...selectedFilters, radius: radius})
