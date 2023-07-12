@@ -44,7 +44,7 @@ const MapFilter = ({ onFilterChange, closeModal, onRadiusChange, radius }) => {
     chargingSpeed: "all",
     provider: "all",
     cost: "all",
-    radius: 100,
+    radius: 30,
   });
 
   const handleFilterChange = (selectedOptions, filterType) => {
@@ -62,6 +62,16 @@ const MapFilter = ({ onFilterChange, closeModal, onRadiusChange, radius }) => {
   const applyFilters = () => {
     onFilterChange({...selectedFilters, radius: radius})
     closeModal();
+  };
+
+  const handleReset = () => {
+    setSelectedFilters({
+      connectorType: 'all',
+      chargingSpeed: 'all',
+      provider: 'all',
+      cost: 'all',
+      radius: 30
+    });
   };
 
   return (
@@ -114,6 +124,13 @@ const MapFilter = ({ onFilterChange, closeModal, onRadiusChange, radius }) => {
           onClick={closeModal}
         >
           Close
+        </button>
+        <button
+          style={{ width: "100px" }}
+          className="btn btn-dark default-button mr-5"
+          onClick={handleReset}
+        >
+          Reset
         </button>
         <button
           style={{ width: "100px" }}
