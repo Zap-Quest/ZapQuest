@@ -426,7 +426,8 @@ const applyFilters = (list, filters) => {
                     }
               
                     {/* EVSList Markers */}
-                    {EVSList
+                    {/* EVSList Markers */}
+                    {EVSList && EVSList.length > 0
                       ? EVSList.map((s) => {
                           let location = {
                             lat: s.geometry.coordinates[1],
