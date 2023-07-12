@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 
-
-
-
 const RouteModal = (props) => {
     const onClose = props.onClose;
+    const onEndNav = props.onEndNav;
     const steps = props.steps;
     const duration = props.duration;
     const distance = props.distance;
@@ -32,7 +30,7 @@ const RouteModal = (props) => {
                     <i className="fa fa-sharp fa-solid fa-turn-down fa-rotate-90"></i>
                     <span>{`  ${duration}`}</span>
                     <span style={{color: "white"}}>{` (${distance})`}</span>
-                    </h5>
+                  </h5>
                 </div>
                 <div className="modal-body" style={{ height: '400px', overflowY: 'auto' }}>
                     {
@@ -54,6 +52,14 @@ const RouteModal = (props) => {
                     <button 
                         type="button" 
                         className="btn btn-secondary" 
+                        onClick={onEndNav} 
+                        style={{background: "#779DA6", borderColor:"Background"}}
+                    >
+                        End Nav
+                    </button>
+                    <button 
+                        type="button" 
+                        className="btn btn-secondary" 
                         data-dismiss="modal" 
                         onClick={onClose} 
                         style={{background: "#779DA6",borderColor:"Background"}}
@@ -66,10 +72,9 @@ const RouteModal = (props) => {
           </div>
       </>
     );
-  };
+};
 
-
-  const Card = (props) => {
+const Card = (props) => {
     const instructions = props.instructions;
     const distance = props.distance;
     const duration = props.duration;
@@ -87,6 +92,6 @@ const RouteModal = (props) => {
         </div>
       </div>
     );
-  };
-  
-  export default RouteModal;
+};
+
+export default RouteModal;

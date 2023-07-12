@@ -86,6 +86,19 @@ const Map = () => {
     setIsRoutesOpen(false);
   };
 
+  const endNavigation = () => {
+    console.log("state", directionsResponse, distance, duration, steps, origin, destination, isRoutesOpen); // Before state updates
+    setDirectionsResponse(null);
+    setDistance('');
+    setDuration('');
+    setSteps(null);
+    setOrigin(null);
+    setDestination(null);
+    setIsRoutesOpen(false);
+    console.log("afterstate", directionsResponse, distance, duration, steps, origin, destination, isRoutesOpen); // After state updates
+};
+
+
   // my StationInfo modal
   const openStationInfo = () => {
     setIsFavoriteOpen(false);
@@ -193,7 +206,7 @@ const Map = () => {
     }else{
       setWarn(" YOu do not have location enabled");
     }
-  } 
+  }
 
   /* useEffect */
 
@@ -486,7 +499,7 @@ const handleReset = () => {
                     {directionsResponse && <DirectionsRenderer directions={directionsResponse}/>}
                     {
                       isRoutesOpen&&(
-                        <RouteModal onClose={closeRoutes} steps={steps} duration={duration} distance={distance}/>
+                        <RouteModal onClose={closeRoutes} onEndNav={endNavigation} steps={steps} duration={duration} distance={distance}/>
                       )
                     }
                   </>
