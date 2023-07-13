@@ -70,7 +70,7 @@ const MapFilter = ({ onFilterChange, closeModal, onRadiusChange, radius }) => {
       chargingSpeed: 'all',
       provider: 'all',
       cost: 'all',
-      radius: 30
+      radius: 10
     });
   };
 
@@ -84,7 +84,7 @@ const MapFilter = ({ onFilterChange, closeModal, onRadiusChange, radius }) => {
         <input
           type="number"
           id="radius"
-          defaultValue={radius}
+          value={radius}
           className="form-control"
           onChange={onRadiusChange}
         />
