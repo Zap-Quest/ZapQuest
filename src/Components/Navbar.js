@@ -11,6 +11,10 @@ const Navbar = () => {
     username: "",
     email: "",
     password: "",
+    vehicleMake: "",
+    vehicleModel: "",
+    vehicleYear: "",
+    vehicleChargerType: "",
   });
   const [isRegisterMode, setIsRegisterMode] = useState(false);
   const [loginError, setLoginError] = useState(null);
@@ -29,6 +33,10 @@ const Navbar = () => {
       username: "",
       email: "",
       password: "",
+      vehicleMake: "",
+      vehicleModel: "",
+      vehicleYear: "",
+      vehicleChargerType: "",
     });
   };
 
@@ -66,7 +74,7 @@ const Navbar = () => {
     ev.preventDefault();
     try {
       await dispatch(signup(credentials));
-      const loginResponse = await dispatch(attemptLogin(credentials));
+      const loginResponse = await dispatch(attemptLogin({username: credentials.username, password: credentials.password}));
 
       // If the login was successful, close the modal
       if (loginResponse.payload.toString().length > 0) {
@@ -194,18 +202,68 @@ const Navbar = () => {
                   />
                 </div>
                 {isRegisterMode && (
-                  <div className="form-group">
-                    <label htmlFor="modalEmail">Email</label>
-                    <input
-                      type="email"
-                      className="form-control"
-                      id="modalEmail"
-                      placeholder="Email"
-                      name="email"
-                      value={credentials.email}
-                      onChange={onChange}
-                    />
-                  </div>
+                  <>
+                    <div className="form-group">
+                      <label htmlFor="modalEmail">Email</label>
+                      <input
+                        type="email"
+                        className="form-control"
+                        id="modalEmail"
+                        placeholder="Email"
+                        name="email"
+                        value={credentials.email}
+                        onChange={onChange}
+                      />
+                    </div>
+                    <div className="form-group">
+                      <label htmlFor="modalVehicleMake">Vehicle Make</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="modalVehicleMake"
+                        placeholder="Vehicle Make"
+                        name="vehicleMake"
+                        value={credentials.vehicleMake}
+                        onChange={onChange}
+                      />
+                    </div>
+                    <div className="form-group">
+                      <label htmlFor="modalVehicleModel">Vehicle Model</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="modalVehicleModel"
+                        placeholder="Vehicle Model"
+                        name="vehicleModel"
+                        value={credentials.vehicleModel}
+                        onChange={onChange}
+                      />
+                    </div>
+                    <div className="form-group">
+                      <label htmlFor="modalVehicleYear">Vehicle Year</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="modalVehicleYear"
+                        placeholder="Vehicle Year"
+                        name="vehicleYear"
+                        value={credentials.vehicleYear}
+                        onChange={onChange}
+                      />
+                    </div>
+                    <div className="form-group">
+                      <label htmlFor="modalVehicleChargerType">Charger Type</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="modalVehicleChargerType"
+                        placeholder="Charger Type"
+                        name="vehicleChargerType"
+                        value={credentials.vehicleChargerType}
+                        onChange={onChange}
+                      />
+                    </div>
+                  </>
                 )}
                 {isRegisterMode ? (
                   <button type="submit" className="btn btn-dark default-button">

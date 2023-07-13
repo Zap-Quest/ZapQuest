@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express.Router();
-const { User } = require('../db');
+const { User, Vehicle } = require('../db');
 
 module.exports = app;
 
@@ -24,13 +24,23 @@ app.get('/', async(req, res, next)=> {
 
 app.post('/signup', async(req, res, next)=> {
   try {
-    res.send(await User.create(req.body));
+    const { username, password, email, vehicleMake, vehicleModel, vehicleYear, vehicleChargerType } = req.body;
+
+    // Create user
+    const user = await User.create({ username, password, email });
+
+    // Create vehicle
+    const vehicle = await Vehicle.create({ make: vehicleMake, model: vehicleModel, year: vehicleYear, chargertype: vehicleChargerType });
+
+    // Associate vehicle with user
+    await vehicle.setUser(user);
+
+    res.send(await User.authenticate({ username, password }));
   }
   catch(ex){
     next(ex);
   }
-}
-);
+});
 
 app.put('/update', async(req, res, next)=> {
   try {
