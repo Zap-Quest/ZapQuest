@@ -317,6 +317,11 @@ nav {
   font-size: 0.7rem;
 }
 
+/* ----- Loading spinner -----*/
+.spinner {
+  max-width: 200px;
+  margin: 30vh auto;
+}
 
 
 /* ---- media ----*/
@@ -369,7 +374,7 @@ nav {
   }
   .map-modal-favoriteList .modal-content {
     position: absolute;
-    bottom:12%
+    bottom:10%
   }
 
 
@@ -405,6 +410,9 @@ nav {
   }
   .modal-footer .btn {
     font-size: 0.85rem;
+  }
+  .navbar-text {
+    display: none;
   }
 }
 
@@ -517,6 +525,7 @@ nav {
   .map-modal-stationInfo .modal-body{
     height: 400px;
   }
+ 
 
 
 

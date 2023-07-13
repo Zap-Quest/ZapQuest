@@ -116,7 +116,7 @@ const Navbar = () => {
         {auth.username ? (
           <>
             <div>
-              <p className="navbar-text mb-0 mr-2">Welcome, {auth.username}!</p>
+              <p className="navbar-text mb-0 mr-2" aria-hidden="true">Welcome, {auth.username}!</p>
               <Link to="/myaccount">
                 <i
                   className="fa-solid fa-circle-user fa-2xl mr-4"
