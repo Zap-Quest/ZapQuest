@@ -35,7 +35,7 @@ const RouteModal = (props) => {
                       <span aria-hidden="true" style={{color:"grey"}}>&times;</span>
                     </button>
                 </div>
-                <div className="modal-body" style={{ height: '400px', overflowY: 'auto' }}>
+                <div className="modal-body" style={{ overflowY: 'auto' }}>
                     {
                         steps&&(
                             <>
@@ -84,7 +84,7 @@ const Card = (props) => {
   
     return (
       <div>
-        <div className="card" style={{ width: '265px',marginBottom:'0.25rem' }}>
+        <div className="card" style={{ width: '100%',marginBottom:'0.25rem' }}>
           <div className="card-body" style={{padding:'0.5rem',fontWeight:"600",color:"#779DA6"}}>
             <p className="card-text"
                 dangerouslySetInnerHTML={{ __html: instructions }} 
