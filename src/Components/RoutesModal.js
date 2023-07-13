@@ -12,7 +12,7 @@ const RouteModal = (props) => {
     return (
         <>
           <div 
-            className={ 'show'} 
+            className={ 'show map-modal'} 
             id="exampleModal" 
             tabIndex="-1" 
             role="dialog" 
@@ -22,19 +22,21 @@ const RouteModal = (props) => {
             data-mdb-keyboard="true"
           >
             <div 
-              className="modal-dialog modal-side modal-dialog-left  modal-dialog-centered" 
+              className="modal-dialog modal-side modal-dialog-left  modal-dialog-centered " 
               role="document" 
-              style={{ marginLeft: '5rem', marginRight: 'auto', height: '700px', width: '300px', maxWidth: '800px' }}
             >
-              <div className="modal-content" style={{ marginTop: '-30px' }}>
+              <div className="modal-content"  id="RouteModalContent" style={{ marginTop: '-30px' }}>
                 <div className="modal-header" style={{background:"#214042"}}>
                   <h5 className="modal-title" id="exampleModalLabel" style={{color: "#EABD00"}}>
                     <i className="fa fa-sharp fa-solid fa-turn-down fa-rotate-90"></i>
                     <span>{`  ${duration}`}</span>
                     <span style={{color: "white"}}>{` (${distance})`}</span>
                     </h5>
+                    <button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={onClose} >
+                      <span aria-hidden="true" style={{color:"grey"}}>&times;</span>
+                    </button>
                 </div>
-                <div className="modal-body" style={{ height: '400px', overflowY: 'auto' }}>
+                <div className="modal-body" style={{overflowY: 'auto' }}>
                     {
                         steps&&(
                             <>
@@ -50,17 +52,7 @@ const RouteModal = (props) => {
                         )
                     }
                 </div>
-                <div className="modal-footer">
-                    <button 
-                        type="button" 
-                        className="btn btn-secondary" 
-                        data-dismiss="modal" 
-                        onClick={onClose} 
-                        style={{background: "#779DA6",borderColor:"Background"}}
-                    >
-                        Close
-                    </button>
-                </div>
+               
               </div>
             </div>
           </div>
@@ -76,7 +68,7 @@ const RouteModal = (props) => {
   
     return (
       <div>
-        <div className="card" style={{ width: '265px',marginBottom:'0.25rem' }}>
+        <div className="card" style={{ width: '100%',marginBottom:'0.25rem' }}>
           <div className="card-body" style={{padding:'0.5rem',fontWeight:"600",color:"#779DA6"}}>
             <p className="card-text"
                 dangerouslySetInnerHTML={{ __html: instructions }} 
