@@ -289,8 +289,7 @@ const Map = () => {
     }
   }, [allStations]);
 
-const handleRadiusChange = useCallback((event) => {
-  const newRadius = event.target.value;
+const handleRadiusChange = useCallback((newRadius) => {
   setRadius(newRadius)
 }, []);
 
