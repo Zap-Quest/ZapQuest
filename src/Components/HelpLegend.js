@@ -96,35 +96,41 @@ const HelpLegend = (props) => {
                     </span>
                 </div> 
                 <div className="d-flex" style={{gap:"10px",margin:" 1rem 0"}}>
-                    <i className="fa-solid fa-location-dot"></i>
-                    <span>
+                  <i className="fa-solid fa-location-arrow"></i>
+                  <span>
                     TO MY LOCATION
-                    </span>
+                  </span>
                 </div> 
                 <div className="d-flex" style={{gap:"10px",margin:" 1rem 0"}}>
-                    <i className="fa fa-heart" aria-hidden="true"></i>
-                    <span>
-                    MY FAVORITE
-                    </span>
-                </div> 
-                <div className="d-flex" style={{gap:"10px",margin:" 1rem 0"}}>
-                    <i className="fa fa-sharp fa-solid fa-turn-down fa-rotate-90"></i>
-                    <span>
-                    DIRECTION
-                    </span>
-                </div>  
-                <div className="d-flex" style={{gap:"10px",margin:" 1rem 0"}}>
-                    <i className="fa-solid fa-share-nodes"></i>
-                    <span>
-                    COPY URL
-                    </span>
-                </div>  
-                <div className="d-flex" style={{gap:"10px",margin:" 1rem 0"}}>
-                    <i className="fa-sharp fa-solid fa-circle-question"></i>
-                    <span>
-                    SHOW LEGEND
-                    </span>
+                  <i className="fa-solid fa-charging-station"></i>
+                  <span>
+                    STATION INTO
+                  </span>
                 </div>      
+                <div className="d-flex" style={{gap:"10px",margin:" 1rem 0"}}>
+                  <i className="fa fa-sharp fa-solid fa-turn-down fa-rotate-90"></i>
+                  <span>
+                    DIRECTION
+                  </span>
+                </div>  
+                <div className="d-flex" style={{gap:"10px",margin:" 1rem 0"}}>
+                  <i className="fa-solid fa-share-nodes"></i>
+                  <span>
+                    COPY URL
+                  </span>
+                </div>  
+                <div className="d-flex" style={{gap:"10px",margin:" 1rem 0"}}>
+                  <i className="fa-sharp fa-solid fa-circle-question"></i>
+                  <span>
+                    SHOW LEGEND
+                  </span>
+                </div>
+                <div className="d-flex" style={{gap:"10px",margin:" 1rem 0"}}>
+                  <i className="fa fa-heart" aria-hidden="true"></i>
+                  <span>
+                    MY FAVORITE
+                  </span>
+                </div>       
             </div>
           </div>
         </div>

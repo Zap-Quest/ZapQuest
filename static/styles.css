@@ -21,6 +21,13 @@ nav {
   justify-content: space-around;
 }
 
+button.disabled {
+  /* Add your special styles for the disabled button here */
+  opacity: 0.1;
+  cursor: not-allowed;
+  /* Additional styles as needed */
+}
+
 /* home page element */
 .home-btn{
   width:200px;
@@ -156,37 +163,39 @@ nav {
   outline: none;
   background-color: #d8d8d8;
 }
-.open-modal-button {
-  top: 75px;
+
+/* ----- see map-key button -----*/
+.see-map-key {
+  top: 65px;
+  right: 65px;
+  font-size: 12px;
+  font-weight: bold;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  width:80px;
 }
-
-
-
-
+.open-modal-button {
+  top: 65px;
+}
 /* ----- set to nearby button -----*/
 .set-mylocation-button {
-  top: 125px;
-}
-/* ----- see station button -----*/
-.see-station {
-  top: 175px;
-}
-/* ----- direction button -----*/
-.see-direction {
-  top: 225px;
+  top: 115px;
 }
 /* ----- copy URL button -----*/
 .copy-URL {
-  top: 275px;
+  top: 165px;
 }
-/* ----- see help button -----*/
-.see-help {
-  top: 325px;
-  font-size: 16px;
-}
+
 /* ----- My favorite button -----*/
 .see-my-favorite {
-  top:375px;
+  top: 215px;
+}
+/* ----- see station button -----*/
+.see-station {
+  top: 265px;
+}
+/* ----- direction button -----*/
+.see-direction {
+  top: 315px;
 }
 
 /* ----- FavoriteList Modal effect -----*/
@@ -206,26 +215,31 @@ nav {
     height: 30px;
     padding: 0 7px;
   }
+  .see-map-key {
+    font-size: 10px;
+    font-weight: bold;
+    width: 60px;
+    height: 35px;
+    right: 7px;
+    top: 67px;
+  }
   .open-modal-button {
-    top: 75px;
+    top:115PX;
   }
   .set-mylocation-button {
-    top: 115px;
-  }
-  .see-station {
-    top: 155px;
-  }
-  .see-direction {
-    top: 195px;
+    top:155PX;
   }
   .copy-URL {
-    top: 235px;
-  }
-  .see-help {
-    top: 275px;
+    top:195PX;
   }
   .see-my-favorite {
-    top : 315px;
+    top:235PX;
+  }
+  .see-station {
+    top: 275PX;
+  }
+  .see-direction {
+    top: 315PX;
   }
 }
 

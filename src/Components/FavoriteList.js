@@ -129,3 +129,4 @@ const FavoriteList = (props) => {
   };
   
   export default FavoriteList;
+{}

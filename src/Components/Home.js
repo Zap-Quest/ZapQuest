@@ -112,7 +112,8 @@ const Home = () => {
                   // style={{ width: "180px" }}
                   onClick={handleMyLocation}
                 >
-                  Nearby
+                <i className="fa-solid fa-location-arrow"></i>
+                  <span>{' Nearby'}</span>
                 </button>
               </div>
               <div className="col" style={{textAlign:"center"}}>

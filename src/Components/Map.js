@@ -8,7 +8,7 @@ import "dotenv/config";
 import MapFilter from "./MapFilter";
 import SearchBar from "./SearchBar";
 import StationInfo from "./StationInfo";
-import StationsList from "./StationsLIst";
+import StationsList from "./StationsList";
 import FavoriteList from "./FavoriteList";
 import RouteModal from "./RoutesModal";
 import LoadingSpinner from "./LoadingSpinner";
@@ -87,15 +87,17 @@ const Map = () => {
   };
 
   const endNavigation = () => {
-    console.log("state", directionsResponse, distance, duration, steps, origin, destination, isRoutesOpen); // Before state updates
-    setDirectionsResponse(null);
-    setDistance('');
-    setDuration('');
-    setSteps(null);
-    setOrigin(null);
-    setDestination(null);
-    setIsRoutesOpen(false);
-    console.log("afterstate", directionsResponse, distance, duration, steps, origin, destination, isRoutesOpen); // After state updates
+    setIsStationInfoOpen(false);
+    navigate(`/map/place/${startAddress}/`)
+    // console.log("state", directionsResponse, distance, duration, steps, origin, destination, isRoutesOpen); // Before state updates
+    // setDirectionsResponse(null);
+    // setDistance('');
+    // setDuration('');
+    // setSteps(null);
+    // setOrigin(null);
+    // setDestination(null);
+    // setIsRoutesOpen(false);
+    // console.log("afterstate", directionsResponse, distance, duration, steps, origin, destination, isRoutesOpen); // After state updates
 };
 
 
@@ -149,6 +151,7 @@ const Map = () => {
       setSelectedCenter({ lat: coordinates[1]-0.00005, lng: coordinates[0] });
       setActiveMarker(id);
     }
+    setIsRoutesOpen(false);
     navigate(`/map/place/${encodeURIComponent(address)}/${id}`);
   };
 
@@ -158,9 +161,7 @@ const Map = () => {
     streetViewControl: false,
     mapId: "8a036518220c529",
     fullscreenControl: false,
-    mapTypeControlOptions: {
-      style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
-    },
+    
   };
 
   //set to my location button
@@ -344,6 +345,10 @@ const handleReset = () => {
     return (
       <div className="Map">
         
+        {/* see-map-key */}
+        <button className="see-map-key map-btn" onClick={openHelpLegend}>
+          <span>LEGEND</span>
+        </button>
   
         {/* filter modal */}
         <button className="open-modal-button map-btn" onClick={openModal}>
@@ -367,14 +372,14 @@ const handleReset = () => {
   
         {/* set my location button */}
         <button className="set-mylocation-button map-btn" onClick={setToMyLocation} style={{fontSize:"115%"}}>
-            <i className="fa-solid fa-location-dot"></i>
+            <i className="fa-solid fa-location-arrow"></i>
         </button>
         {/* see-station */}
-        <button className="see-station map-btn" onClick={openStationInfo}>
+        <button className={`see-station map-btn ${stationId === undefined || isStationInfoOpen === true ? 'disabled' : ''}`} disabled={stationId===undefined || isStationInfoOpen===true} onClick={openStationInfo}>
           <i className="fa-solid fa-charging-station"></i>
         </button>
         {/* show direction button */}
-        <button className="see-direction map-btn" disabled={isRoutesOpen===true} onClick={openRoutes} style={{fontSize:"115%"}}>
+        <button className={`see-direction map-btn ${isRoutesOpen===true || startAddress === undefined ? 'disabled' : ''}`} disabled={isRoutesOpen===true|| isStationInfoOpen===true || startAddress===undefined } onClick={openRoutes} style={{fontSize:"115%"}}>
           <i className="fa fa-sharp fa-solid fa-turn-down fa-rotate-90"></i>
         </button>
 
@@ -383,10 +388,7 @@ const handleReset = () => {
           <i className="fa-solid fa-share-nodes"></i>
         </button>
 
-        {/* see-help */}
-        <button className="see-help map-btn" onClick={openHelpLegend}>
-          <i className="fa-sharp fa-solid fa-question"></i>
-        </button>
+
         {/* show my favorite button */}
         <button className="see-my-favorite map-btn" onClick={openMyFavorite} >
           <i className="fa fa-heart" aria-hidden="true"></i>
@@ -415,9 +417,10 @@ const handleReset = () => {
               }
               {/* StationInfo Modal*/}
               {
-              selectedStation && isStationInfoOpen? (
+              (selectedStation && isStationInfoOpen)? (
                   <StationInfo value={selectedStation} address={address} closeMyFavorite={closeMyFavorite} closeStationInfo={closeStationInfo}  openRoutes={openRoutes}/>
-              ) : (<StationsList />) /* if we have a selectdStation, we can have specific station infor. if not, should we show the list of all the nearby stations?*/
+              ):
+              (isStationInfoOpen &&(<StationsList address={address} closeMyFavorite={closeMyFavorite} closeStationInfo={closeStationInfo}  openRoutes={openRoutes}/>) )/* if we have a selectdStation, we can have specific station info. if not, should we show the list of all the nearby stations?*/
               }
               {/* HelpLegend Modal*/}
               {
