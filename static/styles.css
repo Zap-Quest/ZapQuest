@@ -361,18 +361,15 @@ nav {
   .map-modal-favoriteList .modal-dialog{
     margin-left: auto;
     margin-right: auto;
-    margin-bottom: 6%;
-    margin-top: auto;
-    height: 700px;
-    width: 90%;
+    width: 95%;
     max-width: none;
   }
   .map-modal-favoriteList .modal-body {
-    height:200px;
+    height:30vh;
   }
   .map-modal-favoriteList .modal-content {
-  position: absolute;
-  bottom:10%
+    position: absolute;
+    bottom:12%
   }
 
 
@@ -380,18 +377,15 @@ nav {
   .map-modal-stationInfo .modal-dialog{
     margin-left: auto;
     margin-right: auto;
-    margin-bottom: 20vh;
-    margin-top: auto;
-    height: 25vh;
-    width: 85%;
+    width: 95%;
     max-width: none;
   }
   .map-modal-stationInfo .modal-body {
-    height:22vh;
+    height:25vh;
   } 
   .map-modal-stationInfo .modal-content {
   position: absolute;
-  bottom:15%
+  bottom:12%
   }
   .map-modal-stationInfo h5{
     font-size: 1rem;
