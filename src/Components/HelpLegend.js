@@ -1,3 +1,4 @@
+
 import React,{useState} from "react";
 
 
@@ -10,7 +11,7 @@ const HelpLegend = (props) => {
     return (
         <>
           <div 
-            className={`show map-modal-legend`}
+            className={`show map-modal`}
             id="exampleModal" 
             tabIndex="-1" 
             role="dialog" 

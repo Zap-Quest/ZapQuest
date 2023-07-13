@@ -128,7 +128,7 @@ nav {
   background-color: #112426;
 }
 
-/* ----- filter button -----*/
+/* ----- all the small button on the map -----*/
 .map-btn{
   position: absolute;
   right: 10px;
@@ -149,16 +149,17 @@ nav {
 }
 
 .map-btn:hover {
-  background-color: #e6e6e6;
+  background-color: #d8d8d8;
 }
 
 .map-btn:focus {
   outline: none;
-  background-color: #e6e6e6;
+  background-color: #d8d8d8;
 }
 .open-modal-button {
   top: 75px;
 }
+
 
 
 
@@ -186,6 +187,14 @@ nav {
 /* ----- My favorite button -----*/
 .see-my-favorite {
   top:375px;
+}
+
+/* ----- FavoriteList Modal effect -----*/
+.favoriteList-stationInfo-card-title {
+  color: #5f919d
+}
+.favoriteList-stationInfo-card-title:hover {
+  color: rgb(196, 157, 42);
 }
 
 
@@ -220,7 +229,7 @@ nav {
   }
 }
 
-/* ----- input -----*/
+/* ----- input-----*/
 .input-group {
   z-index: 997;
   align-items: center;
@@ -298,7 +307,19 @@ nav {
 
 
 
-/* ----- Help Legend from map CSS -----*/
+/* map-modal form  map */
+.map-modal .modal-dialog{
+  margin-left: 5rem;
+  margin-right: auto;
+  height: auto;
+  max-height: 800px;
+  width: 300px;
+  max-width: 800px;
+}
+.map-modal .modal-body{
+  height: auto;
+  max-height: 450px;
+}
 .map-modal [class*="fa-"] {
   font-size:150%;
 }
@@ -327,6 +348,20 @@ nav {
 /* ---- media ----*/
 
 @media (max-width: 767px) {
+  /* map-modal */
+  .map-modal .modal-dialog {
+    margin-left: auto;
+    margin-right: auto;
+    width: 95%;
+    max-width: none;
+  }
+  .map-modal .modal-body {
+    height:29vh;
+  }
+  .map-modal .modal-content {
+      position: absolute;
+      bottom:10vh;
+  }
   /* help form  home */
   .help .modal-dialog {
     height: 500px;
@@ -336,25 +371,8 @@ nav {
     margin-right:auto;
   }
 
-  /* help legend form  map */
-  .map-modal-legend .modal-dialog {
-        width: 90%;
-        max-width: none;
-        margin-left: 5%;
-        margin-right:auto;
-        margin-bottom: 6%;
-        margin-top: auto;
-  }
-  .map-modal-legend .modal-body {
-          height:200px;
-  }
-  .map-modal-legend .modal-content {
-      position: absolute;
-      bottom:10%
-  }
-
   /* favorite modal form  home */
-  .favorite  .modal-dialog {
+  .favorite .modal-dialog {
     height: 500px;
     width: 80%;
     max-width: none;
@@ -362,45 +380,22 @@ nav {
     margin-right:auto;
   }
 
-  /* favoriteList modal form  map */
-  .map-modal-favoriteList .modal-dialog{
-    margin-left: auto;
-    margin-right: auto;
-    width: 95%;
-    max-width: none;
-  }
-  .map-modal-favoriteList .modal-body {
-    height:30vh;
-  }
-  .map-modal-favoriteList .modal-content {
-    position: absolute;
-    bottom:10%
-  }
-
-
   /* StationInfo modal form map */
-  .map-modal-stationInfo .modal-dialog{
-    margin-left: auto;
-    margin-right: auto;
-    width: 95%;
-    max-width: none;
+  #RouteModalContent {
+    margin-bottom: 10vh;
   }
-  .map-modal-stationInfo .modal-body {
-    height:25vh;
-  } 
-  .map-modal-stationInfo .modal-content {
-  position: absolute;
-  bottom:12%
-  }
-  .map-modal-stationInfo h5{
+  .map-modal h5{
     font-size: 1rem;
   }
-  .map-modal-stationInfo hr{
+  .map-modal hr{
     margin-top: 0.5rem;
     margin-bottom: 0.5rem;
   }
-  .map-modal-stationInfo h6{
+  .map-modal h6{
     font-size: 0.85rem;
+  }
+  .map-modal .d-flex{
+    margin-bottom: 0;
   }
   .card-text span{
     font-size: 0.7rem;;
@@ -409,11 +404,12 @@ nav {
     padding: 0.85rem;
   }
   .modal-footer .btn {
-    font-size: 0.85rem;
+    font-size: 0.5rem;
   }
   .navbar-text {
     display: none;
   }
+
 }
 
 
@@ -435,13 +431,10 @@ nav {
     margin-right:auto;
   }
   
-  /* help legend form  map */
-  .map-modal-legend .modal-dialog {
+  /* map-modal form  map */
+  .map-modal .modal-dialog {
     margin-left: 1rem;
-    margin-right: auto;
-    height: 700px;
-    width: 300px;
-    max-width: 800px;
+
   }
 
   /* favorite modal form  home */
@@ -453,27 +446,6 @@ nav {
     margin-right:auto;
   }
 
-  /* favoriteList modal form  map */
-  .map-modal-favoriteList .modal-dialog{
-    margin-left: 1rem;
-    margin-right: auto;
-    height: 700px;
-    width: 300px;
-    max-width: 800px;
-  }
-
-  /* StationInfo modal form  map */
-  .map-modal-stationInfo .modal-dialog{
-    margin-left: 1rem;
-    margin-right: auto;
-    height: 700px;
-    width: 300px;
-    max-width: 800px;
-
-  }
-  .map-modal-stationInfo .modal-body{
-    height: 400px;
-  }  
 }
 
   /* Styles for screens bigger than or equal to 992 pixels */
@@ -487,46 +459,14 @@ nav {
     margin-right: auto;
   }
 
-  /* help legend form  map */
-  .map-modal-legend  .modal-dialog {
-      height: auto;
-      width: 300px;
-      max-width: 800px;
-      margin-left: 5rem;
-      margin-right: auto;
-    }
-
   /* favorite  modal form  home */
-  .favorite   .modal-dialog {
+  .favorite  .modal-dialog {
     height: 700px;
     width: 30%;
     max-width: 800px;
     margin-left: 5rem;
     margin-right: auto;
   }
-  /* favoriteList modal form  map */
-  .map-modal-favoriteList .modal-dialog{
-    margin-left: 5rem;
-    margin-right: auto;
-    height: 700px;
-    width: 300px;
-    max-width: 800px;
-  }
-
-  /* StationInfo modal form  map */
-  .map-modal-stationInfo .modal-dialog{
-    margin-left: 5rem;
-    margin-right: auto;
-    height: 700px;
-    width: 300px;
-    max-width: 800px;
-
-  }
-  .map-modal-stationInfo .modal-body{
-    height: 400px;
-  }
- 
-
 
 
 }

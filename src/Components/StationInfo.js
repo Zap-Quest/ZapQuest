@@ -85,7 +85,7 @@ const StationInfo = (props) => {
     return (
         <>
           <div 
-            className={ 'show map-modal-stationInfo'} 
+            className={ 'show map-modal stationInfo'} 
             id="exampleModal" 
             tabIndex="-1" 
             role="dialog" 
@@ -99,102 +99,102 @@ const StationInfo = (props) => {
               role="document" 
 
             >
-              <div className="modal-content" style={{ marginTop: '-30px' }}>
-                <div className="modal-header" style={{background:"#214042"}}>
-                    <h5 className="modal-title" id="exampleModalLabel" style={{color:"white"}}>
-                        <i className="fa-solid fa-charging-station" style={{ color: "#EABD00" }}/>
-                        <span>{`  EV Station`}</span>
-                    </h5>
-                    <button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={closeStationInfo}>
-                    <span aria-hidden="true" style={{color:"grey"}}>&times;</span>
-                  </button>
-                </div>
-                <div className="modal-body" style={{  overflowY: 'auto' }}>
-                    <>
-                        <div className="d-flex w-100 justify-content-between">
-                            <h6 className="mb-1" style={{ color: "#779DA6",fontWeight:"bold"}}>
-                                <span>{` ${station.properties.station_name}`}</span>
-                            </h6>
-                            <small>{`${station.properties.distance.toFixed(1)} mile`}</small>
-                        </div>
-                        <hr/>
-                        <div className="card" style={{ width: '100%',marginBottom:"0.5rem", fontSize:"0.8rem"}}>
-                            <div className="card-body">
-                            <p className="card-text" >
-                                <i className="fa-solid fa-location-dot" style={{ color: "#779DA6" }}/>
-                                <span>{` ${station.properties.street_address.toUpperCase()} ${station.properties.city.toUpperCase()}`}</span>
-                            </p>
-                            <hr/>
-                            <p className="card-text">
-                                <i className="fa-solid fa-phone" style={{ color: "#779DA6" }}/>
-                                <span>{` ${station.properties.station_phone}`}</span>
-                            </p>
-                            {station.access_days_time&&(
-                                <>
-                                    <hr/>
-                                    <p className="card-text">
-                                    <i className="fa-solid fa-clock" style={{ color: "#779DA6" }}></i>
-                                    <span>{`  24/7`}</span>
-                                    </p>
-                                </>
-                            )}
+                <div className="modal-content" style={{ marginTop: '-30px' }}>
+                    <div className="modal-header" style={{background:"#214042"}}>
+                        <h5 className="modal-title" id="exampleModalLabel" style={{color:"white"}}>
+                            <i className="fa-solid fa-charging-station" style={{ color: "#EABD00" }}/>
+                            <span>{`  EV Station`}</span>
+                        </h5>
+                        <button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={closeStationInfo}>
+                        <span aria-hidden="true" style={{color:"grey"}}>&times;</span>
+                    </button>
+                    </div>
+                    <div className="modal-body" style={{  overflowY: 'auto' }}>
+                        <>
+                            <div className="d-flex w-100 justify-content-between">
+                                <h6 className="mb-1" style={{ color: "#779DA6",fontWeight:"bold"}}>
+                                    <span>{` ${station.properties.station_name}`}</span>
+                                </h6>
+                                <small>{`${station.properties.distance.toFixed(1)} mile`}</small>
                             </div>
-                        </div>
-                        <div className="card" style={{ width: '100%', marginBottom:"0.5rem",fontSize:"0.8rem" }}>
-                            <div className="card-body">
-                            <p className="card-title d-flex w-100 justify-content-between">
-                                <span>
-                                    <i className="fa-solid fa-charging-station" style={{ color: "#779DA6" }}/>
-                                    <span>{` ${station.properties.ev_network.toUpperCase()}`}</span>
-                                </span>
-                                <small>{station.properties.ev_pricing&&station.properties.ev_pricing.toUpperCase()!=="FREE"?("PAID"):("FREE")}</small>
-                            </p>
                             <hr/>
-                            <p className="card-text">
-                                {station.properties.ev_connector_types.map((p,index)=>{return(
-                                    <span key={index}>
-                                        <i className="fa-solid fa-plug" style={{ color: "#779DA6" }}></i>
-                                        <span>{`  ${p}   `}</span>
+                            <div className="card" style={{ width: '100%',marginBottom:"0.5rem", fontSize:"0.8rem"}}>
+                                <div className="card-body">
+                                <p className="card-text" >
+                                    <i className="fa-solid fa-location-dot" style={{ color: "#779DA6" }}/>
+                                    <span>{` ${station.properties.street_address.toUpperCase()} ${station.properties.city.toUpperCase()}`}</span>
+                                </p>
+                                <hr/>
+                                <p className="card-text">
+                                    <i className="fa-solid fa-phone" style={{ color: "#779DA6" }}/>
+                                    <span>{` ${station.properties.station_phone}`}</span>
+                                </p>
+                                {station.access_days_time&&(
+                                    <>
+                                        <hr/>
+                                        <p className="card-text">
+                                        <i className="fa-solid fa-clock" style={{ color: "#779DA6" }}></i>
+                                        <span>{`  24/7`}</span>
+                                        </p>
+                                    </>
+                                )}
+                                </div>
+                            </div>
+                            <div className="card" style={{ width: '100%', marginBottom:"0.5rem",fontSize:"0.8rem" }}>
+                                <div className="card-body">
+                                <p className="card-title d-flex w-100 justify-content-between">
+                                    <span>
+                                        <i className="fa-solid fa-charging-station" style={{ color: "#779DA6" }}/>
+                                        <span>{` ${station.properties.ev_network.toUpperCase()}`}</span>
                                     </span>
-                                )})}
-                            </p>
+                                    <small>{station.properties.ev_pricing&&station.properties.ev_pricing.toUpperCase()!=="FREE"?("PAID"):("FREE")}</small>
+                                </p>
+                                <hr/>
+                                <p className="card-text">
+                                    {station.properties.ev_connector_types.map((p,index)=>{return(
+                                        <span key={index}>
+                                            <i className="fa-solid fa-plug" style={{ color: "#779DA6" }}></i>
+                                            <span>{`  ${p}   `}</span>
+                                        </span>
+                                    )})}
+                                </p>
+                                </div>
                             </div>
-                        </div>
-                        <div className="card" style={{ width: '100%',fontSize:"0.8rem" }}>
-                            <div className="card-body">
-                            <p className="card-title d-flex w-100 justify-content-between">
-                                <span>
-                                    <i className="fa-solid fa-charging-station" style={{ color: "#EABD00" }}/>
-                                    <span>{' NEARBY CHARGING STATION'}</span>
-                                </span>
-                            </p>
-                            <div className="card-text">
-                                {nearbyStations &&
-                                    nearbyStations.map((s)=>{
-                                    console.log("s:",s);
-                                    return (<div key={s.properties.id}>
-                                                <hr/>
-                                                <p><i className="fa-solid fa-location-dot" style={{ color: "#EABD00" }}/><span>{`  ${s.properties.station_name}`}</span></p>
-                                                <p style={{fontSize:"0.6rem"}}>{` ${s.properties.street_address.toUpperCase()} ${s.properties.city.toUpperCase()}`}</p>
-                                            </div>
-                                    )})
-                                }
+                            <div className="card" style={{ width: '100%',fontSize:"0.8rem" }}>
+                                <div className="card-body">
+                                <p className="card-title d-flex w-100 justify-content-between">
+                                    <span>
+                                        <i className="fa-solid fa-charging-station" style={{ color: "#EABD00" }}/>
+                                        <span>{' NEARBY CHARGING STATION'}</span>
+                                    </span>
+                                </p>
+                                <div className="card-text">
+                                    {nearbyStations &&
+                                        nearbyStations.map((s)=>{
+                                        console.log("s:",s);
+                                        return (<div key={s.properties.id}>
+                                                    <hr/>
+                                                    <p><i className="fa-solid fa-location-dot" style={{ color: "#EABD00" }}/><span>{`  ${s.properties.station_name}`}</span></p>
+                                                    <p style={{fontSize:"0.6rem"}}>{` ${s.properties.street_address.toUpperCase()} ${s.properties.city.toUpperCase()}`}</p>
+                                                </div>
+                                        )})
+                                    }
+                                </div>
+                                </div>
                             </div>
-                            </div>
-                        </div>
-                    </>
+                        </>
+                    </div>
+                    <div className="modal-footer" style={{padding:"0.5rem"}}>
+                        {auth.username&&(
+                            stationInFavorite?(
+                                <button type="button" className="btn btn-secondary" data-dismiss="modal"  onClick={removeFromFavorite}><i className="fa fa-heart" aria-hidden="true" style={{color:"#EABD00", fontSize:"100%" }}></i></button>
+                            ):(
+                                <button type="button" className="btn btn-secondary" data-dismiss="modal"  onClick={addToFavorite}><i className="fa fa-heart" aria-hidden="true" style={{fontSize:"100%"}} ></i></button>
+                            )
+                        )}
+                        <button type="button" className="btn btn-secondary" onClick={()=>handleDirection()}><i className="fa fa-sharp fa-solid fa-turn-down fa-rotate-90"  style={{fontSize:"100%"}}></i></button>
+                    </div>
                 </div>
-                <div className="modal-footer" style={{padding:"0.5rem"}}>
-                {auth.username&&(
-                    stationInFavorite?(
-                        <button type="button" className="btn btn-secondary" data-dismiss="modal"  onClick={removeFromFavorite}><i className="fa fa-heart" aria-hidden="true" style={{color:"#EABD00" }}></i></button>
-                    ):(
-                        <button type="button" className="btn btn-secondary" data-dismiss="modal"  onClick={addToFavorite}><i className="fa fa-heart" aria-hidden="true"></i></button>
-                    )
-                )}
-                  <button type="button" className="btn btn-secondary" onClick={()=>handleDirection()}><i className="fa fa-sharp fa-solid fa-turn-down fa-rotate-90"></i></button>
-                </div>
-              </div>
             </div>
           </div>
       </>
