@@ -28,7 +28,6 @@ const Help = (props) => {
         <div
           className="modal-dialog modal-side modal-dialog-centered "
           role="document"
-    
         >
           <div className="modal-content" style={{ marginTop: '-100px' }}>
             <div className="modal-header" style={{ background: "#214042" }}>

@@ -1,6 +1,6 @@
 body {
   font-family: verdana;
-  min-width: 485px;
+  /* min-width: 100%;   */
 }
 
 form {
@@ -13,25 +13,60 @@ form > * {
 }
 
 .navbar {
-  min-width: 485px;
+  /* min-width: 485px; */
+  max-width: 100vw;
 }
-
 nav {
   display: flex;
   justify-content: space-around;
 }
 
-.Map {
-  height: 100vh;
-  width: 100vw;
+/* home page element */
+.home-btn{
+  width:200px;
+}
+.home-input{
+  width:400px;
+}
+.home .pm{
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+  padding-top: 3rem;
+  padding-bottom: 3rem;
 }
 
-.map-container {
+@media (max-width: 767px) {
+  .home-btn{
+    width:150px;
+  } 
+  .home-input{
+    width:100%;
+    margin:auto;
+  }
+  .home .pm {
+    margin-top:1rem;
+    padding-top: 1rem;
+  }
+  
+}
 
-  height: 90%;
+/* ------ Map ------ */
+.Map {
+  height: 93vh;
+  width: 100vw;
+}
+.map-container {
+  height: 100%;
   width: 100%; 
   position: relative;
   /*flex: 1;*/
+}
+
+@media (max-width: 767px) {
+  .map-container .gm-style-mtc,
+  .map-container .gmnoprint {
+    display: none !important;
+  }
 }
 
 .map-button {
@@ -94,10 +129,9 @@ nav {
 }
 
 /* ----- filter button -----*/
-.open-modal-button {
+.map-btn{
   position: absolute;
-  top: 75px;
-  right: 30px;
+  right: 10px;
   z-index: 999;
   background-color: #fff;
   border: 1px solid transparent;
@@ -114,171 +148,88 @@ nav {
   height: 38px;
 }
 
-.open-modal-button:hover {
+.map-btn:hover {
   background-color: #e6e6e6;
 }
 
-.open-modal-button:focus {
+.map-btn:focus {
   outline: none;
   background-color: #e6e6e6;
 }
+.open-modal-button {
+  top: 75px;
+}
+
+
 
 /* ----- set to nearby button -----*/
 .set-mylocation-button {
-  position: absolute;
   top: 125px;
-  right: 30px;
-  z-index: 999;
-  background-color: #fff;
-  border: 1px solid transparent;
-  border-radius: 2px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
-  color: #333;
-  cursor: pointer;
-  font-family: Roboto, Arial, sans-serif;
-  line-height: 38px;
-  padding: 0 12px;
-  text-align: center;
-  font-size: 14px;
-  width: 38px;
-  height: 38px;
 }
-
-.set-mylocation-button:hover {
-  background-color: #e6e6e6;
-}
-
-.set-mylocation-button {
-  outline: none;
-  background-color: #e6e6e6;
-}
-
-/* ----- My favorite button -----*/
-.see-my-favorite {
-  position: absolute;
+/* ----- see station button -----*/
+.see-station {
   top: 175px;
-  right: 30px;
-  z-index: 999;
-  background-color: #fff;
-  border: 1px solid transparent;
-  border-radius: 2px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
-  color: #333;
-  cursor: pointer;
-  font-family: Roboto, Arial, sans-serif;
-  line-height: 38px;
-  padding: 0 12px;
-  text-align: center;
-  font-size: 14px;
-  width: 38px;
-  height: 38px;
 }
-
-.see-my-favorite:hover {
-  background-color: #e6e6e6;
-}
-
-.see-my-favorite {
-  outline: none;
-  background-color: #e6e6e6;
-}
-
 /* ----- direction button -----*/
 .see-direction {
-  position: absolute;
   top: 225px;
-  right: 30px;
-  z-index: 999;
-  background-color: #fff;
-  border: 1px solid transparent;
-  border-radius: 2px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
-  color: #333;
-  cursor: pointer;
-  font-family: Roboto, Arial, sans-serif;
-  line-height: 38px;
-  padding: 0 12px;
-  text-align: center;
-  font-size: 14px;
-  width: 38px;
-  height: 38px;
 }
-
-.see-direction:hover {
-  background-color: #e6e6e6;
-}
-
-.see-direction {
-  outline: none;
-  background-color: #e6e6e6;
-}
-
 /* ----- copy URL button -----*/
 .copy-URL {
-  position: absolute;
   top: 275px;
-  right: 30px;
-  z-index: 999;
-  background-color: #fff;
-  border: 1px solid transparent;
-  border-radius: 2px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
-  color: #333;
-  cursor: pointer;
-  font-family: Roboto, Arial, sans-serif;
-  line-height: 38px;
-  padding: 0 12px;
-  text-align: center;
-  font-size: 14px;
-  width: 38px;
-  height: 38px;
 }
-
-.copy-URL:hover {
-  background-color: #e6e6e6;
-}
-
-.copy-URL {
-  outline: none;
-  background-color: #e6e6e6;
-}
-
 /* ----- see help button -----*/
 .see-help {
-  position: absolute;
   top: 325px;
-  right: 30px;
-  z-index: 999;
-  background-color: #fff;
-  border: 1px solid transparent;
-  border-radius: 2px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
-  color: #333;
-  cursor: pointer;
-  font-family: Roboto, Arial, sans-serif;
-  line-height: 38px;
-  padding: 0 12px;
-  text-align: center;
-  font-size: 14px;
-  width: 38px;
-  height: 38px;
+  font-size: 16px;
+}
+/* ----- My favorite button -----*/
+.see-my-favorite {
+  top:375px;
 }
 
-.see-help{
-  background-color: #e6e6e6;
-}
 
-.see-help {
-  outline: none;
-  background-color: #e6e6e6;
+
+@media (max-width: 767px) {
+  .map-btn {
+    font-size: 14px;
+    width: 30px;
+    height: 30px;
+    padding: 0 7px;
+  }
+  .open-modal-button {
+    top: 75px;
+  }
+  .set-mylocation-button {
+    top: 115px;
+  }
+  .see-station {
+    top: 155px;
+  }
+  .see-direction {
+    top: 195px;
+  }
+  .copy-URL {
+    top: 235px;
+  }
+  .see-help {
+    top: 275px;
+  }
+  .see-my-favorite {
+    top : 315px;
+  }
 }
 
 /* ----- input -----*/
 .input-group {
-  width: 60%;
-  margin-left: 35%;
   z-index: 997;
+  align-items: center;
+  justify-content: center;
 }
+.input-group #search-input{
+  width:50vw;
+}
+
 
 /* ----- pagination -----*/
 .pagination .page-link {
@@ -328,72 +279,254 @@ nav {
   font-size: 12px;
 }
 
-@media (max-width: 767px) {
-    .favorite  .modal-dialog {
-        height: 500px;
-        width: 80%;
-        max-width: none;
-        margin-left: 10%;
-        margin-right:auto;
-      }
-  }
 
-  
-@media (min-width: 768px) and (max-width: 991px) {
-    .favorite  .modal-dialog {
-      height: 600px;
-      width: 50%;
-      max-width: none;
-      margin-left: 25%;
-      margin-right:auto;
-    }
-  }
-
-  /* Styles for screens bigger than or equal to 992 pixels */
-@media (min-width: 992px) {
-  .favorite   .modal-dialog {
-      height: 700px;
-      width: 30%;
-      max-width: 800px;
-      margin-left: 5rem;
-      margin-right: auto;
-    }
-}
-
-/* ----- Help CSS -----*/
-.favorite  [class*="fa-"] {
+/* ----- Help from home CSS -----*/
+.help [class*="fa-"] {
   font-size:150%;
 }
+.help .d-flex {
+  gap: 15px;
+  margin-bottom: 1rem;
+  font-size: 10px;
+}
+.help h4{
+  font-size: 16px;
+}
+.help p{
+  font-size: 12px;
+}
+
+
+
+/* ----- Help Legend from map CSS -----*/
+.map-modal [class*="fa-"] {
+  font-size:150%;
+}
+.map-modal .d-flex {
+  gap: 15px;
+  margin-bottom: 1rem;
+  font-size: 10px;
+}
+.map-modal h4{
+  font-size: 16px;
+}
+.map-modal p{
+  font-size: 12px;
+}
+.map-modal-legend span{
+  font-size: 0.7rem;
+}
+
+/* ----- Loading spinner -----*/
+.spinner {
+  max-width: 200px;
+  margin: 30vh auto;
+}
+
+
+/* ---- media ----*/
 
 @media (max-width: 767px) {
-    .favorite  .modal-dialog {
-        height: 500px;
-        width: 80%;
-        max-width: none;
-        margin-left: 10%;
-        margin-right:auto;
-      }
+  /* help form  home */
+  .help .modal-dialog {
+    height: 500px;
+    width: 80%;
+    max-width: none;
+    margin-left: 10%;
+    margin-right:auto;
   }
+
+  /* help legend form  map */
+  .map-modal-legend .modal-dialog {
+        width: 90%;
+        max-width: none;
+        margin-left: 5%;
+        margin-right:auto;
+        margin-bottom: 6%;
+        margin-top: auto;
+  }
+  .map-modal-legend .modal-body {
+          height:200px;
+  }
+  .map-modal-legend .modal-content {
+      position: absolute;
+      bottom:10%
+  }
+
+  /* favorite modal form  home */
+  .favorite  .modal-dialog {
+    height: 500px;
+    width: 80%;
+    max-width: none;
+    margin-left: 10%;
+    margin-right:auto;
+  }
+
+  /* favoriteList modal form  map */
+  .map-modal-favoriteList .modal-dialog{
+    margin-left: auto;
+    margin-right: auto;
+    width: 95%;
+    max-width: none;
+  }
+  .map-modal-favoriteList .modal-body {
+    height:30vh;
+  }
+  .map-modal-favoriteList .modal-content {
+    position: absolute;
+    bottom:10%
+  }
+
+
+  /* StationInfo modal form map */
+  .map-modal-stationInfo .modal-dialog{
+    margin-left: auto;
+    margin-right: auto;
+    width: 95%;
+    max-width: none;
+  }
+  .map-modal-stationInfo .modal-body {
+    height:25vh;
+  } 
+  .map-modal-stationInfo .modal-content {
+  position: absolute;
+  bottom:12%
+  }
+  .map-modal-stationInfo h5{
+    font-size: 1rem;
+  }
+  .map-modal-stationInfo hr{
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+  .map-modal-stationInfo h6{
+    font-size: 0.85rem;
+  }
+  .card-text span{
+    font-size: 0.7rem;;
+  }
+  .card-body {
+    padding: 0.85rem;
+  }
+  .modal-footer .btn {
+    font-size: 0.85rem;
+  }
+  .navbar-text {
+    display: none;
+  }
+}
+
 
   
 @media (min-width: 768px) and (max-width: 991px) {
-    .help .modal-dialog {
-      height: 600px;
-      width: 50%;
-      max-width: none;
-      margin-left: 25%;
-      margin-right:auto;
-    }
+  .modal-header {
+    padding: 0.5rem;
   }
+  .modal-title {
+    line-height:1;
+}
+
+  /* help form  home */
+  .help .modal-dialog {
+    height: 600px;
+    width: 50%;
+    max-width: none;
+    margin-left: 25%;
+    margin-right:auto;
+  }
+  
+  /* help legend form  map */
+  .map-modal-legend .modal-dialog {
+    margin-left: 1rem;
+    margin-right: auto;
+    height: 700px;
+    width: 300px;
+    max-width: 800px;
+  }
+
+  /* favorite modal form  home */
+  .favorite  .modal-dialog {
+    height: 600px;
+    width: 50%;
+    max-width: none;
+    margin-left: 25%;
+    margin-right:auto;
+  }
+
+  /* favoriteList modal form  map */
+  .map-modal-favoriteList .modal-dialog{
+    margin-left: 1rem;
+    margin-right: auto;
+    height: 700px;
+    width: 300px;
+    max-width: 800px;
+  }
+
+  /* StationInfo modal form  map */
+  .map-modal-stationInfo .modal-dialog{
+    margin-left: 1rem;
+    margin-right: auto;
+    height: 700px;
+    width: 300px;
+    max-width: 800px;
+
+  }
+  .map-modal-stationInfo .modal-body{
+    height: 400px;
+  }  
+}
 
   /* Styles for screens bigger than or equal to 992 pixels */
 @media (min-width: 992px) {
+  /* help form  home */
   .help  .modal-dialog {
-      height: 700px;
-      width: 30%;
+    height: 700px;
+    width: 30%;
+    max-width: 800px;
+    margin-left: 5rem;
+    margin-right: auto;
+  }
+
+  /* help legend form  map */
+  .map-modal-legend  .modal-dialog {
+      height: auto;
+      width: 300px;
       max-width: 800px;
       margin-left: 5rem;
       margin-right: auto;
     }
-}
 
+  /* favorite  modal form  home */
+  .favorite   .modal-dialog {
+    height: 700px;
+    width: 30%;
+    max-width: 800px;
+    margin-left: 5rem;
+    margin-right: auto;
+  }
+  /* favoriteList modal form  map */
+  .map-modal-favoriteList .modal-dialog{
+    margin-left: 5rem;
+    margin-right: auto;
+    height: 700px;
+    width: 300px;
+    max-width: 800px;
+  }
+
+  /* StationInfo modal form  map */
+  .map-modal-stationInfo .modal-dialog{
+    margin-left: 5rem;
+    margin-right: auto;
+    height: 700px;
+    width: 300px;
+    max-width: 800px;
+
+  }
+  .map-modal-stationInfo .modal-body{
+    height: 400px;
+  }
+ 
+
+
+
+}

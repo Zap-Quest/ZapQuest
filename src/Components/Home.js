@@ -79,47 +79,47 @@ const Home = () => {
 
   return (
     <>
-      <div className="container d-flex flex-column align-items-center justify-content-center">
-        <div className="my-5 py-5">
-          <div className="text-center mb-4">
+      <div className="container d-flex flex-column align-items-center justify-content-center home" >
+        <div className="pm" >
+          <div className="text-center mb-4" style={{maxWidth: "100vw"}} >
             <img
               src="https://cdn1.iconfinder.com/data/icons/game-design-volume-2/512/Quest-512.png"
               alt="Quest Icon"
               className="mb-2"
-              style={{ width: "200px", height: "200px" }}
+              style={{ width: "180px", height: "200px" }}
             />
-            <h1 className="mb-4">Begin your Quest</h1>
+            <h1 className="mb-4" style={{}}>Begin your Quest</h1>
             <form onSubmit={handleSearch} className="d-flex mb-4">
               <input
                 type="text"
-                className="form-control shadow-sm me-2 mb-1"
+                className="form-control shadow-sm me-2 mb-1 home-input"
                 placeholder="Search city, place, or address"
                 value={searchInput}
                 onChange={onChange}
                 ref={elPlace}
-                style={{ width: "400px" }}
+                // style={{ width: "400px" }}
               />
-              <button type="submit" className="btn btn-dark default-button">
+              <button type="submit" className="btn btn-dark default-button search-btn">
                 Search
               </button>
             </form>
           </div>
           <div className="d-grid gap-3">
             <div className="row">
-              <div className="col">
+              <div className="col" style={{textAlign:"center"}} >
                 <button
-                  className="btn btn-dark mb-2 default-button"
-                  style={{ width: "200px" }}
+                  className="btn btn-dark mb-2 default-button home-btn"
+                  // style={{ width: "180px" }}
                   onClick={handleMyLocation}
                 >
                   Nearby
                 </button>
               </div>
-              <div className="col">
+              <div className="col" style={{textAlign:"center"}}>
                 <Link to="/about">
                   <button
-                    className="btn btn-dark mb-2 default-button"
-                    style={{ width: "200px" }}
+                    className="btn btn-dark mb-2 default-button home-btn"
+                    // style={{ width: "180px" }}
                   >
                     About
                   </button>
@@ -127,13 +127,19 @@ const Home = () => {
               </div>
             </div>
             <div className="row">
-              <div className="col">
-                <button className="btn btn-dark default-button" style={{ width: "200px" }} onClick={openMyFavorite}>
+              <div className="col" style={{textAlign:"center"}}>
+                <button className="btn btn-dark default-button home-btn" 
+                  // style={{ width: "180px" }} 
+                  onClick={openMyFavorite}
+                >
                   Favorites
                 </button>
               </div>
-              <div className="col">
-                <button className="btn btn-dark default-button" style={{ width: "200px" }} onClick={openHelp}>
+              <div className="col" style={{textAlign:"center"}}>
+                <button className="btn btn-dark default-button home-btn" 
+                  // style={{ width: "180px" }} 
+                  onClick={openHelp}
+                >
                   <span>Help</span>
                 </button>
               </div>

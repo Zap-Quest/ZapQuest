@@ -86,6 +86,19 @@ const Map = () => {
     setIsRoutesOpen(false);
   };
 
+  const endNavigation = () => {
+    console.log("state", directionsResponse, distance, duration, steps, origin, destination, isRoutesOpen); // Before state updates
+    setDirectionsResponse(null);
+    setDistance('');
+    setDuration('');
+    setSteps(null);
+    setOrigin(null);
+    setDestination(null);
+    setIsRoutesOpen(false);
+    console.log("afterstate", directionsResponse, distance, duration, steps, origin, destination, isRoutesOpen); // After state updates
+};
+
+
   // my StationInfo modal
   const openStationInfo = () => {
     setIsFavoriteOpen(false);
@@ -145,7 +158,9 @@ const Map = () => {
     streetViewControl: false,
     mapId: "8a036518220c529",
     fullscreenControl: false,
-   
+    mapTypeControlOptions: {
+      style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
+    },
   };
 
   //set to my location button
@@ -191,7 +206,7 @@ const Map = () => {
     }else{
       setWarn(" YOu do not have location enabled");
     }
-  } 
+  }
 
   /* useEffect */
 
@@ -332,7 +347,7 @@ const handleReset = () => {
         
   
         {/* filter modal */}
-        <button className="open-modal-button" onClick={openModal}>
+        <button className="open-modal-button map-btn" onClick={openModal}>
           <i className="fa-solid fa-filter"></i>
         </button>
         {isModalOpen && (
@@ -352,27 +367,30 @@ const handleReset = () => {
         )}
   
         {/* set my location button */}
-        <button className="set-mylocation-button" onClick={setToMyLocation} style={{fontSize:"115%"}}>
+        <button className="set-mylocation-button map-btn" onClick={setToMyLocation} style={{fontSize:"115%"}}>
             <i className="fa-solid fa-location-dot"></i>
         </button>
-
-        {/* show my favorite button */}
-        <button className="see-my-favorite" onClick={openMyFavorite} >
-          <i className="fa fa-heart" aria-hidden="true"></i>
+        {/* see-station */}
+        <button className="see-station map-btn" onClick={openStationInfo}>
+          <i className="fa-solid fa-charging-station"></i>
         </button>
         {/* show direction button */}
-        <button className="see-direction" disabled={isRoutesOpen===true} onClick={openRoutes} style={{fontSize:"115%"}}>
+        <button className="see-direction map-btn" disabled={isRoutesOpen===true} onClick={openRoutes} style={{fontSize:"115%"}}>
           <i className="fa fa-sharp fa-solid fa-turn-down fa-rotate-90"></i>
         </button>
 
         {/* copy URL */}
-        <button className="copy-URL" onClick={handleCopyURL} >
+        <button className="copy-URL map-btn" onClick={handleCopyURL} >
           <i className="fa-solid fa-share-nodes"></i>
         </button>
 
         {/* see-help */}
-        <button className="see-help" style={{fontSize:"135%"}} onClick={openHelpLegend}>
+        <button className="see-help map-btn" onClick={openHelpLegend}>
           <i className="fa-sharp fa-solid fa-question"></i>
+        </button>
+        {/* show my favorite button */}
+        <button className="see-my-favorite map-btn" onClick={openMyFavorite} >
+          <i className="fa fa-heart" aria-hidden="true"></i>
         </button>
 
         {/* loading Map */}
@@ -481,7 +499,7 @@ const handleReset = () => {
                     {directionsResponse && <DirectionsRenderer directions={directionsResponse}/>}
                     {
                       isRoutesOpen&&(
-                        <RouteModal onClose={closeRoutes} steps={steps} duration={duration} distance={distance}/>
+                        <RouteModal onClose={closeRoutes} onEndNav={endNavigation} steps={steps} duration={duration} distance={distance}/>
                       )
                     }
                   </>

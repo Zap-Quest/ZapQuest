@@ -1,5 +1,5 @@
 import React,{useState} from "react";
-import "../../static/HelpLegend.css"
+
 
 
 
@@ -10,7 +10,7 @@ const HelpLegend = (props) => {
     return (
         <>
           <div 
-            className={`show map-modal`}
+            className={`show map-modal-legend`}
             id="exampleModal" 
             tabIndex="-1" 
             role="dialog" 

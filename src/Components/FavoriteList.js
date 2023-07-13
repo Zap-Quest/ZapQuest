@@ -39,7 +39,7 @@ const FavoriteList = (props) => {
     return (
         <>
           <div 
-            className={ 'show'} 
+            className={ 'show map-modal-favoriteList'} 
             id="exampleModal" 
             tabIndex="-1" 
             role="dialog" 
@@ -49,9 +49,9 @@ const FavoriteList = (props) => {
             data-mdb-keyboard="true"
           >
             <div 
-              className="modal-dialog modal-side modal-dialog-left  modal-dialog-centered" 
+              className="modal-dialog modal-side modal-dialog-left  modal-dialog-centered modal-dialog-scrollable" 
               role="document" 
-              style={{ marginLeft: '5rem', marginRight: 'auto', height: '700px', width: '300px', maxWidth: '800px' }}
+            
             >
               <div className="modal-content" style={{ marginTop: '-30px' }}>
                 <div className="modal-header" style={{background:"#214042"}}>
@@ -66,7 +66,7 @@ const FavoriteList = (props) => {
                     <span aria-hidden="true" style={{color:"grey"}}>&times;</span>
                   </button>
                 </div>
-                <div className="modal-body" style={{ height: '450px', overflowY: 'auto' }}>
+                <div className="modal-body" style={{ overflowY: 'auto' }}>
                     {auth.username?(
                         currentFavorite && (
                             <>

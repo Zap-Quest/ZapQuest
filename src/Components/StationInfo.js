@@ -85,7 +85,7 @@ const StationInfo = (props) => {
     return (
         <>
           <div 
-            className={ 'show'} 
+            className={ 'show map-modal-stationInfo'} 
             id="exampleModal" 
             tabIndex="-1" 
             role="dialog" 
@@ -95,9 +95,9 @@ const StationInfo = (props) => {
             data-mdb-keyboard="true"
           >
             <div 
-              className="modal-dialog modal-side modal-dialog-left  modal-dialog-centered" 
+              className="modal-dialog modal-side modal-dialog-left  modal-dialog-centered modal-dialog-scrollable" 
               role="document" 
-              style={{ marginLeft: '5rem', marginRight: 'auto', height: '700px', width: '300px', maxWidth: '800px' }}
+
             >
               <div className="modal-content" style={{ marginTop: '-30px' }}>
                 <div className="modal-header" style={{background:"#214042"}}>
@@ -109,16 +109,16 @@ const StationInfo = (props) => {
                     <span aria-hidden="true" style={{color:"grey"}}>&times;</span>
                   </button>
                 </div>
-                <div className="modal-body" style={{ height: '400', overflowY: 'auto' }}>
+                <div className="modal-body" style={{  overflowY: 'auto' }}>
                     <>
                         <div className="d-flex w-100 justify-content-between">
-                            <h5 className="mb-1" style={{ color: "#779DA6",fontWeight:"bold",fontSize:"1rem" }}>
+                            <h6 className="mb-1" style={{ color: "#779DA6",fontWeight:"bold"}}>
                                 <span>{` ${station.properties.station_name}`}</span>
-                            </h5>
+                            </h6>
                             <small>{`${station.properties.distance.toFixed(1)} mile`}</small>
                         </div>
                         <hr/>
-                        <div className="card" style={{ width: '265px',marginBottom:"0.5rem", fontSize:"0.8rem"}}>
+                        <div className="card" style={{ width: '100%',marginBottom:"0.5rem", fontSize:"0.8rem"}}>
                             <div className="card-body">
                             <p className="card-text" >
                                 <i className="fa-solid fa-location-dot" style={{ color: "#779DA6" }}/>
@@ -140,7 +140,7 @@ const StationInfo = (props) => {
                             )}
                             </div>
                         </div>
-                        <div className="card" style={{ width: '265px', marginBottom:"0.5rem",fontSize:"0.8rem" }}>
+                        <div className="card" style={{ width: '100%', marginBottom:"0.5rem",fontSize:"0.8rem" }}>
                             <div className="card-body">
                             <p className="card-title d-flex w-100 justify-content-between">
                                 <span>
@@ -160,7 +160,7 @@ const StationInfo = (props) => {
                             </p>
                             </div>
                         </div>
-                        <div className="card" style={{ width: '265px',fontSize:"0.8rem" }}>
+                        <div className="card" style={{ width: '100%',fontSize:"0.8rem" }}>
                             <div className="card-body">
                             <p className="card-title d-flex w-100 justify-content-between">
                                 <span>
@@ -174,7 +174,7 @@ const StationInfo = (props) => {
                                     console.log("s:",s);
                                     return (<div key={s.properties.id}>
                                                 <hr/>
-                                                <p><i className="fa-solid fa-location-dot" style={{ color: "#EABD00" }}/>{`  ${s.properties.station_name}`}</p>
+                                                <p><i className="fa-solid fa-location-dot" style={{ color: "#EABD00" }}/><span>{`  ${s.properties.station_name}`}</span></p>
                                                 <p style={{fontSize:"0.6rem"}}>{` ${s.properties.street_address.toUpperCase()} ${s.properties.city.toUpperCase()}`}</p>
                                             </div>
                                     )})
@@ -184,7 +184,7 @@ const StationInfo = (props) => {
                         </div>
                     </>
                 </div>
-                <div className="modal-footer">
+                <div className="modal-footer" style={{padding:"0.5rem"}}>
                 {auth.username&&(
                     stationInFavorite?(
                         <button type="button" className="btn btn-secondary" data-dismiss="modal"  onClick={removeFromFavorite}><i className="fa fa-heart" aria-hidden="true" style={{color:"#EABD00" }}></i></button>
