@@ -44,7 +44,7 @@ const MapFilter = ({ onFilterChange, closeModal, onRadiusChange, radius }) => {
     chargingSpeed: "all",
     provider: "all",
     cost: "all",
-    radius: 30,
+    radius: radius,
   });
 
   const handleFilterChange = (selectedOptions, filterType) => {
@@ -70,8 +70,9 @@ const MapFilter = ({ onFilterChange, closeModal, onRadiusChange, radius }) => {
       chargingSpeed: 'all',
       provider: 'all',
       cost: 'all',
-      radius: 30
+      radius: 10
     });
+    onRadiusChange(10);
   };
 
   return (
@@ -84,9 +85,9 @@ const MapFilter = ({ onFilterChange, closeModal, onRadiusChange, radius }) => {
         <input
           type="number"
           id="radius"
-          defaultValue={radius}
+          value={radius}
           className="form-control"
-          onChange={onRadiusChange}
+          onChange={(event) => onRadiusChange(event.target.value)}
         />
       </div>
       <div className="filter-dropdown">
