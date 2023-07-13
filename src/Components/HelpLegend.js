@@ -120,12 +120,6 @@ const HelpLegend = (props) => {
                   </span>
                 </div>  
                 <div className="d-flex" style={{gap:"10px",margin:" 1rem 0"}}>
-                  <i className="fa-sharp fa-solid fa-circle-question"></i>
-                  <span>
-                    SHOW LEGEND
-                  </span>
-                </div>
-                <div className="d-flex" style={{gap:"10px",margin:" 1rem 0"}}>
                   <i className="fa fa-heart" aria-hidden="true"></i>
                   <span>
                     MY FAVORITE

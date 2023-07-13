@@ -181,12 +181,6 @@ const Help = (props) => {
               COPY URL
             </span>
           </div>  
-          <div className="col-lg-4 col-md-12 d-flex" >
-            <i className="fa-sharp fa-solid fa-circle-question"></i>
-            <span>
-              SHOW LEGEND
-            </span>
-          </div> 
           <div className="col-lg-4 col-md-12 d-flex">
             <i className="fa fa-heart" aria-hidden="true"></i>
             <span>
