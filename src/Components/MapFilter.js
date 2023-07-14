@@ -48,8 +48,8 @@ const MapFilter = ({
     { value: "free", label: "Free" },
     { value: "paid", label: "Paid" },
   ];
-
   const selectedFilters = useSelector((state) => state.filter);
+  const currentFilters = useSelector((state) => state.filter);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -62,42 +62,61 @@ const MapFilter = ({
   }, [dispatch, radius]);
 
   const handleFilterChange = (selectedOptions, filterType) => {
-    if (filterType === "radius") {
-      onRadiusChange(selectedOptions);
+    let updatedOptions;
+    if (
+      selectedOptions.length === 0 ||
+      selectedOptions.some((option) => option.value === "all")
+    ) {
+      updatedOptions = "all";
     } else {
-      let updatedOptions;
-      if (
-        selectedOptions.length === 0 ||
-        selectedOptions.some((option) => option.value === "all")
-      ) {
-        updatedOptions = "all";
-      } else {
-        updatedOptions = selectedOptions.map((option) => option.value);
-      }
-  
-      dispatch(
-        setFilter({
-          ...selectedFilters,
-          [filterType]: updatedOptions,
-        })
-      );
-  
-      const filteredMarkers = applyFilters(updatedOptions);
-      onFilterChange(filteredMarkers);
-      setFilteredMarkers(filteredMarkers);
+      updatedOptions = selectedOptions.map((option) => option.value);
     }
+  
+    const updatedFilters = {
+      ...selectedFilters,
+      [filterType]: updatedOptions,
+    };
+    
+    dispatch(setFilter(updatedFilters));
   };
   
-  const applyFilters = (updatedOptions) => {
-    if (!allStations) return [];
+    // const filteredMarkers = applyFilters(updatedFilters);
+    // onFilterChange(filteredMarkers);
+    // setFilteredMarkers(filteredMarkers);
+    const handleApplyFilters = () => {    
+      const filteredMarkers = applyFilters(currentFilters); 
+      onFilterChange(filteredMarkers);
+      setFilteredMarkers(filteredMarkers);
+    };
+
+
+  const applyFilters = (updatedFilters) => {
+    console.log('applyfilter fn being called');
   
-    const filteredMarkers = allStations.filter((station) => {
-      if (updatedOptions.includes(station.properties.connectorType)) {
-        return true;
-      }
-      return false;
-    });
+    let filteredMarkers = allStations;
   
+    if (updatedFilters.connectorType && updatedFilters.connectorType !== "all") {
+      filteredMarkers = filteredMarkers.filter(station =>
+        updatedFilters.connectorType.includes(String(station.properties.ev_connector_types[0])));
+    }
+    
+    if (updatedFilters.chargingSpeed && updatedFilters.chargingSpeed !== "all") {
+      filteredMarkers = filteredMarkers.filter(station =>
+        updatedFilters.chargingSpeed.includes(String(station.properties.chargingSpeed)));
+    }
+    
+    if (updatedFilters.provider && updatedFilters.provider !== "all") {
+      filteredMarkers = filteredMarkers.filter(station =>
+        updatedFilters.provider.includes(station.properties.provider));
+    }
+    
+    if (updatedFilters.cost && updatedFilters.cost !== "all") {
+      filteredMarkers = filteredMarkers.filter(station =>
+        updatedFilters.cost.includes(station.properties.cost));
+    }
+    console.log('Updated Filter', updatedFilters)
+    console.log('All Stations', allStations)
+    console.log('filtered Markers', filteredMarkers)
     return filteredMarkers;
   };
   
@@ -200,7 +219,7 @@ const MapFilter = ({
         <button
           style={{ width: "100px" }}
           className="btn btn-dark default-button ml-5"
-          onClick={applyFilters}
+          onClick={handleApplyFilters}
         >
           Apply
         </button>

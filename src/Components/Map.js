@@ -26,7 +26,7 @@ const Map = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   //redux store
-  const { searchAddress, allStations,favorite } = useSelector((state) => state);
+  const { searchAddress, allStations, favorite } = useSelector((state) => state);
   const { address, stationId,startAddress,endAddress } = useParams();
   //set
   const [center, setCenter] = useState(null);
@@ -368,6 +368,7 @@ const handleReset = () => {
                   radius={radius}
                   closeModal={closeModal}
                   handleReset={handleReset}
+                  allStations={allStations}
                 />
               </div>
             </div>

@@ -13,7 +13,9 @@ const filterSlice = createSlice({
   initialState,
   reducers: {
     setFilter: (state, action) => {
-      return { ...state, ...action.payload };
+      console.log('action payload store', action.payload);
+      return action.payload;
+      
     },
     resetFilter: (state) => {
       return { ...initialState, radius: state.radius };
