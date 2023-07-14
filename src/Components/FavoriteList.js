@@ -39,7 +39,7 @@ const FavoriteList = (props) => {
     return (
         <>
           <div 
-            className={ 'show map-modal-favoriteList'} 
+            className={ 'show map-modal'} 
             id="exampleModal" 
             tabIndex="-1" 
             role="dialog" 
@@ -114,9 +114,9 @@ const FavoriteList = (props) => {
       <div>
         <div className="card" style={{ width: '100%',marginBottom:'0.25rem'}}>
           <div className="card-body" style={{padding:'0.5rem'}}>
-            <p className="card-title"style={{fontSize:"0.8rem",marginBottom:'0.25rem',cursor:"pointer", color:"#5f919d"}} onClick={()=>handleSelectedStation(station)}>
+            <p className="card-title favoriteList-stationInfo-card-title"style={{fontSize:"0.8rem",marginBottom:'0.25rem',cursor:"pointer",  }} onClick={()=>handleSelectedStation(station)}>
                 <i className="fa-solid fa-charging-station">
-                </i><span style={{fontWeight:"500"}}>{`  ${station.stationName.toUpperCase()}`}</span>
+                </i><span className="card-link" style={{fontWeight:"500"}}>{`  ${station.stationName.toUpperCase()}`}</span>
                 <button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={()=>handleRemoveFavorite(station)}>
                     <span aria-hidden="true">&times;</span>
                 </button>

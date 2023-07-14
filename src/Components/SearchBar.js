@@ -53,7 +53,6 @@ const SearchBar = () => {
           value={searchInput}
           ref={elPlace}
           onChange={onChange}
-
         />
       </div>
       <button
@@ -61,6 +60,7 @@ const SearchBar = () => {
         type="button"
         className="btn default-button"
         onClick={handleSearch}
+        style={{backgroundColor:"transparent"}}
       >
         <i className="fas fa-search"></i>
       </button>

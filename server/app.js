@@ -7,6 +7,7 @@ app.engine('html',require('ejs').renderFile);
 
 app.use('/dist', express.static(path.join(__dirname, '../dist')));
 app.use('/static', express.static(path.join(__dirname, '../static')));
+app.use('/uploads', express.static(path.join(__dirname, '../uploads')) );
 
 //app.get('/', (req, res)=> res.sendFile(path.join(__dirname, '../static/index.html')));
 app.get('/', (req, res)=> res.render(path.join(__dirname, '../static/index.html'),{

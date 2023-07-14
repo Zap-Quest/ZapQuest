@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, Link, Navigate, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAllUsers, updateUserProfile } from "../store";
+import axios from "axios";
 
 const UpdateUserForm = () => {
   const dispatch = useDispatch();
@@ -11,16 +12,17 @@ const UpdateUserForm = () => {
   const navigate = useNavigate();
 
   const [userEmail, setUserEmail] = useState("");
-  const [userAvatar, setUserAvatar] = useState("");
+  const [userAvatar, setUserAvatar] = useState(null);
   const [userPassword, setUserPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [selectedFile, setSelectedFile] = useState(null);
+  const [selectedAvatar, setSelectedAvatar] = useState(null);
 
   const handleEmailChange = (e) => setUserEmail(e.target.value);
-  const handleAvatarChange = (e) => setUserAvatar(e.target.value);
+  const handleAvatarChange = (e) => {
+    setSelectedAvatar(e.target.files[0]);
+  };
   const handlePasswordChange = (e) => setUserPassword(e.target.value);
   const handleTogglePassword = () => setShowPassword(!showPassword);
-  const handleFileSelect = (e) => setSelectedFile(e.target.files[0]);
   const handleGoBack = () => navigate("/myaccount");
 
   useEffect(() => {
@@ -28,29 +30,44 @@ const UpdateUserForm = () => {
       dispatch(fetchAllUsers());
     } else {
       setUserEmail(user.email);
-      setUserAvatar(user.avatar);
       setUserPassword(user.password);
     }
   }, [dispatch, usersList, user]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const updatedUserData = {
-      id: user.id,
-      email: userEmail,
-      password: userPassword,
-      avatar: userAvatar,
-    };
-    dispatch(updateUserProfile(updatedUserData));
-    setUserEmail("");
-    setUserAvatar("");
-    setUserPassword("");
-    setSelectedFile(null);
-    navigate("/myaccount");
+
+    const formData = new FormData();
+    formData.append("avatar", selectedAvatar);
+    formData.append("email", userEmail);
+    formData.append("password", userPassword);
+
+    try {
+      const response = await axios.put(`/api/user/${user.id}`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data", // Set the correct content type for form data
+        },
+      });
+
+      // Handle the response
+      console.log(response.data);
+      // ...
+
+      // Reset the form fields
+      setUserEmail("");
+      setUserAvatar(null);
+      setUserPassword("");
+
+      // Navigate to the desired page
+      navigate("/myaccount");
+    } catch (error) {
+      // Handle errors
+      console.log(error);
+    }
   };
 
   if (!user) {
-    return <div>Loading...</div>; // Render a loading state or handle the case when user is not found
+    return <div>Loading...</div>;
   }
 
   return (
@@ -110,19 +127,26 @@ const UpdateUserForm = () => {
               <label>Avatar</label>
               <input
                 type="file"
-                accept="image/*"
-                onChange={handleFileSelect}
+                name="avatar"
+                onChange={handleAvatarChange}
                 className="form-control-file"
               />
-              {selectedFile && (
-                <img
-                  src={URL.createObjectURL(selectedFile)}
-                  alt="Selected Avatar"
-                  className="mt-2"
-                  style={{ maxHeight: "200px" }}
-                />
-              )}
             </div>
+            <div className="form-group">
+              <label>Current Avatar</label>
+              <div>
+                {user.avatar ? (
+                  <img
+                    src={user.avatar}
+                    alt="Avatar"
+                    style={{ width: "100px" }}
+                  />
+                ) : (
+                  <div className="text-muted">No avatar available</div>
+                )}
+              </div>
+            </div>
+
             <div className="form-group">
               <button type="submit" className="btn default-button">
                 Submit Changes
@@ -136,4 +160,3 @@ const UpdateUserForm = () => {
 };
 
 export default UpdateUserForm;
-

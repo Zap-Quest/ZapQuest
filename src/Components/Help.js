@@ -158,17 +158,17 @@ const Help = (props) => {
             </span>
           </div> 
           <div className="col-lg-4 col-md-12 d-flex ">
-            <i className="fa-solid fa-location-dot"></i>
+            <i className="fa-solid fa-location-arrow"></i>
             <span>
               TO MY LOCATION
             </span>
           </div>  
-          <div className="col-lg-4 col-md-12 d-flex">
-            <i className="fa fa-heart" aria-hidden="true"></i>
+          <div className="col-lg-4 col-md-12 d-flex ">
+            <i className="fa-solid fa-charging-station"></i>
             <span>
-              MY FAVORITE
+              STATION INFO
             </span>
-          </div> 
+          </div>  
           <div className="col-lg-4 col-md-12 d-flex ">
             <i className="fa fa-sharp fa-solid fa-turn-down fa-rotate-90"></i>
             <span>
@@ -181,10 +181,10 @@ const Help = (props) => {
               COPY URL
             </span>
           </div>  
-          <div className="col-lg-4 col-md-12 d-flex" >
-            <i className="fa-sharp fa-solid fa-circle-question"></i>
+          <div className="col-lg-4 col-md-12 d-flex">
+            <i className="fa fa-heart" aria-hidden="true"></i>
             <span>
-              SHOW LEGEND
+              MY FAVORITE
             </span>
           </div>     
         </div>
