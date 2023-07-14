@@ -15,13 +15,13 @@ const UpdateVehicleForm = () => {
   const [vehicleModel, setVehicleModel] = useState(userVehicle?.model || '');
   const [vehicleYear, setVehicleYear] = useState(userVehicle?.year || '');
   const [vehicleChargertype, setVehicleChargertype] = useState(userVehicle?.chargertype || '');
-  const [vehicleImage, setVehicleImage] = useState(userVehicle?.image || '');
+  const [vehicleImage, setVehicleImage] = useState(null); // Use state to store the selected file
 
   const handleMakeChange = (e) => setVehicleMake(e.target.value);
   const handleModelChange = (e) => setVehicleModel(e.target.value);
   const handleYearChange = (e) => setVehicleYear(e.target.value);
   const handleChargertypeChange = (e) => setVehicleChargertype(e.target.value);
-  const handleImageChange = (e) => setVehicleImage(e.target.value);
+  const handleImageChange = (e) => setVehicleImage(e.target.files[0]); // Update the state with the selected file
 
   useEffect(() => {
     dispatch(fetchVehicleById(userVehicle?.id)); // Pass the userVehicle.id parameter
@@ -30,20 +30,26 @@ const UpdateVehicleForm = () => {
 
   const handleSubmit = (e) => {
       e.preventDefault();
+
+      const formData = new FormData();
+      formData.append("make", vehicleMake);
+      formData.append("model", vehicleModel);
+      formData.append("year", vehicleYear);
+      formData.append("chargertype", vehicleChargertype);
+      formData.append("image", vehicleImage); // Append the file to the form data
+
       const updatedVehicleData = {
           id: userVehicle?.id,
-          make: vehicleMake,
-          model: vehicleModel,
-          year: vehicleYear,
-          chargertype: vehicleChargertype,
-          image: vehicleImage,
+          formData, // Pass the form data instead of vehicleImage directly
       }
+
       dispatch(updateVehicle(updatedVehicleData))
       setVehicleMake('')
       setVehicleModel('')
       setVehicleYear('')
       setVehicleChargertype('')
-      setVehicleImage('')
+      setVehicleImage(null) // Reset the selected file
+
       navigate('/myaccount')
   };
 
@@ -68,7 +74,7 @@ const UpdateVehicleForm = () => {
           <div className="text-center">
             <h2>Update Information</h2>
           </div>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} encType="multipart/form-data"> {/* Set the form's encoding type to support file uploads */}
             <div className="form-group">
               <label>Make</label>
               <input
@@ -108,10 +114,10 @@ const UpdateVehicleForm = () => {
             <div className="form-group">
               <label>Image</label>
               <input
+                type="file"
                 name="image"
-                value={vehicleImage}
                 onChange={handleImageChange}
-                className="form-control"
+                className="form-control-file"
               />
             </div>
             <div className="form-group">
