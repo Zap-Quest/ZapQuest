@@ -2,16 +2,18 @@ import React, { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 
-const SearchBar = () => {
+const SearchBar = (props) => {
   const [searchInput, setSearchInput] = useState("");
   const [selectedPlace, setSelectedPlace] = useState(null);
   const navigate = useNavigate();
   const elPlace = useRef();
+  const stopAnimation = props.stopAnimation;
 
   const handleSearch = async (ev) => {
     ev.preventDefault();
     const place = selectedPlace ? selectedPlace : searchInput;
     try {
+      stopAnimation();
       navigate(`/map/place/${encodeURIComponent(place)}`);
     } catch (ex) {
       console.log(ex);

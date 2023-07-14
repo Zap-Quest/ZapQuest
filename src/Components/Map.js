@@ -28,6 +28,7 @@ const Map = () => {
   //redux store
   const { searchAddress, allStations,favorite } = useSelector((state) => state);
   const { address, stationId,startAddress,endAddress } = useParams();
+  console.log("address:",address);
   //set
   const [center, setCenter] = useState(null);
   const [myLocation, setMyLocation] = useState(null);
@@ -50,6 +51,8 @@ const Map = () => {
   const [selectedCenter,setSelectedCenter] = useState(null);
   const [isLoadingModalOpen,setIsLoadingModalOpen] = useState(true);
   const [activeMarker, setActiveMarker] = useState(null);
+  const [isMarkerAnimated, setIsMarkerAnimated] = useState(true);
+  const [isStationMarkerAnimated, setIsStationMarkerAnimated] = useState(false);
 
   /* helper function */
     //filter module
@@ -150,6 +153,7 @@ const Map = () => {
       setIsStationInfoOpen(true);
       setSelectedCenter({ lat: coordinates[1]-0.00005, lng: coordinates[0] });
       setActiveMarker(id);
+      setIsStationMarkerAnimated(true);
     }
     setIsRoutesOpen(false);
     navigate(`/map/place/${encodeURIComponent(address)}/${id}`);
@@ -171,6 +175,8 @@ const Map = () => {
     //   setIsLoadingModalOpen(false);
     // }, 500);
     toast.success(`Direct to My Location`);
+    setSearchLocation(null);
+    setIsStationMarkerAnimated(false);
     navigate(`/map/place/${encodeURIComponent("nearby")}`);
   }
 
@@ -207,6 +213,11 @@ const Map = () => {
     }else{
       setWarn(" YOu do not have location enabled");
     }
+  }
+
+  const stopAnimation = () => {
+    setIsMarkerAnimated(false);
+    setIsStationMarkerAnimated(false);
   }
 
   /* useEffect */
@@ -335,6 +346,12 @@ const handleReset = () => {
   });
 };
 
+useEffect(() => {
+  if (address === "nearby") {
+    setSearchLocation(null);
+  }
+}, [address]);
+
 
 
 
@@ -407,7 +424,7 @@ const handleReset = () => {
             >
               {/* Search Bar */}
               <div className="d-flex justify-content-end p-0">
-                <SearchBar/>
+                <SearchBar stopAnimation={stopAnimation}/>
               </div>
               {/* Favorite List Modal*/}
               {
@@ -440,7 +457,7 @@ const handleReset = () => {
                           url: "https://cdn-icons-png.flaticon.com/512/5501/5501965.png",//"https://cdn-icons-png.flaticon.com/512/8065/8065913.png"
                           scaledSize: new window.google.maps.Size(36, 36), // Adjust the size here
                         }}
-                        animation={google.maps.Animation.BOUNCE}
+                        animation={isMarkerAnimated ? google.maps.Animation.BOUNCE : null}
                         zIndex={999}
                       />
                     ) : null
@@ -455,7 +472,7 @@ const handleReset = () => {
                           scaledSize: new window.google.maps.Size(36, 36), // Adjust the size here
                         }}
                         zIndex={998}
-                        animation={google.maps.Animation.BOUNCE}
+                        animation={ google.maps.Animation.BOUNCE }
                       />
                     ) : null
                     }
@@ -476,14 +493,14 @@ const handleReset = () => {
                                 scaledSize: new window.google.maps.Size(23,30), // Adjust the size here
                               }}
                               key={s.properties.id}
-                              animation = {activeMarker === s.properties.id?window.google.maps.Animation.BOUNCE: null}
+                              animation = {activeMarker === s.properties.id && isStationMarkerAnimated?window.google.maps.Animation.BOUNCE: null}
                               onClick={() => handleStationId(s.properties.id)}
                             />
                           );
                         })
                       : null
                     }
-                    {selectedCenter&&(
+                    {selectedCenter&& isStationMarkerAnimated?(
                             <Marker
                               position={selectedCenter}
                               icon={{
@@ -493,7 +510,7 @@ const handleReset = () => {
                               }}
                               zIndex={5}
                             />
-                          )
+                          ):(null)
                     }
                   </>
                 ):(
