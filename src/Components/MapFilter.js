@@ -10,6 +10,7 @@ const MapFilter = ({
   onRadiusChange,
   radius,
   allStations,
+  setFilteredMarkers,
 }) => {
   const connectorTypeOptions = [
     { value: "all", label: "All" },

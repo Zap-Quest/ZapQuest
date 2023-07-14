@@ -50,6 +50,7 @@ const Map = () => {
   const [selectedCenter,setSelectedCenter] = useState(null);
   const [isLoadingModalOpen,setIsLoadingModalOpen] = useState(true);
   const [activeMarker, setActiveMarker] = useState(null);
+  const [filteredMarkers, setFilteredMarkers] = useState([])
 
   /* helper function */
     //filter module
@@ -355,6 +356,8 @@ const handleReset = () => {
             <div className="modal-map">
               <div className="modal-map-content">
                 <MapFilter
+                  filteredMarkers={filteredMarkers}
+                  setFilteredMarkers={setFilteredMarkers}
                   onFilterChange={handleFilterChange}
                   onRadiusChange={handleRadiusChange}
                   radius={radius}
