@@ -36,14 +36,13 @@ const User = conn.define("user", {
   },
   address: {
     type: STRING,
-    allowNull: true,
+    allowNull: false,
     validate: {
       notEmpty: true,
     },
   },
   avatar: {
     type: STRING,
-    defaultValue: "../static/images/Default Avatar.svg",
   },
 });
 
