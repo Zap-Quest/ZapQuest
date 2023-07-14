@@ -95,33 +95,22 @@ const UpdateUserForm = () => {
             <div className="form-group">
               <div className="d-flex align-items-center">
                 <h6 className="my-account-p">Password</h6>
-                <button
-                  type="button"
-                  className="btn btn-link mb-2"
-                  onClick={handleTogglePassword}
-                >
-                  {showPassword ? (
-                    <i className="fas fa-eye-slash"></i>
-                  ) : (
-                    <i className="fas fa-eye"></i>
-                  )}
-                </button>
-              </div>
-              {showPassword ? (
-                <input
-                  type="text"
-                  value={userPassword}
-                  onChange={handlePasswordChange}
-                  className="form-control"
-                />
-              ) : (
-                <input
-                  type="password"
-                  value={userPassword}
-                  onChange={handlePasswordChange}
-                  className="form-control"
-                />
-              )}
+                </div>
+                {showPassword ? (
+                  <input
+                    type="text"
+                    value={''}
+                    onChange={handlePasswordChange}
+                    className="form-control"
+                  />
+                ) : (
+                  <input
+                    type="password"
+                    value={''}
+                    onChange={handlePasswordChange}
+                    className="form-control"
+                  />
+                )}
             </div>
             <div className="form-group">
               <label>Avatar</label>
