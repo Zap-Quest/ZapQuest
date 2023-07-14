@@ -28,11 +28,11 @@ const RouteModal = (props) => {
                 <div className="modal-header" style={{background:"#214042"}}>
                   <h5 className="modal-title" id="exampleModalLabel" style={{color: "#EABD00"}}>
                     <i className="fa fa-sharp fa-solid fa-turn-down fa-rotate-90"></i>
-                    <span>{`  ${duration}`}</span>
+                    <span>{`    ${duration}`}</span>
                     <span style={{color: "white"}}>{` (${distance})`}</span>
                   </h5>
                    <button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={onClose} >
-                      <span aria-hidden="true" style={{color:"grey"}}>&times;</span>
+                      <span aria-hidden="true" style={{color:"grey", fontFamily:"verdana"}}>&times;</span>
                     </button>
                 </div>
                 <div className="modal-body" style={{ overflowY: 'auto' }}>

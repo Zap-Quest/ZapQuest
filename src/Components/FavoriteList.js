@@ -58,12 +58,12 @@ const FavoriteList = (props) => {
                   <h5 className="modal-title" id="exampleModalLabel" style={{color:"white"}}>
                     <i
                         className="fa-solid fa-charging-station"
-                        style={{ color: "#EABD00" }}
+                        style={{ color: "#EABD00",fontSize:"100%" }}
                     />
-                    {`  FAVORITE LIST`}
+                    {`  Favorite List`}
                     </h5>
                   <button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={handleClose}>
-                    <span aria-hidden="true" style={{color:"grey"}}>&times;</span>
+                    <span aria-hidden="true" style={{color:"grey",fontFamily:"verdana"}}>&times;</span>
                   </button>
                 </div>
                 <div className="modal-body" style={{ overflowY: 'auto' }}>

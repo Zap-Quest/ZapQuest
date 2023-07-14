@@ -102,11 +102,11 @@ const StationInfo = (props) => {
                 <div className="modal-content" style={{ marginTop: '-30px' }}>
                     <div className="modal-header" style={{background:"#214042"}}>
                         <h5 className="modal-title" id="exampleModalLabel" style={{color:"white"}}>
-                            <i className="fa-solid fa-charging-station" style={{ color: "#EABD00" }}/>
+                            <i className="fa-solid fa-charging-station" style={{ color: "#EABD00",fontSize:"100%" }}/>
                             <span>{`  EV Station`}</span>
                         </h5>
                         <button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={closeStationInfo}>
-                        <span aria-hidden="true" style={{color:"grey"}}>&times;</span>
+                        <span aria-hidden="true" style={{color:"grey",fontFamily:"verdana"}}>&times;</span>
                     </button>
                     </div>
                     <div className="modal-body" style={{  overflowY: 'auto' }}>
