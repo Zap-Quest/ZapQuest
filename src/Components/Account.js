@@ -9,7 +9,6 @@ const MyAccount = () => {
   const usersList = useSelector((state) => state.user.usersList);
   const userStatus = useSelector((state) => state.user.status);
   const vehicle = useSelector((state) => state.vehicle);
-  const [showPassword, setShowPassword] = React.useState(false);
 
   useEffect(() => {
     if (userStatus === "idle") {
@@ -72,29 +71,8 @@ const MyAccount = () => {
                             <p className="text-muted mt-1">{user.email}</p>
                           </div>
                           <div className="col-md-6">
-                            <div className="d-flex align-items-center">
-                              <h6 className="my-account-p">Password</h6>
-                              <button
-                                className="btn btn-link mb-2"
-                                onClick={() => setShowPassword(!showPassword)}
-                              >
-                                {showPassword ? (
-                                  <i className="fas fa-eye-slash"></i>
-                                ) : (
-                                  <i className="fas fa-eye"></i>
-                                )}
-                              </button>
-                            </div>
-                            {showPassword ? (
-                              <p className="text-muted">{user.password}</p>
-                            ) : (
-                              <input
-                                type="password"
-                                value={user.password}
-                                className="form-control"
-                                disabled
-                              />
-                            )}
+                            <h6 className="my-account-p">Password</h6>
+                            <p className="text-muted">******</p>
                           </div>
                           <div className="col-md-6 mt-4">
                             <h6 className="my-account-p">Address</h6>
