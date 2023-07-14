@@ -33,7 +33,7 @@ const HelpLegend = (props) => {
                     >
                         <i 
                             className="fa-solid fa-charging-station" 
-                            style={{ color: "#EABD00" }}
+                            style={{ color: "#EABD00",fontSize:"100%" }}
                         />
                         <span>
                             {` Legend`}
@@ -45,7 +45,7 @@ const HelpLegend = (props) => {
                             aria-label="Close" 
                             onClick={closeHelpLegend}
                     >
-                        <span aria-hidden="true" style={{color:"grey"}}>&times;</span>
+                        <span aria-hidden="true" style={{color:"grey",fontFamily:"verdana"}}>&times;</span>
                     </button>
                 </div>
                 <div className="modal-body" style={{overflowY: 'auto' }}>
@@ -71,12 +71,14 @@ const HelpLegend = (props) => {
                     MY LOCATION
                     </span>
                 </div> 
+                <hr></hr>
                 <div className="d-flex " style={{gap:"10px",margin:" 1rem 0"}}>
                     <img src="https://cdn-icons-png.flaticon.com/512/9131/9131546.png" alt="Image" style={{ width: "20px", height: "20px" }}/>
                     <span>
                     SEARCH LOCATION
                     </span>
-                </div>  
+                </div> 
+                <hr></hr> 
                 <div className="d-flex " style={{gap:"10px",margin:" 1rem 0"}}>
                     <img src="../static/images/ElecMapPin.png" alt="Image" style={{ width: "18px", height: "22px" }}/>
                     <span>
@@ -95,36 +97,41 @@ const HelpLegend = (props) => {
                     FILTER
                     </span>
                 </div> 
+                <hr></hr>
                 <div className="d-flex" style={{gap:"10px",margin:" 1rem 0"}}>
                   <i className="fa-solid fa-location-arrow"></i>
                   <span>
                     TO MY LOCATION
                   </span>
                 </div> 
+                <hr></hr>
                 <div className="d-flex" style={{gap:"10px",margin:" 1rem 0"}}>
                   <i className="fa-solid fa-charging-station"></i>
                   <span>
                     STATION INTO
                   </span>
-                </div>      
+                </div> 
+                <hr></hr>     
                 <div className="d-flex" style={{gap:"10px",margin:" 1rem 0"}}>
                   <i className="fa fa-sharp fa-solid fa-turn-down fa-rotate-90"></i>
                   <span>
                     DIRECTION
                   </span>
                 </div>  
+                <hr></hr>
                 <div className="d-flex" style={{gap:"10px",margin:" 1rem 0"}}>
                   <i className="fa-solid fa-share-nodes"></i>
                   <span>
                     COPY URL
                   </span>
                 </div>  
+                <hr></hr>
                 <div className="d-flex" style={{gap:"10px",margin:" 1rem 0"}}>
                   <i className="fa fa-heart" aria-hidden="true"></i>
                   <span>
                     MY FAVORITE
                   </span>
-                </div>       
+                </div>  
             </div>
           </div>
         </div>
