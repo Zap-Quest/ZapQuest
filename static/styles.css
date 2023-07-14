@@ -1,7 +1,15 @@
 body {
   /* font-family: verdana; */
   /* font-family: 'Questrial', sans-serif; */
-  font-family: 'Chakra Petch', sans-serif;
+  /* font-family: 'Oxygen', sans-serif; */
+  /* font-family: 'Chakra Petch', sans-serif; */
+  /* font-family: 'Noto Sans Bengali', sans-serif; */
+  /* font-family: 'Orbitron', sans-serif; */
+  font-family: 'Reem Kufi', sans-serif;
+  /* font-family: 'Abril Fatface', cursive; */
+  /* font-family: 'Anek Latin', sans-serif;  */
+  /* font-family: verdana; */
+
 
 
 
@@ -223,13 +231,14 @@ button.disabled {
     width: 30px;
     height: 30px;
     padding: 0 7px;
+    right: 15px;
   }
   .see-map-key {
     font-size: 10px;
     font-weight: bold;
     width: 60px;
     height: 35px;
-    right: 7px;
+    right: 15px;
     top: 67px;
   }
   .open-modal-button {
