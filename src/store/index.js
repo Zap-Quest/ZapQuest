@@ -6,6 +6,7 @@ import user from './user';
 import vehicle from "./vehicle";
 import searchAddress from "./searchAddress";
 import allStations from "./allStations";
+import filter from "./filter"
 
 const store = configureStore({
   middleware: (defaultMiddleware)=> defaultMiddleware().concat(logger),
@@ -16,7 +17,7 @@ const store = configureStore({
     vehicle: vehicle,
     searchAddress: searchAddress,
     allStations:allStations,
-
+    filter: filter,
   }
 });
 
@@ -26,5 +27,6 @@ export * from './favorite';
 export * from './user';
 export * from './searchAddress';
 export * from './allStations';
-export * from './vehicle'
+export * from './vehicle';
+export * from './filter';
 
