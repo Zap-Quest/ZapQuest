@@ -20,6 +20,10 @@ nav {
   display: flex;
   justify-content: space-around;
 }
+.navBar-container{
+    padding-right: 0;
+    padding-left: 0;
+}
 
 button.disabled {
   /* Add your special styles for the disabled button here */
