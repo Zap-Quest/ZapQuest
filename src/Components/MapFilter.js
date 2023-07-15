@@ -87,48 +87,37 @@ const MapFilter = ({
     };
 
 
-  const applyFilters = (updatedFilters) => {
-    console.log('applyfilter fn being called');
-    console.log('All Stations', allStations)
-    let filteredMarkers = allStations;
-    console.log('before if updated filterMarkers', filteredMarkers)
-    console.log('connectorType', updatedFilters.connectorType)
-
-    
-    if (updatedFilters.connectorType && updatedFilters.connectorType !== "all") {
-      console.log('filterMarker in if', filteredMarkers)
-      console.log('connectorType in if', updatedFilters.connectorType)
-      filteredMarkers = filteredMarkers.filter(station => 
-        station.properties.ev_connector_types.some(type => updatedFilters.connectorType.includes(type))
-        //{
-        //  console.log("array of connector types: ", station.properties.ev_connector_types);
-        //  console.log("connector type: ", updatedFilters.connectorType)
-        //  console.log(station.properties.ev_connector_types.includes(updatedFilters.connectorType[0]))
-
-
-        //}
-        );
-    }
-    console.log("filteredMarkers after chris' filter", filteredMarkers)
-    // if (updatedFilters.connectorType && updatedFilters.connectorType !== "all") {
-    //   filteredMarkers = filteredMarkers.filter(station => {
-    //     console.log('station data', station.properties.ev_connector_types[0])
-    //     return updatedFilters.connectorType.includes(String(station.properties.ev_connector_types[0]));
-    //   });
-    // }
-    console.log('filteredMarkers before filtering for ChargingSpeed: ', filteredMarkers);
-
-    if (updatedFilters.chargingSpeed && updatedFilters.chargingSpeed !== "all") {
-      console.log('Charging Speed Filter: ', updatedFilters.chargingSpeed);
-      filteredMarkers = filteredMarkers.filter(station => {
-        if(!station.properties) return false;
-        console.log('Station Charging Speed: ', station.properties.ev_level2_evse_num);
-        const hasLevel2 = station.properties.ev_level2_evse_num !== null && station.properties.ev_level2_evse_num !== undefined && updatedFilters.chargingSpeed.includes("2");
-        console.log('Does station match filter? ', hasLevel2);
-        return hasLevel2;
-      });
-    }
-    console.log('filterMarker for ChargingSpeed: ', filteredMarkers)
+    const applyFilters = (updatedFilters) => {
+      console.log('applyfilter fn being called');
+      console.log('All Stations', allStations);
+      let filteredMarkers = allStations;
+      console.log('before if updated filterMarkers', filteredMarkers);
+      console.log('connectorType', updatedFilters.connectorType);
+  
+      // Apply connectorType filter only if a value was selected
+      if (updatedFilters.connectorType && updatedFilters.connectorType !== "all") {
+          console.log('filterMarker in if', filteredMarkers)
+          console.log('connectorType in if', updatedFilters.connectorType)
+          filteredMarkers = filteredMarkers.filter(station =>
+              station.properties.ev_connector_types.some(type => updatedFilters.connectorType.includes(type))
+          );
+      }
+      console.log("filteredMarkers after chris' filter", filteredMarkers)
+  
+      // Apply chargingSpeed filter only if a value was selected
+      if (updatedFilters.chargingSpeed && updatedFilters.chargingSpeed !== "all") {
+          console.log('Charging Speed Filter: ', updatedFilters.chargingSpeed);
+          filteredMarkers = filteredMarkers.filter(station => {
+              if(!station.properties) return false;
+              console.log('Station Charging Speed: ', station.properties.ev_level2_evse_num);
+              const hasLevel1 = station.properties.ev_level1_evse_num != null && station.properties.ev_level1_evse_num !== undefined && updatedFilters.chargingSpeed.includes("1");
+              const hasLevel2 = station.properties.ev_level2_evse_num !== null && station.properties.ev_level2_evse_num !== undefined && updatedFilters.chargingSpeed.includes("2");
+              const hasDCFast = station.properties.ev_dc_fast_num !== null && station.properties.ev_dc_fast_num !== undefined && updatedFilters.chargingSpeed.includes("dc_fast");
+              console.log('Does station match filter? ', hasLevel2);
+              return hasLevel1 || hasLevel2 || hasDCFast;
+          });
+      }
+      console.log('filterMarker for ChargingSpeed: ', filteredMarkers)
     
     if (updatedFilters.provider && updatedFilters.provider !== "all") {
       filteredMarkers = filteredMarkers.filter(station =>
