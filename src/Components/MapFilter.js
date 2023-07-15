@@ -119,11 +119,15 @@ const MapFilter = ({
       }
       console.log('filterMarker for ChargingSpeed: ', filteredMarkers)
     
-    if (updatedFilters.provider && updatedFilters.provider !== "all") {
-      filteredMarkers = filteredMarkers.filter(station =>
-        updatedFilters.provider.includes(station.properties.provider));
-    }
-    
+      if (updatedFilters.provider && updatedFilters.provider !== "all") {
+        console.log('Provider filter: ', updatedFilters.provider);
+        filteredMarkers = filteredMarkers.filter(station =>
+          updatedFilters.provider.includes(station.properties.ev_network)
+        );
+      }
+      console.log("filterMarkers for provider after: ", filteredMarkers);     
+
+
     if (updatedFilters.cost && updatedFilters.cost !== "all") {
       filteredMarkers = filteredMarkers.filter(station =>
         updatedFilters.cost.includes(station.properties.cost));
