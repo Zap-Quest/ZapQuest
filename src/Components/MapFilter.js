@@ -79,10 +79,7 @@ const MapFilter = ({
     
     dispatch(setFilter(updatedFilters));
   };
-  
-    // const filteredMarkers = applyFilters(updatedFilters);
-    // onFilterChange(filteredMarkers);
-    // setFilteredMarkers(filteredMarkers);
+
     const handleApplyFilters = () => {    
       const filteredMarkers = applyFilters(currentFilters); 
       onFilterChange(filteredMarkers);
@@ -92,13 +89,33 @@ const MapFilter = ({
 
   const applyFilters = (updatedFilters) => {
     console.log('applyfilter fn being called');
-  
+    console.log('All Stations', allStations)
     let filteredMarkers = allStations;
-  
+    console.log('before if updated filterMarkers', filteredMarkers)
+    console.log('connectorType', updatedFilters.connectorType)
+
+    
     if (updatedFilters.connectorType && updatedFilters.connectorType !== "all") {
-      filteredMarkers = filteredMarkers.filter(station =>
-        updatedFilters.connectorType.includes(String(station.properties.ev_connector_types[0])));
+      console.log('filterMarker in if', filteredMarkers)
+      console.log('connectorType in if', updatedFilters.connectorType)
+      filteredMarkers = filteredMarkers.filter(station => 
+        station.properties.ev_connector_types.some(type => updatedFilters.connectorType.includes(type))
+        //{
+        //  console.log("array of connector types: ", station.properties.ev_connector_types);
+        //  console.log("connector type: ", updatedFilters.connectorType)
+        //  console.log(station.properties.ev_connector_types.includes(updatedFilters.connectorType[0]))
+
+
+        //}
+        );
     }
+    console.log("filteredMarkers after chris' filter", filteredMarkers)
+    // if (updatedFilters.connectorType && updatedFilters.connectorType !== "all") {
+    //   filteredMarkers = filteredMarkers.filter(station => {
+    //     console.log('station data', station.properties.ev_connector_types[0])
+    //     return updatedFilters.connectorType.includes(String(station.properties.ev_connector_types[0]));
+    //   });
+    // }
     
     if (updatedFilters.chargingSpeed && updatedFilters.chargingSpeed !== "all") {
       filteredMarkers = filteredMarkers.filter(station =>
@@ -115,8 +132,8 @@ const MapFilter = ({
         updatedFilters.cost.includes(station.properties.cost));
     }
     console.log('Updated Filter', updatedFilters)
-    console.log('All Stations', allStations)
-    console.log('filtered Markers', filteredMarkers)
+  
+    console.log(' after if filtered Markers', filteredMarkers)
     return filteredMarkers;
   };
   

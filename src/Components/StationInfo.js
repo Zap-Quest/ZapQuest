@@ -14,12 +14,12 @@ const StationInfo = (props) => {
     const openRoutes = props.openRoutes;
 
 
-    console.log('Station Modal shown');
-    console.log("station:",station);
-    console.log("station EV1:",station.properties.ev_level1_evse_num);
-    console.log("station EV2:",station.properties.ev_level2_evse_num);
-    console.log("station type:",station.properties.ev_connector_types);
-    console.log("station:",station);
+    // console.log('Station Modal shown');
+    // console.log("station:",station);
+    // console.log("station EV1:",station.properties.ev_level1_evse_num);
+    // console.log("station EV2:",station.properties.ev_level2_evse_num);
+    // console.log("station type:",station.properties.ev_connector_types);
+    // console.log("station:",station);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const {auth,favorite,allStations} = useSelector(state => state);
@@ -72,8 +72,8 @@ const StationInfo = (props) => {
         const tempStationList = allStations.filter((s) => {
             return s.properties.zip === station.properties.zip;
         })
-        console.log('allStations',allStations)
-        console.log('tempStationList',tempStationList);
+        // console.log('allStations',allStations)
+        // console.log('tempStationList',tempStationList);
         setNearbyStations(tempStationList);
 
     },[allStations])
@@ -171,7 +171,7 @@ const StationInfo = (props) => {
                                 <div className="card-text">
                                     {nearbyStations &&
                                         nearbyStations.map((s)=>{
-                                        console.log("s:",s);
+                                        // console.log("s:",s);
                                         return (<div key={s.properties.id}>
                                                     <hr/>
                                                     <p><i className="fa-solid fa-location-dot" style={{ color: "#EABD00" }}/><span>{`  ${s.properties.station_name}`}</span></p>
