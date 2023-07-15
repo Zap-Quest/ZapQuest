@@ -128,12 +128,15 @@ const MapFilter = ({
       console.log("filterMarkers for provider after: ", filteredMarkers);     
 
 
-    if (updatedFilters.cost && updatedFilters.cost !== "all") {
-      filteredMarkers = filteredMarkers.filter(station =>
-        updatedFilters.cost.includes(station.properties.cost));
-    }
-    console.log('Updated Filter', updatedFilters)
-  
+      if (updatedFilters.cost && updatedFilters.cost !== "all") {
+        filteredMarkers = filteredMarkers.filter(station => {
+          if(!station.properties) return false;
+          const isFree = (station.properties.ev_pricing === null || station.properties.ev_pricing === '') && updatedFilters.cost.includes("free");
+          const isPaid = (station.properties.ev_pricing !== null && station.properties.ev_pricing !== '') && updatedFilters.cost.includes("paid");
+          return isFree || isPaid;
+        });
+      }
+    console.log('filterMarker for cost: ', filteredMarkers)
     console.log(' after if filtered Markers', filteredMarkers)
     return filteredMarkers;
   };
