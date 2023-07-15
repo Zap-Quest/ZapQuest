@@ -116,11 +116,19 @@ const MapFilter = ({
     //     return updatedFilters.connectorType.includes(String(station.properties.ev_connector_types[0]));
     //   });
     // }
-    
+    console.log('filteredMarkers before filtering for ChargingSpeed: ', filteredMarkers);
+
     if (updatedFilters.chargingSpeed && updatedFilters.chargingSpeed !== "all") {
-      filteredMarkers = filteredMarkers.filter(station =>
-        updatedFilters.chargingSpeed.includes(String(station.properties.chargingSpeed)));
+      console.log('Charging Speed Filter: ', updatedFilters.chargingSpeed);
+      filteredMarkers = filteredMarkers.filter(station => {
+        if(!station.properties) return false;
+        console.log('Station Charging Speed: ', station.properties.ev_level2_evse_num);
+        const hasLevel2 = station.properties.ev_level2_evse_num !== null && station.properties.ev_level2_evse_num !== undefined && updatedFilters.chargingSpeed.includes("2");
+        console.log('Does station match filter? ', hasLevel2);
+        return hasLevel2;
+      });
     }
+    console.log('filterMarker for ChargingSpeed: ', filteredMarkers)
     
     if (updatedFilters.provider && updatedFilters.provider !== "all") {
       filteredMarkers = filteredMarkers.filter(station =>
