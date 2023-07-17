@@ -24,6 +24,9 @@ form {
 form > * {
   margin: 1rem;
 }
+p {
+  font-size: 1rem;
+}
 
 .navbar {
   /* min-width: 485px; */

@@ -349,6 +349,9 @@ const handleReset = () => {
 useEffect(() => {
   if (address === "nearby") {
     setSearchLocation(null);
+    if(stationId === undefined){
+      setIsStationMarkerAnimated(false);
+    }
   }
 }, [address]);
 

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchFavorite, removeFavorite } from "../store";
-import { useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import Pagination from "./Pagination";
 
 
@@ -16,6 +16,8 @@ const FavoriteList = (props) => {
     const itemsPerPage = 5;
     const totalPages = Math.ceil(favorite.length/itemsPerPage);
     const [currentFavorite,setCurrentFavorite]= useState(null);
+    const {address} =useParams();
+    console.log("address:",address);
     React.useEffect(()=>{
         const currentFavoriteTemp = [...favorite].slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
         setCurrentFavorite(currentFavoriteTemp);
@@ -82,7 +84,7 @@ const FavoriteList = (props) => {
                                 />
                             </>
                         )
-                      ):(<p>Please Log in to see your favorite.</p>)
+                      ):(<p style={{fontSize:"1rem"}}>Please Log in to see your favorite.</p>)
                     }
                 </div>
               </div>

@@ -51,7 +51,7 @@ const Help = (props) => {
                 aria-label="Close"
                 onClick={closeHelp}
               >
-                <span aria-hidden="true" style={{ color: "grey" }}>
+                <span aria-hidden="true" style={{ color: "grey",fontFamily:"verdana" }}>
                   &times;
                 </span>
               </button>
@@ -71,7 +71,7 @@ const Help = (props) => {
       <div>
         <div className="card" style={{ width:'100%',marginBottom:'0.25rem'}}>
           <div className="card-body" style={{padding:'0.5rem'}}>
-            <div className="card-title"style={{fontSize:"0.8rem",marginBottom:'0.25rem',cursor:"pointer", color:"#5f919d", paddingLeft:"1rem"}} >
+            <div className="card-title"style={{fontSize:"1rem",marginBottom:'0.25rem',cursor:"pointer", color:"#5f919d", paddingLeft:"1rem"}} >
                LEGEND
             </div>
             <div className="card-text">
@@ -81,7 +81,7 @@ const Help = (props) => {
         </div>
         <div className="card" style={{ width:'100%',marginBottom:'0.25rem'}}>
           <div className="card-body" style={{padding:'0.5rem'}}>
-            <div className="card-title"style={{fontSize:"0.8rem",marginBottom:'0.25rem',cursor:"pointer", color:"#5f919d", paddingLeft:"1rem"}} >
+            <div className="card-title"style={{fontSize:"1rem",marginBottom:'0.25rem',cursor:"pointer", color:"#5f919d", paddingLeft:"1rem"}} >
                BUTTON
             </div>
             <div className="card-text">
@@ -93,7 +93,7 @@ const Help = (props) => {
           <div className="card-body" style={{padding:'0.5rem'}}>
             <div className="card-text">
               <h4>The map</h4>
-              <p>
+              <p style={{fontSize:"0.8rem"}}>
                 {`
                 Use the map to locate charging stations near you. 
                 You can zoom in or out and pan across the map to find what you need. 
@@ -104,7 +104,7 @@ const Help = (props) => {
                 `}
               </p>
               <h4>Filter</h4>
-              <p>
+              <p style={{fontSize:"0.8rem"}}>
                 {`
               To find the most relevant charging stations, you can use the map filter. 
               Simply click on the filter icon, which looks like a funnel, located on the map. 

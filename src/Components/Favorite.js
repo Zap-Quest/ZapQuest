@@ -86,7 +86,7 @@ const Favorite = ({onClose}) => {
                                 />
                             </>
                         )
-                      ):(<p>Please Log in to see your favorite.</p>)
+                      ):(<p style={{fontSize:"1rem"}}>Please Log in to see your favorite.</p>)
                     }
                 </div>
               </div>

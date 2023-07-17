@@ -47,8 +47,9 @@ const StationInfo = (props) => {
 
     const handleDirection = () =>{
         openRoutes();
-        //console.log("address:",address.split(',').join(''), "stationAddress:",stationAddress.split(',').join(''),address.split(',').join('') !== stationAddress.split(',').join(''));
+        console.log("address:",address.split(',').join(''), "stationAddress:",stationAddress.split(',').join(''),address.split(',').join('') !== stationAddress.split(',').join(''));
         if(address.split(',').join('') !== stationAddress.split(',').join('')){
+            console.log("handle diredtion");
             navigate(`/map/dir/${encodeURIComponent(address)}/${encodeURIComponent(stationAddress)}`);
         }else{
             navigate(`/map/dir/nearby/${encodeURIComponent(stationAddress)}`);
@@ -115,10 +116,10 @@ const StationInfo = (props) => {
                                 <h6 className="mb-1" style={{ color: "#779DA6",fontWeight:"bold"}}>
                                     <span>{` ${station.properties.station_name}`}</span>
                                 </h6>
-                                <small>{`${station.properties.distance.toFixed(1)} mile`}</small>
+                                <p>{`${station.properties.distance.toFixed(1)} mile`}</p>
                             </div>
                             <hr/>
-                            <div className="card" style={{ width: '100%',marginBottom:"0.5rem", fontSize:"0.8rem"}}>
+                            <div className="card" style={{ width: '100%',marginBottom:"0.5rem", fontSize:"1rem"}}>
                                 <div className="card-body">
                                 <p className="card-text" >
                                     <i className="fa-solid fa-location-dot" style={{ color: "#779DA6" }}/>
@@ -144,8 +145,8 @@ const StationInfo = (props) => {
                                 <div className="card-body">
                                 <p className="card-title d-flex w-100 justify-content-between">
                                     <span>
-                                        <i className="fa-solid fa-charging-station" style={{ color: "#779DA6" }}/>
-                                        <span>{` ${station.properties.ev_network.toUpperCase()}`}</span>
+                                        <i className="fa-solid fa-charging-station" style={{ color: "#779DA6",fontSize:"200%"  }}/>
+                                        <span style={{fontWeight:"bolder",fontSize:"130%"}}>{` ${station.properties.ev_network.toUpperCase()}`}</span>
                                     </span>
                                     <small>{station.properties.ev_pricing&&station.properties.ev_pricing.toUpperCase()!=="FREE"?("PAID"):("FREE")}</small>
                                 </p>
@@ -164,8 +165,8 @@ const StationInfo = (props) => {
                                 <div className="card-body">
                                 <p className="card-title d-flex w-100 justify-content-between">
                                     <span>
-                                        <i className="fa-solid fa-charging-station" style={{ color: "#EABD00" }}/>
-                                        <span>{' NEARBY CHARGING STATION'}</span>
+                                        <i className="fa-solid fa-charging-station" style={{ color: "#EABD00",fontSize:"200%" }}/>
+                                        <span style={{fontWeight:"bold",fontSize:"120%"}}>{' NEARBY CHARGING STATION'}</span>
                                     </span>
                                 </p>
                                 <div className="card-text">
@@ -174,8 +175,8 @@ const StationInfo = (props) => {
                                         console.log("s:",s);
                                         return (<div key={s.properties.id}>
                                                     <hr/>
-                                                    <p><i className="fa-solid fa-location-dot" style={{ color: "#EABD00" }}/><span>{`  ${s.properties.station_name}`}</span></p>
-                                                    <p style={{fontSize:"0.6rem"}}>{` ${s.properties.street_address.toUpperCase()} ${s.properties.city.toUpperCase()}`}</p>
+                                                    <p><i className="fa-solid fa-location-dot" style={{ color: "#EABD00" }}/><span style={{fontSize:"0.75rem"}}>{`  ${s.properties.station_name.toUpperCase()}`}</span></p>
+                                                    <p style={{fontSize:"0.7rem"}}>{` ${s.properties.street_address.toUpperCase()} ${s.properties.city.toUpperCase()}`}</p>
                                                 </div>
                                         )})
                                     }
