@@ -26,7 +26,7 @@ const Map = () => {
   const { searchAddress, allStations, favorite } = useSelector((state) => state);
   const { address, stationId,startAddress,endAddress } = useParams();
   const filters = useSelector(state => state.filter)
-  const filteredMarkers = useSelector((state) => state.map.filteredMarkers);
+  const filteredMarkers = useSelector((state) => state.filter.filteredMarkers);
   //set
   const [center, setCenter] = useState(null);
   const [myLocation, setMyLocation] = useState(null);
@@ -328,6 +328,7 @@ const handleReset = () => {
   });
 };
 
+console.log('map.js filteredMarkers: ', filteredMarkers)
     return (
       <div className="Map">
         
@@ -452,27 +453,26 @@ const handleReset = () => {
               
                     {/* EVSList Markers */}
                     {/* EVSList Markers */}
-                    {filteredMarkers  && filteredMarkers .length > 0
-                      ? filteredMarkers .map((s) => {
-                          let location = {
-                            lat: s.geometry.coordinates[1],
-                            lng: s.geometry.coordinates[0],
-                          };
-                          return (
-                            <Marker
-                              position={location}
-                              icon={{
-                                url: '../static/images/ElecMapPin.png',/*"https://cdn-icons-png.flaticon.com/512/5868/5868069.png", */
-                                scaledSize: new window.google.maps.Size(23,30), // Adjust the size here
-                              }}
-                              key={s.properties.id}
-                              animation = {activeMarker === s.properties.id?window.google.maps.Animation.BOUNCE: null}
-                              onClick={() => handleStationId(s.properties.id)}
-                            />
-                          );
-                        })
-                      : null
-                    }
+                    {filteredMarkers && filteredMarkers.length > 0 ? (
+                      filteredMarkers.map((s) => {
+                        let location = {
+                          lat: s.geometry.coordinates[1],
+                          lng: s.geometry.coordinates[0],
+                        };
+                        return (
+                          <Marker
+                            position={location}
+                            icon={{
+                              url: "../static/images/ElecMapPin.png",
+                              scaledSize: new window.google.maps.Size(23, 30),
+                            }}
+                            key={s.properties.id}
+                            animation={activeMarker === s.properties.id ? window.google.maps.Animation.BOUNCE : null}
+                            onClick={() => handleStationId(s.properties.id)}
+                          />
+                        );
+                      })
+                    ) : null}
                     {selectedCenter&&(
                             <Marker
                               position={selectedCenter}
