@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { setFilter, resetFilter } from "../store/filter";
+import { setFilter, resetFilter, setFilteredMarkers } from "../store/filter";
+// import { setFilteredMarkers } from "../store/filter";
 import Select from "react-select";
 
 const MapFilter = ({
@@ -10,7 +11,6 @@ const MapFilter = ({
   onRadiusChange,
   radius,
   allStations,
-  setFilteredMarkers,
 }) => {
   const connectorTypeOptions = [
     { value: "all", label: "All" },
@@ -50,6 +50,7 @@ const MapFilter = ({
   ];
   const selectedFilters = useSelector((state) => state.filter);
   const currentFilters = useSelector((state) => state.filter);
+  // const filteredMarkers = useSelector(state => state.map.filteredMarkers);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -59,6 +60,7 @@ const MapFilter = ({
         radius: radius,
       })
     );
+    console.log('useEffect from radius what is selectedFilter: ', selectedFilters)
   }, [dispatch, radius]);
 
   const handleFilterChange = (selectedOptions, filterType) => {
@@ -83,7 +85,7 @@ const MapFilter = ({
     const handleApplyFilters = () => {    
       const filteredMarkers = applyFilters(currentFilters); 
       onFilterChange(filteredMarkers);
-      setFilteredMarkers(filteredMarkers);
+      // updateFilteredMarkers(filteredMarkers);
     };
 
 
@@ -138,7 +140,7 @@ const MapFilter = ({
       }
     console.log('filterMarker for cost: ', filteredMarkers)
     console.log(' after if filtered Markers', filteredMarkers)
-    return filteredMarkers;
+    dispatch(setFilteredMarkers(filteredMarkers));
   };
   
   const handleReset = () => {

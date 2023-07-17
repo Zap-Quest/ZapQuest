@@ -3,6 +3,8 @@ import { GoogleMap, Marker, useLoadScript, DirectionsRenderer,  MarkerClusterer 
 import { useSelector, useDispatch } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 import { fetchNearbyStations, fetchSearchAddress, setToNearby } from "../store";
+import { setFilter, resetFilter, setFilteredMarkers } from "../store/filter";
+
 
 import "dotenv/config";
 import MapFilter from "./MapFilter";
@@ -17,17 +19,14 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const Map = () => {
-  // const { isLoaded } = useLoadScript({
-  //   googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
-  // });
-
- 
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
   //redux store
   const { searchAddress, allStations, favorite } = useSelector((state) => state);
   const { address, stationId,startAddress,endAddress } = useParams();
+  const filters = useSelector(state => state.filter)
+  const filteredMarkers = useSelector((state) => state.map.filteredMarkers);
   //set
   const [center, setCenter] = useState(null);
   const [myLocation, setMyLocation] = useState(null);
@@ -50,10 +49,9 @@ const Map = () => {
   const [selectedCenter,setSelectedCenter] = useState(null);
   const [isLoadingModalOpen,setIsLoadingModalOpen] = useState(true);
   const [activeMarker, setActiveMarker] = useState(null);
-  const [filteredMarkers, setFilteredMarkers] = useState([])
-
-  /* helper function */
-    //filter module
+  // const [filteredMarkers, setFilteredMarkers] = useState([])
+  const [filteredStations, setFilteredStations] = useState([]);
+  
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -89,17 +87,8 @@ const Map = () => {
 
   const endNavigation = () => {
     setIsStationInfoOpen(false);
-    navigate(`/map/place/${startAddress}/`)
-    // console.log("state", directionsResponse, distance, duration, steps, origin, destination, isRoutesOpen); // Before state updates
-    // setDirectionsResponse(null);
-    // setDistance('');
-    // setDuration('');
-    // setSteps(null);
-    // setOrigin(null);
-    // setDestination(null);
-    // setIsRoutesOpen(false);
-    // console.log("afterstate", directionsResponse, distance, duration, steps, origin, destination, isRoutesOpen); // After state updates
-};
+    navigate(`/map/place/${startAddress}/`)   
+  };
 
 
   // my StationInfo modal
@@ -167,10 +156,6 @@ const Map = () => {
 
   //set to my location button
   const setToMyLocation = () => {
-    // setIsLoadingModalOpen();
-    // setTimeout(() => {
-    //   setIsLoadingModalOpen(false);
-    // }, 500);
     toast.success(`Direct to My Location`);
     navigate(`/map/place/${encodeURIComponent("nearby")}`);
   }
@@ -231,11 +216,7 @@ const Map = () => {
     }
   }, [startAddress, address, radius]);
 
-  // if search specific address
-  /*
-  inputRadius is the search radius around your searching location, now it sets to 10 mile.
-  By modifying the inputRadius, you can control the distance within which you want to search for places or points of interest.
-  */
+
   React.useEffect(() => {
     if (searchAddress) {
       setCenter(searchAddress);
@@ -284,17 +265,27 @@ const Map = () => {
     }, 3000);
   }, []);
   
+  // const handleFilterChange = useCallback((newFilters) => {
+  //   if (allStations) {
+  //     const filteredStations = applyFilters(allStations, newFilters);
+  //     setEVSList(filteredStations);
+  //   }
+  // }, [allStations]);
+
   const handleFilterChange = useCallback((newFilters) => {
-    if (allStations) {
-      const filteredStations = applyFilters(allStations, newFilters);
-      setEVSList(filteredStations);
-    }
-  }, [allStations]);
+    dispatch(setFilter(newFilters));
+  }, [dispatch]);
 
-const handleRadiusChange = useCallback((newRadius) => {
+  const handleRadiusChange = useCallback((newRadius) => {
+    setRadius(newRadius)
+  }, []);
 
-  setRadius(newRadius)
-}, []);
+
+useEffect(() => {
+  const filteredStations = applyFilters(allStations, filters);
+  setFilteredStations(filteredStations);
+}, [allStations, filters]);
+
 
 const applyFilters = (list, filters) => {
   if (!list) return [];
@@ -337,13 +328,6 @@ const handleReset = () => {
   });
 };
 
-
-
-
-  /*return, base on the URL , 
-    if address exist, it means URL is "/map/place/:address/",will return the result searching all EVstations, 
-    else, it indicates URL is "/map/dir/:startAddress/:endAddress", will return the result searching for routes*/
-
     return (
       <div className="Map">
         
@@ -362,13 +346,14 @@ const handleReset = () => {
               <div className="modal-map-content">
                 <MapFilter
                   filteredMarkers={filteredMarkers}
-                  setFilteredMarkers={setFilteredMarkers}
+                  setFilteredMarkers={dispatch(setFilteredMarkers)}
                   onFilterChange={handleFilterChange}
                   onRadiusChange={handleRadiusChange}
                   radius={radius}
                   closeModal={closeModal}
                   handleReset={handleReset}
                   allStations={allStations}
+
                 />
               </div>
             </div>
@@ -467,8 +452,8 @@ const handleReset = () => {
               
                     {/* EVSList Markers */}
                     {/* EVSList Markers */}
-                    {EVSList && EVSList.length > 0
-                      ? EVSList.map((s) => {
+                    {filteredMarkers  && filteredMarkers .length > 0
+                      ? filteredMarkers .map((s) => {
                           let location = {
                             lat: s.geometry.coordinates[1],
                             lng: s.geometry.coordinates[0],
