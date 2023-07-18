@@ -14,12 +14,12 @@ const StationInfo = (props) => {
     const openRoutes = props.openRoutes;
 
 
-    console.log('Station Modal shown');
-    console.log("station:",station);
-    console.log("station EV1:",station.properties.ev_level1_evse_num);
-    console.log("station EV2:",station.properties.ev_level2_evse_num);
-    console.log("station type:",station.properties.ev_connector_types);
-    console.log("station:",station);
+    // console.log('Station Modal shown');
+    // console.log("station:",station);
+    // console.log("station EV1:",station.properties.ev_level1_evse_num);
+    // console.log("station EV2:",station.properties.ev_level2_evse_num);
+    // console.log("station type:",station.properties.ev_connector_types);
+    // console.log("station:",station);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const {auth,favorite,allStations} = useSelector(state => state);

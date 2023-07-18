@@ -1,9 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { setFilter, resetFilter, setFilteredMarkers } from "../store/filter";
+// import { setFilteredMarkers } from "../store/filter";
 import Select from "react-select";
 
-const MapFilter = ({ onFilterChange, closeModal, onRadiusChange, radius }) => {
+const MapFilter = ({
+  filteredMarkers,
+  onFilterChange,
+  closeModal,
+  onRadiusChange,
+  radius,
+  allStations,
+}) => {
   const connectorTypeOptions = [
-    { value: 'all', label: "All" },
+    { value: "all", label: "All" },
     { value: "J1772", label: "J1772" },
     { value: "J1772COMBO", label: "CCS" },
     { value: "TESLA", label: "TESLA" },
@@ -14,14 +24,14 @@ const MapFilter = ({ onFilterChange, closeModal, onRadiusChange, radius }) => {
   ];
 
   const chargingSpeedOptions = [
-    { value: 'all', label: "All" },
+    { value: "all", label: "All" },
     { value: "1", label: "1" },
     { value: "2", label: "2" },
     { value: "dc_fast", label: "DC Fast" },
   ];
 
   const providerOptions = [
-    { value: 'all', label: "All" },
+    { value: "all", label: "All" },
     { value: "Tesla", label: "Tesla" },
     { value: "ChargePoint Network", label: "ChargePoint" },
     { value: "Electrify America", label: "Electrify America" },
@@ -34,44 +44,108 @@ const MapFilter = ({ onFilterChange, closeModal, onRadiusChange, radius }) => {
   ];
 
   const costOptions = [
-    { value: 'all', label: "All" },
+    { value: "all", label: "All" },
     { value: "free", label: "Free" },
     { value: "paid", label: "Paid" },
   ];
+  const selectedFilters = useSelector((state) => state.filter);
+  const currentFilters = useSelector((state) => state.filter);
+  // const filteredMarkers = useSelector(state => state.map.filteredMarkers);
+  const dispatch = useDispatch();
 
-  const [selectedFilters, setSelectedFilters] = useState({
-    connectorType: "all",
-    chargingSpeed: "all",
-    provider: "all",
-    cost: "all",
-    radius: radius,
-  });
+  useEffect(() => {
+    dispatch(
+      setFilter({
+        ...selectedFilters,
+        radius: radius,
+      })
+    );
+    console.log('useEffect from radius what is selectedFilter: ', selectedFilters)
+  }, [dispatch, radius]);
 
   const handleFilterChange = (selectedOptions, filterType) => {
-    if (filterType === 'radius') {
-      onRadiusChange(selectedOptions);
+    let updatedOptions;
+    if (
+      selectedOptions.length === 0 ||
+      selectedOptions.some((option) => option.value === "all")
+    ) {
+      updatedOptions = "all";
     } else {
-      setSelectedFilters((prevFilters) => ({
-        ...prevFilters,
-        [filterType]: selectedOptions ? selectedOptions.map((option) => option.value) : "all",
-      }));
+      updatedOptions = selectedOptions.map((option) => option.value);
     }
+  
+    const updatedFilters = {
+      ...selectedFilters,
+      [filterType]: updatedOptions,
+    };
+    
+    dispatch(setFilter(updatedFilters));
+  };
+
+    const handleApplyFilters = () => {    
+      const filteredMarkers = applyFilters(currentFilters); 
+      onFilterChange(filteredMarkers);
+      // updateFilteredMarkers(filteredMarkers);
+    };
+
+
+    const applyFilters = (updatedFilters) => {
+      console.log('applyfilter fn being called');
+      console.log('All Stations', allStations);
+      let filteredMarkers = allStations;
+      console.log('before if updated filterMarkers', filteredMarkers);
+      console.log('connectorType', updatedFilters.connectorType);
+  
+      // Apply connectorType filter only if a value was selected
+      if (updatedFilters.connectorType && updatedFilters.connectorType !== "all") {
+          console.log('filterMarker in if', filteredMarkers)
+          console.log('connectorType in if', updatedFilters.connectorType)
+          filteredMarkers = filteredMarkers.filter(station =>
+              station.properties.ev_connector_types &&
+              station.properties.ev_connector_types.some(type => updatedFilters.connectorType.includes(type))
+          );
+      }
+      console.log("filteredMarkers after chris' filter", filteredMarkers)
+  
+      // Apply chargingSpeed filter only if a value was selected
+      if (updatedFilters.chargingSpeed && updatedFilters.chargingSpeed !== "all") {
+          console.log('Charging Speed Filter: ', updatedFilters.chargingSpeed);
+          filteredMarkers = filteredMarkers.filter(station => {
+              if(!station.properties) return false;
+              console.log('Station Charging Speed: ', station.properties.ev_level2_evse_num);
+              const hasLevel1 = station.properties.ev_level1_evse_num != null && station.properties.ev_level1_evse_num !== undefined && updatedFilters.chargingSpeed.includes("1");
+              const hasLevel2 = station.properties.ev_level2_evse_num !== null && station.properties.ev_level2_evse_num !== undefined && updatedFilters.chargingSpeed.includes("2");
+              const hasDCFast = station.properties.ev_dc_fast_num !== null && station.properties.ev_dc_fast_num !== undefined && updatedFilters.chargingSpeed.includes("dc_fast");
+              console.log('Does station match filter? ', hasLevel2);
+              return hasLevel1 || hasLevel2 || hasDCFast;
+          });
+      }
+      console.log('filterMarker for ChargingSpeed: ', filteredMarkers)
+    
+      if (updatedFilters.provider && updatedFilters.provider !== "all") {
+        console.log('Provider filter: ', updatedFilters.provider);
+        filteredMarkers = filteredMarkers.filter(station =>
+          updatedFilters.provider.includes(station.properties.ev_network)
+        );
+      }
+      console.log("filterMarkers for provider after: ", filteredMarkers);     
+
+
+      if (updatedFilters.cost && updatedFilters.cost !== "all") {
+        filteredMarkers = filteredMarkers.filter(station => {
+          if(!station.properties) return false;
+          const isFree = (station.properties.ev_pricing === null || station.properties.ev_pricing === '') && updatedFilters.cost.includes("free");
+          const isPaid = (station.properties.ev_pricing !== null && station.properties.ev_pricing !== '') && updatedFilters.cost.includes("paid");
+          return isFree || isPaid;
+        });
+      }
+    console.log('filterMarker for cost: ', filteredMarkers)
+    console.log(' after if filtered Markers', filteredMarkers)
+    dispatch(setFilteredMarkers(filteredMarkers));
   };
   
-
-  const applyFilters = () => {
-    onFilterChange({...selectedFilters, radius: radius})
-    closeModal();
-  };
-
   const handleReset = () => {
-    setSelectedFilters({
-      connectorType: 'all',
-      chargingSpeed: 'all',
-      provider: 'all',
-      cost: 'all',
-      radius: 10
-    });
+    dispatch(resetFilter());
     onRadiusChange(10);
   };
 
@@ -95,20 +169,45 @@ const MapFilter = ({ onFilterChange, closeModal, onRadiusChange, radius }) => {
           options={connectorTypeOptions}
           isMulti
           placeholder="Connector Type"
-          onChange={(selected) => handleFilterChange(selected, "connectorType")}
+          value={
+            Array.isArray(selectedFilters.connectorType)
+              ? selectedFilters.connectorType.map((option) =>
+                  connectorTypeOptions.find((item) => item.value === option)
+                )
+              : []
+          }
+          onChange={(selected) =>
+            handleFilterChange(selected, "connectorType")
+          }
           className="mb-2"
         />
         <Select
           options={chargingSpeedOptions}
           isMulti
           placeholder="Charging Speed"
-          onChange={(selected) => handleFilterChange(selected, "chargingSpeed")}
+          value={
+            Array.isArray(selectedFilters.chargingSpeed)
+              ? selectedFilters.chargingSpeed.map((option) =>
+                  chargingSpeedOptions.find((item) => item.value === option)
+                )
+              : []
+          }
+          onChange={(selected) =>
+            handleFilterChange(selected, "chargingSpeed")
+          }
           className="mb-2"
         />
         <Select
           options={providerOptions}
           isMulti
           placeholder="Provider"
+          value={
+            Array.isArray(selectedFilters.provider)
+              ? selectedFilters.provider.map((option) =>
+                  providerOptions.find((item) => item.value === option)
+                )
+              : []
+          }
           onChange={(selected) => handleFilterChange(selected, "provider")}
           className="mb-2"
         />
@@ -116,6 +215,14 @@ const MapFilter = ({ onFilterChange, closeModal, onRadiusChange, radius }) => {
           options={costOptions}
           isMulti
           placeholder="Cost"
+          value={
+            Array.isArray(selectedFilters.cost)
+              ? selectedFilters.cost.map((option) =>
+                  costOptions.find((item) => item.value === option)
+                )
+              : []
+          }
+          
           onChange={(selected) => handleFilterChange(selected, "cost")}
           className="mb-2"
         />
@@ -136,7 +243,7 @@ const MapFilter = ({ onFilterChange, closeModal, onRadiusChange, radius }) => {
         <button
           style={{ width: "100px" }}
           className="btn btn-dark default-button ml-5"
-          onClick={applyFilters}
+          onClick={handleApplyFilters}
         >
           Apply
         </button>
