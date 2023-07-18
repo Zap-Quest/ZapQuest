@@ -177,7 +177,7 @@ const StationInfo = (props) => {
                                         console.log("s:",s);
                                         return (<div key={s.properties.id}>
                                                     <hr/>
-                                                    <p onClick={()=>handleSelectedStation(s)}><i className="fa-solid fa-location-dot" style={{ color: "#EABD00" }}/><span className="nearbyStation" style={{fontSize:"0.75rem"}}>{`  ${s.properties.station_name.toUpperCase()}`}</span>({s.properties.distance.toFixed(1)} mile)<span></span></p>
+                                                    <p onClick={()=>handleSelectedStation(s)}><i className="fa-solid fa-location-dot" style={{ color: "#EABD00" }}/><span className="nearbyStation" style={{fontSize:"0.75rem"}}>{`  ${s.properties.station_name.toUpperCase()} (${s.properties.distance.toFixed(1)} mile)`}</span></p>
                                                     <p style={{fontSize:"0.7rem"}}>{` ${s.properties.street_address.toUpperCase()} ${s.properties.city.toUpperCase()}`}</p>
                                                 </div>
                                         )})
