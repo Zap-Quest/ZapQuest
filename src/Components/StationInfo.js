@@ -174,7 +174,6 @@ const StationInfo = (props) => {
                                 <div className="card-text">
                                     {nearbyStations &&
                                         nearbyStations.map((s)=>{
-                                        console.log("s:",s);
                                         return (<div key={s.properties.id}>
                                                     <hr/>
                                                     <p onClick={()=>handleSelectedStation(s)}><i className="fa-solid fa-location-dot" style={{ color: "#EABD00" }}/><span className="nearbyStation" style={{fontSize:"0.75rem"}}>{`  ${s.properties.station_name.toUpperCase()} (${s.properties.distance.toFixed(1)} mile)`}</span></p>
