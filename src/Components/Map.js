@@ -329,6 +329,7 @@ const handleReset = () => {
 };
 
 console.log('map.js filteredMarkers: ', filteredMarkers)
+const markersToRender = (filteredMarkers && filteredMarkers.length > 0) ? filteredMarkers : EVSList;
     return (
       <div className="Map">
         
@@ -420,82 +421,78 @@ console.log('map.js filteredMarkers: ', filteredMarkers)
                 )
               }
 
-              {address?
-                (
-                  <>
-                    {/* My Location Marker */}
-                    {myLocation ? (
-                      <Marker
-                        position={myLocation}
-                        icon={{
-                          url: "https://cdn-icons-png.flaticon.com/512/5501/5501965.png",//"https://cdn-icons-png.flaticon.com/512/8065/8065913.png"
-                          scaledSize: new window.google.maps.Size(36, 36), // Adjust the size here
-                        }}
-                        animation={google.maps.Animation.BOUNCE}
-                        zIndex={999}
-                      />
-                    ) : null
-                    }
-              
-                    {/* Search Location Marker */}
-                    {searchLocation ? (
-                      <Marker
-                        position={searchLocation}
-                        icon={{
-                          url: "https://cdn-icons-png.flaticon.com/512/9131/9131546.png",
-                          scaledSize: new window.google.maps.Size(36, 36), // Adjust the size here
-                        }}
-                        zIndex={998}
-                        animation={google.maps.Animation.BOUNCE}
-                      />
-                    ) : null
-                    }
-              
-                    {/* EVSList Markers */}
-                    {/* EVSList Markers */}
-                    {filteredMarkers && filteredMarkers.length > 0 ? (
-                      filteredMarkers.map((s) => {
-                        let location = {
-                          lat: s.geometry.coordinates[1],
-                          lng: s.geometry.coordinates[0],
-                        };
-                        return (
-                          <Marker
-                            position={location}
-                            icon={{
-                              url: "../static/images/ElecMapPin.png",
-                              scaledSize: new window.google.maps.Size(23, 30),
-                            }}
-                            key={s.properties.id}
-                            animation={activeMarker === s.properties.id ? window.google.maps.Animation.BOUNCE : null}
-                            onClick={() => handleStationId(s.properties.id)}
-                          />
-                        );
-                      })
-                    ) : null}
-                    {selectedCenter&&(
-                            <Marker
-                              position={selectedCenter}
-                              icon={{
-                                url: "https://cdn-icons-png.flaticon.com/512/686/686751.png",
-                                scaledSize: new window.google.maps.Size(20, 10), // Adjust the size here
-                                opacity: 0.1,
-                              }}
-                              zIndex={5}
-                            />
-                          )
-                    }
-                  </>
-                ):(
-                  <>
-                    {directionsResponse && <DirectionsRenderer directions={directionsResponse}/>}
-                    {
-                      isRoutesOpen&&(
+              {
+                address
+                  ? (
+                    <>
+                      {/* My Location Marker */}
+                      {myLocation ? (
+                        <Marker
+                          position={myLocation}
+                          icon={{
+                            url: "https://cdn-icons-png.flaticon.com/512/5501/5501965.png",
+                            scaledSize: new window.google.maps.Size(36, 36),
+                          }}
+                          animation={google.maps.Animation.BOUNCE}
+                          zIndex={999}
+                        />
+                      ) : null}
+                
+                      {/* Search Location Marker */}
+                      {searchLocation ? (
+                        <Marker
+                          position={searchLocation}
+                          icon={{
+                            url: "https://cdn-icons-png.flaticon.com/512/9131/9131546.png",
+                            scaledSize: new window.google.maps.Size(36, 36),
+                          }}
+                          zIndex={998}
+                          animation={google.maps.Animation.BOUNCE}
+                        />
+                      ) : null}
+                
+                      {/* EVSList Markers */}
+                      {markersToRender && markersToRender.length > 0 
+                        ? markersToRender.map((s) => {
+                            let location = {
+                              lat: s.geometry.coordinates[1],
+                              lng: s.geometry.coordinates[0],
+                            };
+                            return (
+                              <Marker
+                                position={location}
+                                icon={{
+                                  url: '../static/images/ElecMapPin.png',
+                                  scaledSize: new window.google.maps.Size(23,30),
+                                }}
+                                key={s.properties.id}
+                                animation={activeMarker === s.properties.id && isStationMarkerAnimated ? window.google.maps.Animation.BOUNCE : null}
+                                onClick={() => handleStationId(s.properties.id)}
+                              />
+                            );
+                          })
+                        : null
+                      }                
+                      {selectedCenter && isStationMarkerAnimated && (
+                        <Marker
+                          position={selectedCenter}
+                          icon={{
+                            url: "https://cdn-icons-png.flaticon.com/512/686/686751.png",
+                            scaledSize: new window.google.maps.Size(20, 10),
+                            opacity: 0.1,
+                          }}
+                          zIndex={5}
+                        />
+                      )}
+                    </>
+                  ) : (
+                    <>
+                      {directionsResponse && <DirectionsRenderer directions={directionsResponse} />}
+                      {isRoutesOpen && (
                         <RouteModal onClose={closeRoutes} onEndNav={endNavigation} steps={steps} duration={duration} distance={distance}/>
-                      )
-                    }
-                  </>
-                )
+                      )}
+                    </>
+                  )
               }
               
               
