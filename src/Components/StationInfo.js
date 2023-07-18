@@ -62,7 +62,6 @@ const StationInfo = (props) => {
         navigate(`/map/place/${encodeURIComponent(address)}/${station.properties.id}`);
       
     }
-    //
 
     //useEffect  
     React.useEffect(() =>{
@@ -78,12 +77,8 @@ const StationInfo = (props) => {
         const tempStationList = allStations.filter((s) => {
             return s.properties.zip === station.properties.zip && s.properties.id !==station.properties.id;
         })
-        console.log('allStations',allStations)
-        console.log('tempStationList',tempStationList);
         setNearbyStations(tempStationList);
-
     },[allStations])
-
    
     return (
         <>

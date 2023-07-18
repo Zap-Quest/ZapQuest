@@ -28,7 +28,6 @@ const Map = () => {
   //redux store
   const { searchAddress, allStations,favorite } = useSelector((state) => state);
   const { address, stationId,startAddress,endAddress } = useParams();
-  console.log("address:",address);
   //set
   const [center, setCenter] = useState(null);
   const [myLocation, setMyLocation] = useState(null);
@@ -92,15 +91,6 @@ const Map = () => {
   const endNavigation = () => {
     setIsStationInfoOpen(false);
     navigate(`/map/place/${startAddress}/`)
-    // console.log("state", directionsResponse, distance, duration, steps, origin, destination, isRoutesOpen); // Before state updates
-    // setDirectionsResponse(null);
-    // setDistance('');
-    // setDuration('');
-    // setSteps(null);
-    // setOrigin(null);
-    // setDestination(null);
-    // setIsRoutesOpen(false);
-    // console.log("afterstate", directionsResponse, distance, duration, steps, origin, destination, isRoutesOpen); // After state updates
 };
 
 
