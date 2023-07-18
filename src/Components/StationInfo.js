@@ -59,7 +59,7 @@ const StationInfo = (props) => {
     const handleSelectedStation = (station) => {
         const stationAddress = `${station.properties.street_address} ${station.properties.city}`;
 
-        navigate(`/map/place/${encodeURIComponent(stationAddress)}/${station.properties.id}`);
+        navigate(`/map/place/${encodeURIComponent(address)}/${station.properties.id}`);
       
     }
     //
