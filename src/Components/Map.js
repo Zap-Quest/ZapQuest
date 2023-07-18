@@ -49,6 +49,7 @@ const Map = () => {
   const [selectedCenter,setSelectedCenter] = useState(null);
   const [isLoadingModalOpen,setIsLoadingModalOpen] = useState(true);
   const [activeMarker, setActiveMarker] = useState(null);
+  const [isMarkerAnimated, setIsMarkerAnimated] = useState(true);
   const [isStationMarkerAnimated, setIsStationMarkerAnimated] = useState(false);
 
   // const [filteredMarkers, setFilteredMarkers] = useState([])
@@ -89,8 +90,8 @@ const Map = () => {
 
   const endNavigation = () => {
     setIsStationInfoOpen(false);
-    navigate(`/map/place/${startAddress}/`)   
-  };
+    navigate(`/map/place/${startAddress}/`)
+};
 
 
   // my StationInfo modal
@@ -142,6 +143,7 @@ const Map = () => {
       setIsStationInfoOpen(true);
       setSelectedCenter({ lat: coordinates[1]-0.00005, lng: coordinates[0] });
       setActiveMarker(id);
+      setIsStationMarkerAnimated(true);
     }
     setIsRoutesOpen(false);
     navigate(`/map/place/${encodeURIComponent(address)}/${id}`);
@@ -159,6 +161,8 @@ const Map = () => {
   //set to my location button
   const setToMyLocation = () => {
     toast.success(`Direct to My Location`);
+    setSearchLocation(null);
+    setIsStationMarkerAnimated(false);
     navigate(`/map/place/${encodeURIComponent("nearby")}`);
   }
 
@@ -195,6 +199,11 @@ const Map = () => {
     }else{
       setWarn(" YOu do not have location enabled");
     }
+  }
+
+  const stopAnimation = () => {
+    setIsMarkerAnimated(false);
+    setIsStationMarkerAnimated(false);
   }
 
   /* useEffect */
@@ -332,6 +341,22 @@ const handleReset = () => {
 
 console.log('map.js filteredMarkers: ', filteredMarkers)
 const markersToRender = (filteredMarkers && filteredMarkers.length > 0) ? filteredMarkers : EVSList;
+useEffect(() => {
+  if (address === "nearby") {
+    setSearchLocation(null);
+    if(stationId === undefined){
+      setIsStationMarkerAnimated(false);
+    }
+  }
+}, [address]);
+
+
+
+
+  /*return, base on the URL , 
+    if address exist, it means URL is "/map/place/:address/",will return the result searching all EVstations, 
+    else, it indicates URL is "/map/dir/:startAddress/:endAddress", will return the result searching for routes*/
+
     return (
       <div className="Map">
         
@@ -401,7 +426,7 @@ const markersToRender = (filteredMarkers && filteredMarkers.length > 0) ? filter
             >
               {/* Search Bar */}
               <div className="d-flex justify-content-end p-0">
-                <SearchBar/>
+                <SearchBar stopAnimation={stopAnimation}/>
               </div>
               {/* Favorite List Modal*/}
               {

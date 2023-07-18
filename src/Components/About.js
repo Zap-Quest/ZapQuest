@@ -7,7 +7,7 @@ const About = () => {
         <section className="team-container">
           <h2 className="team-header my-3 text-center">Meet the Team</h2>
           <div className="row">
-            <div className="col-md-6">
+            <div className="col-md-6 profile-container" >
               <div className="team-card my-5 mx-auto">
                 {/* <img src="team-member1.jpg" alt="Team Member 1" className="team-img"> */}
                 <div className="team-details">
@@ -32,7 +32,7 @@ const About = () => {
                 </div>
               </div>
             </div>
-            <div className="col-md-6">
+            <div className="col-md-6  profile-container">
               <div className="team-card my-5 mx-auto">
                 {/* <img src="team-member2.jpg" alt="Team Member 2" className="team-img"> */}
                 <img
@@ -55,7 +55,7 @@ const About = () => {
                 </div>
               </div>
             </div>
-            <div className="col-md-6">
+            <div className="col-md-6  profile-container">
               <div className="team-card my-5 mx-auto">
                 {/* <img src="team-member3.jpg" alt="Team Member 3" className="team-img"> */}
                 <img
@@ -78,7 +78,7 @@ const About = () => {
                 </div>
               </div>
             </div>
-            <div className="col-md-6">
+            <div className="col-md-6  profile-container">
               <div className="team-card my-5 mx-auto">
                 {/* <img src="team-member4.jpg" alt="Team Member 4" className="team-img"> */}
                 <img

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchFavorite, removeFavorite } from "../store";
-import { useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import Pagination from "./Pagination";
 
 
@@ -16,6 +16,8 @@ const FavoriteList = (props) => {
     const itemsPerPage = 5;
     const totalPages = Math.ceil(favorite.length/itemsPerPage);
     const [currentFavorite,setCurrentFavorite]= useState(null);
+    const {address} =useParams();
+    console.log("address:",address);
     React.useEffect(()=>{
         const currentFavoriteTemp = [...favorite].slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
         setCurrentFavorite(currentFavoriteTemp);
@@ -58,12 +60,12 @@ const FavoriteList = (props) => {
                   <h5 className="modal-title" id="exampleModalLabel" style={{color:"white"}}>
                     <i
                         className="fa-solid fa-charging-station"
-                        style={{ color: "#EABD00" }}
+                        style={{ color: "#EABD00",fontSize:"100%" }}
                     />
-                    {`  FAVORITE LIST`}
+                    {`  Favorite List`}
                     </h5>
                   <button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={handleClose}>
-                    <span aria-hidden="true" style={{color:"grey"}}>&times;</span>
+                    <span aria-hidden="true" style={{color:"grey",fontFamily:"verdana"}}>&times;</span>
                   </button>
                 </div>
                 <div className="modal-body" style={{ overflowY: 'auto' }}>
@@ -82,7 +84,7 @@ const FavoriteList = (props) => {
                                 />
                             </>
                         )
-                      ):(<p>Please Log in to see your favorite.</p>)
+                      ):(<p style={{fontSize:"1rem"}}>Please Log in to see your favorite.</p>)
                     }
                 </div>
               </div>

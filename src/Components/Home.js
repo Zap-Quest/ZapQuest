@@ -88,7 +88,7 @@ const Home = () => {
               className="mb-2"
               style={{ width: "180px", height: "200px" }}
             />
-            <h1 className="mb-4" style={{}}>Begin your Quest</h1>
+            <h1 className="mb-4">Begin your Quest</h1>
             <form onSubmit={handleSearch} className="d-flex mb-4">
               <input
                 type="text"

@@ -103,7 +103,7 @@ const Navbar = () => {
 
   return (
     <nav className="navbar navbar-dark nav-color">
-      <div className="container-fluid">
+      <div className="container-fluid navBar-container">
         <Link to="/" className="navbar-brand">
           <i
             className="fa-solid fa-charging-station"

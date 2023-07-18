@@ -1,7 +1,6 @@
 import React from "react";
 
 const LoadingSpinner = () => {
-    console.log("spinner");
   return (
     <div className={"show"} tabIndex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
         <div className="modal-dialog spinner " style={{width:"40%"}}>

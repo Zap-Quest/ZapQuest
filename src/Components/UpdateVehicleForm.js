@@ -64,11 +64,16 @@ const UpdateVehicleForm = () => {
           </div>
           {userVehicle && (
             <div className="vehicle-details-container">
+              <img
+                src={userVehicle.image}
+                alt="Vehicle"
+                className="mx-auto d-block"
+                style={{ width: '240px' }}
+              />
               <p>Make: {userVehicle.make}</p>
               <p>Model: {userVehicle.model}</p>
               <p>Year: {userVehicle.year}</p>
               <p>Charger Type: {userVehicle.chargertype}</p>
-              <p>Image: {userVehicle.image}</p>
             </div>
           )}
           <div className="text-center">
@@ -112,7 +117,7 @@ const UpdateVehicleForm = () => {
               />
             </div>
             <div className="form-group">
-              <label>Image</label>
+              <label>Upload New Image</label>
               <input
                 type="file"
                 name="image"

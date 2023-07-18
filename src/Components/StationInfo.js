@@ -47,16 +47,21 @@ const StationInfo = (props) => {
 
     const handleDirection = () =>{
         openRoutes();
-        //console.log("address:",address.split(',').join(''), "stationAddress:",stationAddress.split(',').join(''),address.split(',').join('') !== stationAddress.split(',').join(''));
+        console.log("address:",address.split(',').join(''), "stationAddress:",stationAddress.split(',').join(''),address.split(',').join('') !== stationAddress.split(',').join(''));
         if(address.split(',').join('') !== stationAddress.split(',').join('')){
+            console.log("handle diredtion");
             navigate(`/map/dir/${encodeURIComponent(address)}/${encodeURIComponent(stationAddress)}`);
         }else{
             navigate(`/map/dir/nearby/${encodeURIComponent(stationAddress)}`);
         }
-        
-        
     }
-    //
+
+    const handleSelectedStation = (station) => {
+        const stationAddress = `${station.properties.street_address} ${station.properties.city}`;
+
+        navigate(`/map/place/${encodeURIComponent(address)}/${station.properties.id}`);
+      
+    }
 
     //useEffect  
     React.useEffect(() =>{
@@ -70,17 +75,10 @@ const StationInfo = (props) => {
     
     React.useEffect(() => {
         const tempStationList = allStations.filter((s) => {
-            return s.properties.zip === station.properties.zip;
+            return s.properties.zip === station.properties.zip && s.properties.id !==station.properties.id;
         })
-        // console.log('allStations',allStations)
-        // console.log('tempStationList',tempStationList);
         setNearbyStations(tempStationList);
-
     },[allStations])
-
-    
-    
- 
    
     return (
         <>
@@ -102,11 +100,11 @@ const StationInfo = (props) => {
                 <div className="modal-content" style={{ marginTop: '-30px' }}>
                     <div className="modal-header" style={{background:"#214042"}}>
                         <h5 className="modal-title" id="exampleModalLabel" style={{color:"white"}}>
-                            <i className="fa-solid fa-charging-station" style={{ color: "#EABD00" }}/>
+                            <i className="fa-solid fa-charging-station" style={{ color: "#EABD00",fontSize:"100%" }}/>
                             <span>{`  EV Station`}</span>
                         </h5>
                         <button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={closeStationInfo}>
-                        <span aria-hidden="true" style={{color:"grey"}}>&times;</span>
+                        <span aria-hidden="true" style={{color:"grey",fontFamily:"verdana"}}>&times;</span>
                     </button>
                     </div>
                     <div className="modal-body" style={{  overflowY: 'auto' }}>
@@ -115,10 +113,10 @@ const StationInfo = (props) => {
                                 <h6 className="mb-1" style={{ color: "#779DA6",fontWeight:"bold"}}>
                                     <span>{` ${station.properties.station_name}`}</span>
                                 </h6>
-                                <small>{`${station.properties.distance.toFixed(1)} mile`}</small>
+                                <p>{`${station.properties.distance.toFixed(1)} mile`}</p>
                             </div>
                             <hr/>
-                            <div className="card" style={{ width: '100%',marginBottom:"0.5rem", fontSize:"0.8rem"}}>
+                            <div className="card" style={{ width: '100%',marginBottom:"0.5rem", fontSize:"1rem"}}>
                                 <div className="card-body">
                                 <p className="card-text" >
                                     <i className="fa-solid fa-location-dot" style={{ color: "#779DA6" }}/>
@@ -144,8 +142,8 @@ const StationInfo = (props) => {
                                 <div className="card-body">
                                 <p className="card-title d-flex w-100 justify-content-between">
                                     <span>
-                                        <i className="fa-solid fa-charging-station" style={{ color: "#779DA6" }}/>
-                                        <span>{` ${station.properties.ev_network.toUpperCase()}`}</span>
+                                        <i className="fa-solid fa-charging-station" style={{ color: "#779DA6",fontSize:"200%"  }}/>
+                                        <span style={{fontWeight:"bolder",fontSize:"130%"}}>{` ${station.properties.ev_network.toUpperCase()}`}</span>
                                     </span>
                                     <small>{station.properties.ev_pricing&&station.properties.ev_pricing.toUpperCase()!=="FREE"?("PAID"):("FREE")}</small>
                                 </p>
@@ -164,18 +162,17 @@ const StationInfo = (props) => {
                                 <div className="card-body">
                                 <p className="card-title d-flex w-100 justify-content-between">
                                     <span>
-                                        <i className="fa-solid fa-charging-station" style={{ color: "#EABD00" }}/>
-                                        <span>{' NEARBY CHARGING STATION'}</span>
+                                        <i className="fa-solid fa-charging-station" style={{ color: "#EABD00",fontSize:"200%" }}/>
+                                        <span style={{fontWeight:"bold",fontSize:"120%"}}>{' NEARBY CHARGING STATION'}</span>
                                     </span>
                                 </p>
                                 <div className="card-text">
                                     {nearbyStations &&
                                         nearbyStations.map((s)=>{
-                                        // console.log("s:",s);
                                         return (<div key={s.properties.id}>
                                                     <hr/>
-                                                    <p><i className="fa-solid fa-location-dot" style={{ color: "#EABD00" }}/><span>{`  ${s.properties.station_name}`}</span></p>
-                                                    <p style={{fontSize:"0.6rem"}}>{` ${s.properties.street_address.toUpperCase()} ${s.properties.city.toUpperCase()}`}</p>
+                                                    <p onClick={()=>handleSelectedStation(s)}><i className="fa-solid fa-location-dot" style={{ color: "#EABD00" }}/><span className="nearbyStation" style={{fontSize:"0.75rem"}}>{`  ${s.properties.station_name.toUpperCase()} (${s.properties.distance.toFixed(1)} mile)`}</span></p>
+                                                    <p style={{fontSize:"0.7rem"}}>{` ${s.properties.street_address.toUpperCase()} ${s.properties.city.toUpperCase()}`}</p>
                                                 </div>
                                         )})
                                     }
