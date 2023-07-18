@@ -101,6 +101,7 @@ const MapFilter = ({
           console.log('filterMarker in if', filteredMarkers)
           console.log('connectorType in if', updatedFilters.connectorType)
           filteredMarkers = filteredMarkers.filter(station =>
+              station.properties.ev_connector_types &&
               station.properties.ev_connector_types.some(type => updatedFilters.connectorType.includes(type))
           );
       }
