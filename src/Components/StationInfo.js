@@ -54,8 +54,13 @@ const StationInfo = (props) => {
         }else{
             navigate(`/map/dir/nearby/${encodeURIComponent(stationAddress)}`);
         }
-        
-        
+    }
+
+    const handleSelectedStation = (station) => {
+        const stationAddress = `${station.properties.street_address} ${station.properties.city}`;
+
+        navigate(`/map/place/${encodeURIComponent(stationAddress)}/${station.properties.id}`);
+      
     }
     //
 
@@ -71,7 +76,7 @@ const StationInfo = (props) => {
     
     React.useEffect(() => {
         const tempStationList = allStations.filter((s) => {
-            return s.properties.zip === station.properties.zip;
+            return s.properties.zip === station.properties.zip && s.properties.id !==station.properties.id;
         })
         console.log('allStations',allStations)
         console.log('tempStationList',tempStationList);
@@ -79,9 +84,6 @@ const StationInfo = (props) => {
 
     },[allStations])
 
-    
-    
- 
    
     return (
         <>
@@ -175,7 +177,7 @@ const StationInfo = (props) => {
                                         console.log("s:",s);
                                         return (<div key={s.properties.id}>
                                                     <hr/>
-                                                    <p><i className="fa-solid fa-location-dot" style={{ color: "#EABD00" }}/><span style={{fontSize:"0.75rem"}}>{`  ${s.properties.station_name.toUpperCase()}`}</span></p>
+                                                    <p onClick={()=>handleSelectedStation(s)}><i className="fa-solid fa-location-dot" style={{ color: "#EABD00" }}/><span className="nearbyStation" style={{fontSize:"0.75rem"}}>{`  ${s.properties.station_name.toUpperCase()}`}</span></p>
                                                     <p style={{fontSize:"0.7rem"}}>{` ${s.properties.street_address.toUpperCase()} ${s.properties.city.toUpperCase()}`}</p>
                                                 </div>
                                         )})
