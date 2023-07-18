@@ -231,6 +231,7 @@ button.disabled {
 
 /* ----- FavoriteList Modal effect -----*/
 .favoriteList-stationInfo-card-title {
+  cursor: pointer;
   color: #5f919d
 }
 .favoriteList-stationInfo-card-title:hover {
@@ -388,6 +389,9 @@ button.disabled {
 }
 .card {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.map-modal .nearbyStation {
+  cursor: pointer;
 }
 .map-modal .nearbyStation:hover {
   color: rgb(234, 189, 0);
