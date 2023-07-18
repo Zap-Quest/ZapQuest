@@ -49,6 +49,8 @@ const Map = () => {
   const [selectedCenter,setSelectedCenter] = useState(null);
   const [isLoadingModalOpen,setIsLoadingModalOpen] = useState(true);
   const [activeMarker, setActiveMarker] = useState(null);
+  const [isStationMarkerAnimated, setIsStationMarkerAnimated] = useState(false);
+
   // const [filteredMarkers, setFilteredMarkers] = useState([])
   const [filteredStations, setFilteredStations] = useState([]);
   
