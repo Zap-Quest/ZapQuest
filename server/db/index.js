@@ -9,7 +9,7 @@ Favorite.belongsTo(User);
 
 const syncAndSeed = async()=> {
   await conn.sync({ force: true });
-  const [moe, lucy, larry, ethyl] = await Promise.all([
+  const [moe, NJones345] = await Promise.all([
     User.create({ 
       password: '123',
       username: 'moe',
@@ -18,24 +18,10 @@ const syncAndSeed = async()=> {
       avatar: '/static/images/Default Avatar.svg',
     }),
     User.create({ 
-      password: '123',
-      username: 'lucy',
-      email: 'lucyb@gmail.com',
-      address: '456 Elm St, City B',
-      avatar: '/static/images/Default Avatar.svg',
-    }),
-    User.create({ 
-      password: '123',
-      username: 'larry',
-      email: 'larryg@gmail.com',
-      address: '789 Oak St, City C',
-      avatar: '/static/images/Default Avatar.svg',
-    }),
-    User.create({ 
-      password: '123',
-      username: 'ethyl',
-      email: 'ethylr@gmail.com',
-      address: '987 Pine St, City D',
+      password: 'zap123',
+      username: 'NJones345',
+      email: 'NJones345@gmail.com',
+      address: '123 Main St, City A',
       avatar: '/static/images/Default Avatar.svg',
     }),
   ]);
@@ -45,8 +31,8 @@ const syncAndSeed = async()=> {
     model: 'Model 3',
     year: '2020',
     image: '/static/images/Default Car.svg',
-    chargertype: 'CchadeMO',
-    userId: moe.id
+    chargertype: 'J1772',
+    userId: NJones345.id
   });
 
   const favorite1 = await Favorite.create({ 
@@ -98,15 +84,6 @@ const syncAndSeed = async()=> {
     stationId:205431,
     stationName:"Cityfront Place Parking Garage - 3rd Floor Left",
     street:"400 N. McClurg Court",
-    city:"Chicago",
-    state:"IL",
-  });
-
-  const favorite7 = await Favorite.create({ 
-    userId: lucy.id,
-    stationId:117262,
-    stationName:"Northwestern Memorial HealthCare",
-    street:"425 E Erie St",
     city:"Chicago",
     state:"IL",
   });
