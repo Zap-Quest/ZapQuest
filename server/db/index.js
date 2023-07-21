@@ -35,6 +35,15 @@ const syncAndSeed = async()=> {
     userId: NJones345.id
   });
 
+  const teslaVehicle2 = await Vehicle.create({ 
+    make: 'Tesla',
+    model: 'Model 3',
+    year: '2020',
+    image: '/static/images/Default Car.svg',
+    chargertype: 'J1772',
+    userId: moe.id
+  });
+
   const favorite1 = await Favorite.create({ 
     userId: moe.id,
     stationId:259592,
