@@ -3,6 +3,8 @@ import { GoogleMap, Marker, useLoadScript, DirectionsRenderer,  MarkerClusterer 
 import { useSelector, useDispatch } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 import { fetchNearbyStations, fetchSearchAddress, setToNearby } from "../store";
+import { setFilter, resetFilter, setFilteredMarkers } from "../store/filter";
+
 
 import "dotenv/config";
 import MapFilter from "./MapFilter";
@@ -17,18 +19,18 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const Map = () => {
-  // const { isLoaded } = useLoadScript({
-  //   googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
-  // });
-
- 
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
   //redux store
-  const { searchAddress, allStations,favorite } = useSelector((state) => state);
+  const { searchAddress, allStations, favorite } = useSelector((state) => state);
   const { address, stationId,startAddress,endAddress } = useParams();
+
   console.log("address:",address);
+
+  const filters = useSelector(state => state.filter)
+  const filteredMarkers = useSelector((state) => state.filter.filteredMarkers);
+
   //set
   const [center, setCenter] = useState(null);
   const [myLocation, setMyLocation] = useState(null);
@@ -54,8 +56,9 @@ const Map = () => {
   const [isMarkerAnimated, setIsMarkerAnimated] = useState(true);
   const [isStationMarkerAnimated, setIsStationMarkerAnimated] = useState(false);
 
-  /* helper function */
-    //filter module
+  // const [filteredMarkers, setFilteredMarkers] = useState([])
+  const [filteredStations, setFilteredStations] = useState([]);
+  
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -162,10 +165,6 @@ const Map = () => {
 
   //set to my location button
   const setToMyLocation = () => {
-    // setIsLoadingModalOpen();
-    // setTimeout(() => {
-    //   setIsLoadingModalOpen(false);
-    // }, 500);
     toast.success(`Direct to My Location`);
     setSearchLocation(null);
     setIsStationMarkerAnimated(false);
@@ -238,11 +237,7 @@ const Map = () => {
     }
   }, [startAddress, address, radius]);
 
-  // if search specific address
-  /*
-  inputRadius is the search radius around your searching location, now it sets to 10 mile.
-  By modifying the inputRadius, you can control the distance within which you want to search for places or points of interest.
-  */
+
   React.useEffect(() => {
     if (searchAddress) {
       setCenter(searchAddress);
@@ -291,16 +286,27 @@ const Map = () => {
     }, 3000);
   }, []);
   
-  const handleFilterChange = useCallback((newFilters) => {
-    if (allStations) {
-      const filteredStations = applyFilters(allStations, newFilters);
-      setEVSList(filteredStations);
-    }
-  }, [allStations]);
+  // const handleFilterChange = useCallback((newFilters) => {
+  //   if (allStations) {
+  //     const filteredStations = applyFilters(allStations, newFilters);
+  //     setEVSList(filteredStations);
+  //   }
+  // }, [allStations]);
 
-const handleRadiusChange = useCallback((newRadius) => {
-  setRadius(newRadius)
-}, []);
+  const handleFilterChange = useCallback((newFilters) => {
+    dispatch(setFilter(newFilters));
+  }, [dispatch]);
+
+  const handleRadiusChange = useCallback((newRadius) => {
+    setRadius(newRadius)
+  }, []);
+
+
+useEffect(() => {
+  const filteredStations = applyFilters(allStations, filters);
+  setFilteredStations(filteredStations);
+}, [allStations, filters]);
+
 
 const applyFilters = (list, filters) => {
   if (!list) return [];
@@ -343,6 +349,8 @@ const handleReset = () => {
   });
 };
 
+console.log('map.js filteredMarkers: ', filteredMarkers)
+const markersToRender = (filteredMarkers && filteredMarkers.length > 0) ? filteredMarkers : EVSList;
 useEffect(() => {
   if (address === "nearby") {
     setSearchLocation(null);
@@ -376,11 +384,15 @@ useEffect(() => {
             <div className="modal-map">
               <div className="modal-map-content">
                 <MapFilter
+                  filteredMarkers={filteredMarkers}
+                  setFilteredMarkers={dispatch(setFilteredMarkers)}
                   onFilterChange={handleFilterChange}
                   onRadiusChange={handleRadiusChange}
                   radius={radius}
                   closeModal={closeModal}
                   handleReset={handleReset}
+                  allStations={allStations}
+
                 />
               </div>
             </div>
@@ -446,83 +458,78 @@ useEffect(() => {
                 )
               }
 
-              {address?
-                (
-                  <>
-                    {/* My Location Marker */}
-                    {myLocation ? (
-                      <Marker
-                        position={myLocation}
-                        icon={{
-                          url: "https://cdn-icons-png.flaticon.com/512/5501/5501965.png",//"https://cdn-icons-png.flaticon.com/512/8065/8065913.png"
-                          scaledSize: new window.google.maps.Size(36, 36), // Adjust the size here
-                        }}
-                        animation={isMarkerAnimated ? google.maps.Animation.BOUNCE : null}
-                        zIndex={999}
-                      />
-                    ) : null
-                    }
-              
-                    {/* Search Location Marker */}
-                    {searchLocation ? (
-                      <Marker
-                        position={searchLocation}
-                        icon={{
-                          url: "https://cdn-icons-png.flaticon.com/512/9131/9131546.png",
-                          scaledSize: new window.google.maps.Size(36, 36), // Adjust the size here
-                        }}
-                        zIndex={998}
-                        animation={ google.maps.Animation.BOUNCE }
-                      />
-                    ) : null
-                    }
-              
-                    {/* EVSList Markers */}
-                    {/* EVSList Markers */}
-                    {EVSList && EVSList.length > 0
-                      ? EVSList.map((s) => {
-                          let location = {
-                            lat: s.geometry.coordinates[1],
-                            lng: s.geometry.coordinates[0],
-                          };
-                          return (
-                            <Marker
-                              position={location}
-                              icon={{
-                                url: '../static/images/ElecMapPin.png',/*"https://cdn-icons-png.flaticon.com/512/5868/5868069.png", */
-                                scaledSize: new window.google.maps.Size(23,30), // Adjust the size here
-                              }}
-                              key={s.properties.id}
-                              animation = {activeMarker === s.properties.id && isStationMarkerAnimated?window.google.maps.Animation.BOUNCE: null}
-                              onClick={() => handleStationId(s.properties.id)}
-                            />
-                          );
-                        })
-                      : null
-                    }
-                    {selectedCenter&& isStationMarkerAnimated?(
-                            <Marker
-                              position={selectedCenter}
-                              icon={{
-                                url: "https://cdn-icons-png.flaticon.com/512/686/686751.png",
-                                scaledSize: new window.google.maps.Size(20, 10), // Adjust the size here
-                                opacity: 0.1,
-                              }}
-                              zIndex={5}
-                            />
-                          ):(null)
-                    }
-                  </>
-                ):(
-                  <>
-                    {directionsResponse && <DirectionsRenderer directions={directionsResponse}/>}
-                    {
-                      isRoutesOpen&&(
+              {
+                address
+                  ? (
+                    <>
+                      {/* My Location Marker */}
+                      {myLocation ? (
+                        <Marker
+                          position={myLocation}
+                          icon={{
+                            url: "https://cdn-icons-png.flaticon.com/512/5501/5501965.png",
+                            scaledSize: new window.google.maps.Size(36, 36),
+                          }}
+                          animation={google.maps.Animation.BOUNCE}
+                          zIndex={999}
+                        />
+                      ) : null}
+                
+                      {/* Search Location Marker */}
+                      {searchLocation ? (
+                        <Marker
+                          position={searchLocation}
+                          icon={{
+                            url: "https://cdn-icons-png.flaticon.com/512/9131/9131546.png",
+                            scaledSize: new window.google.maps.Size(36, 36),
+                          }}
+                          zIndex={998}
+                          animation={google.maps.Animation.BOUNCE}
+                        />
+                      ) : null}
+                
+                      {/* EVSList Markers */}
+                      {markersToRender && markersToRender.length > 0 
+                        ? markersToRender.map((s) => {
+                            let location = {
+                              lat: s.geometry.coordinates[1],
+                              lng: s.geometry.coordinates[0],
+                            };
+                            return (
+                              <Marker
+                                position={location}
+                                icon={{
+                                  url: '../static/images/ElecMapPin.png',
+                                  scaledSize: new window.google.maps.Size(23,30),
+                                }}
+                                key={s.properties.id}
+                                animation={activeMarker === s.properties.id && isStationMarkerAnimated ? window.google.maps.Animation.BOUNCE : null}
+                                onClick={() => handleStationId(s.properties.id)}
+                              />
+                            );
+                          })
+                        : null
+                      }                
+                      {selectedCenter && isStationMarkerAnimated && (
+                        <Marker
+                          position={selectedCenter}
+                          icon={{
+                            url: "https://cdn-icons-png.flaticon.com/512/686/686751.png",
+                            scaledSize: new window.google.maps.Size(20, 10),
+                            opacity: 0.1,
+                          }}
+                          zIndex={5}
+                        />
+                      )}
+                    </>
+                  ) : (
+                    <>
+                      {directionsResponse && <DirectionsRenderer directions={directionsResponse} />}
+                      {isRoutesOpen && (
                         <RouteModal onClose={closeRoutes} onEndNav={endNavigation} steps={steps} duration={duration} distance={distance}/>
-                      )
-                    }
-                  </>
-                )
+                      )}
+                    </>
+                  )
               }
               
               

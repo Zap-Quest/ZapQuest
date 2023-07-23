@@ -49,8 +49,8 @@ const MyAccount = () => {
                       />
                       <div className="my-account-details my-5">
                         <div>
-                          <h6 className="my-account-p">Username</h6>
-                          <p className="text-muted">{user.username}</p>
+                          <h6 className="my-account-p underline-text">Username</h6>
+                          <p className="text user-text">{user.username}</p>
                         </div>
                       </div>
                     </div>
@@ -73,10 +73,6 @@ const MyAccount = () => {
                           <div className="col-md-6">
                             <h6 className="my-account-p">Password</h6>
                             <p className="text-muted">******</p>
-                          </div>
-                          <div className="col-md-6 mt-4">
-                            <h6 className="my-account-p">Address</h6>
-                            <p className="text-muted">{user.address}</p>
                           </div>
                         </div>
                       </div>

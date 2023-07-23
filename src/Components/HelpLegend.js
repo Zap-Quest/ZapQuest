@@ -108,7 +108,7 @@ const HelpLegend = (props) => {
                 <div className="d-flex" style={{gap:"10px",margin:" 1rem 0"}}>
                   <i className="fa-solid fa-charging-station"></i>
                   <span>
-                    STATION INTO
+                    STATION INFO
                   </span>
                 </div> 
                 <hr></hr>     
@@ -122,14 +122,14 @@ const HelpLegend = (props) => {
                 <div className="d-flex" style={{gap:"10px",margin:" 1rem 0"}}>
                   <i className="fa-solid fa-share-nodes"></i>
                   <span>
-                    COPY URL
+                    SHARE/COPY URL
                   </span>
                 </div>  
                 <hr></hr>
                 <div className="d-flex" style={{gap:"10px",margin:" 1rem 0"}}>
                   <i className="fa fa-heart" aria-hidden="true"></i>
                   <span>
-                    MY FAVORITE
+                    FAVORITES
                   </span>
                 </div>  
             </div>
