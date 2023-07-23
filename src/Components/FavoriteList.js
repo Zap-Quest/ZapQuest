@@ -116,12 +116,14 @@ const FavoriteList = (props) => {
       <div>
         <div className="card" style={{ width: '100%',marginBottom:'0.25rem'}}>
           <div className="card-body" style={{padding:'0.5rem'}}>
-            <p className="card-title favoriteList-stationInfo-card-title"style={{fontSize:"0.8rem",marginBottom:'0.25rem',cursor:"pointer",  }} onClick={()=>handleSelectedStation(station)}>
-                <i className="fa-solid fa-charging-station">
-                </i><span className="card-link" style={{fontWeight:"500"}}>{`  ${station.stationName.toUpperCase()}`}</span>
-                <button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={()=>handleRemoveFavorite(station)}>
-                    <span aria-hidden="true">&times;</span>
-                </button>
+            <p className="card-title favoriteList-stationInfo-card-title"style={{fontSize:"0.8rem",marginBottom:'0.25rem',cursor:"pointer",  }} >
+              <span className="favoriteList-card-title" onClick={()=>handleSelectedStation(station)}>
+                <i className="fa-solid fa-charging-station"></i>
+                <span className="card-link" style={{fontWeight:"500"}}>{`  ${station.stationName.toUpperCase()}`}</span>
+              </span>
+              <button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={()=>handleRemoveFavorite(station)}>
+                  <span aria-hidden="true" style={{fontFamily:"verdana"}}>&times;</span>
+              </button>
             </p>
             <p className="card-text" style={{fontSize:"0.75rem"}}>{`${address}`}</p>
           </div>

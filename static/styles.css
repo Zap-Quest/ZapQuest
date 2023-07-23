@@ -234,7 +234,7 @@ button.disabled {
   cursor: pointer;
   color: #5f919d
 }
-.favoriteList-stationInfo-card-title:hover {
+.favoriteList-card-title:hover {
   color: rgb(196, 157, 42);
 }
 

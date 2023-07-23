@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { addFavorite, removeFavorite } from "../store";
 import { useNavigate } from "react-router-dom";
@@ -12,6 +12,8 @@ const StationInfo = (props) => {
     const closeMyFavorite = props.closeMyFavorite;
     const closeStationInfo = props.closeStationInfo;
     const openRoutes = props.openRoutes;
+    const stopStationAnimation=props.stopStationAnimation;
+    const modalRef = useRef(null); 
 
 
     console.log('Station Modal shown');
@@ -26,6 +28,7 @@ const StationInfo = (props) => {
     const [stationInFavorite,setStationInFavorite] = useState(false);
     const stationAddress = `${station.properties.street_address}, ${station.properties.city}, ${station.properties.state}`
     const [nearbyStations, setNearbyStations] = useState(null);
+   
     
     //helper
     const addToFavorite = () => {
@@ -44,6 +47,7 @@ const StationInfo = (props) => {
         console.log('remove favorite');
         dispatch(removeFavorite(station.properties.id));
     }
+    
 
     const handleDirection = () =>{
         openRoutes();
@@ -58,8 +62,9 @@ const StationInfo = (props) => {
 
     const handleSelectedStation = (station) => {
         const stationAddress = `${station.properties.street_address} ${station.properties.city}`;
-
+        stopStationAnimation();
         navigate(`/map/place/${encodeURIComponent(address)}/${station.properties.id}`);
+        modalRef.current.scrollTop = 0;
       
     }
 
@@ -91,9 +96,10 @@ const StationInfo = (props) => {
             aria-hidden="true" 
             data-mdb-backdrop="false" 
             data-mdb-keyboard="true"
+            ref={modalRef}
           >
             <div 
-              className="modal-dialog modal-side modal-dialog-left  modal-dialog-centered modal-dialog-scrollable" 
+              className="modal-dialog modal-dialog-left  modal-dialog-centered modal-dialog-scrollable" 
               role="document" 
 
             >

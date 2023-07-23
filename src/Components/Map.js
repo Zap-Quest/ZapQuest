@@ -28,6 +28,7 @@ const Map = () => {
   //redux store
   const { searchAddress, allStations,favorite } = useSelector((state) => state);
   const { address, stationId,startAddress,endAddress } = useParams();
+  console.log("address:",address);
   //set
   const [center, setCenter] = useState(null);
   const [myLocation, setMyLocation] = useState(null);
@@ -91,6 +92,7 @@ const Map = () => {
   const endNavigation = () => {
     setIsStationInfoOpen(false);
     navigate(`/map/place/${startAddress}/`)
+
 };
 
 
@@ -209,6 +211,11 @@ const Map = () => {
     setIsMarkerAnimated(false);
     setIsStationMarkerAnimated(false);
   }
+  const stopStationAnimation = () => {
+    setIsStationMarkerAnimated(false);
+  }
+
+  
 
   /* useEffect */
 
@@ -428,7 +435,7 @@ useEffect(() => {
               {/* StationInfo Modal*/}
               {
               (selectedStation && isStationInfoOpen)? (
-                  <StationInfo value={selectedStation} address={address} closeMyFavorite={closeMyFavorite} closeStationInfo={closeStationInfo}  openRoutes={openRoutes}/>
+                  <StationInfo value={selectedStation} address={address} closeMyFavorite={closeMyFavorite} closeStationInfo={closeStationInfo}  openRoutes={openRoutes} stopStationAnimation={stopStationAnimation}/>
               ):
               (isStationInfoOpen &&(<StationsList address={address} closeMyFavorite={closeMyFavorite} closeStationInfo={closeStationInfo}  openRoutes={openRoutes}/>) )/* if we have a selectdStation, we can have specific station info. if not, should we show the list of all the nearby stations?*/
               }
